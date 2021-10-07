@@ -1,0 +1,99 @@
+@use './breakpoints';
+@use './types';
+@use './z-index';
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key(breakpoints.$breakpoints, $breakpoint) {
+    @media (min-width: #{map-get(breakpoints.$breakpoints, $breakpoint)}) {
+      @content;
+    }
+  }
+  @else {
+    @error 'Invalid breakpoint: `#{$breakpoint}`.';
+  }
+}
+
+@mixin type($type) {
+  @if map-has-key(types.$types, $type) {
+    @each $type-prop, $type-val in map-get(types.$types, $type) {
+      @if $type-prop != respond-to {
+        #{$type-prop}: $type-val;
+      }
+      @else {
+        @each $response-size, $response-map in $type-val {
+          @include respond-to($response-size) {
+            @each $response-prop, $response-val in $response-map {
+              #{$response-prop}: $response-val;
+            }
+          }
+        }
+      }
+    }
+  }
+  @else {
+    @error 'Invalid type: `#{$type}`.';
+  }
+}
+
+@mixin z-index($index: null, $step: 0) {
+  $z-index: 0;
+
+  @if $index {
+    @if map-has-key(z-index.$z-index, $index) {
+      $z-index: map-get(z-index.$z-index, $index);
+    }
+    @else {
+      @error 'Invalid index: `#{$index}`.';
+    }
+  }
+
+  z-index: $z-index + $step;
+}
+
+@mixin transition($properties, $duration: 0.15s, $function: ease) {
+  transition-duration: $duration;
+  transition-property: $properties;
+  transition-timing-function: $function;
+}
+
+@mixin sr-only {
+  border: 0;
+  clip: rect(0,0,0,0);
+  font-size: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+@mixin button {
+  align-items: center;
+  background-color: unset;
+  border: unset;
+  color: unset;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  padding: unset;
+  text-align: unset;
+}
+
+@mixin header-gradient {
+  background-image:
+    radial-gradient(
+      circle at -5rem -15rem,
+      var(--clr-primary-lightskyblue) 0%, transparent 50%,
+    ),
+    radial-gradient(
+      circle at calc(100% + 5rem) calc(100% + 5rem),
+      var(--clr-primary-lightsalmon) 0%, transparent 50%,
+    ),
+    radial-gradient(
+      farthest-corner at 100% 0,
+      var(--clr-primary-indianred) 0%,
+      var(--clr-primary-blueviolet) 50%,
+      var(--clr-primary-dodgerblue) 100%,
+    );
+}

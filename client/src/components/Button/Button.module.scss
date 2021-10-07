@@ -1,0 +1,87 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.button {
+  @include mixins.button();
+  @include mixins.transition(background-color);
+
+  --button-padding: 1.7rem;
+  --button-border-radius: 1rem;
+
+  background-color: var(--button-bg-color, transparent);
+  border-radius: var(--button-border-radius);
+  color: var(--button-color, var(--clr-neutral-100));
+  min-height: var(--button-min-height, 4rem);
+  padding-left: var(--button-padding);
+  padding-right: var(--button-padding);
+  text-decoration: none;
+
+  @include mixins.respond-to(md) {
+    --button-min-height: 4.4rem;
+    --button-padding: 2.5rem;
+  }
+
+  &:hover {
+    background-color: var(--button-bg-hover-color, transparent);
+  }
+
+  &:focus-visible {
+    background-color: var(--button-bg-hover-color, transparent);
+  }
+
+  &[disabled] {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+}
+
+@supports not selector(.button:focus-visible) {
+  .button:focus {
+    background-color: var(--button-bg-hover-color, transparent);
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.prependPlus::before {
+  content: '+';
+  margin-right: 0.5rem;
+}
+
+.variant1 {
+  --button-bg-color: var(--clr-primary-blueviolet);
+  --button-bg-hover-color: var(--clr-primary-mediumorchid);
+}
+
+.variant2 {
+  --button-bg-color: var(--clr-primary-royalblue);
+  --button-bg-hover-color: var(--clr-primary-cornflowerblue);
+}
+
+.variant3 {
+  --button-bg-color: var(--clr-primary-darkslateblue);
+  --button-bg-hover-color: var(--clr-primary-slategray);
+}
+
+.variant4 {
+  --button-bg-color: var(--clr-primary-crimson);
+  --button-bg-hover-color: var(--clr-primary-lightcoral);
+}
+
+.variant5 {
+  @include mixins.type(body3);
+
+  --button-bg-color: var(--clr-primary-aliceblue);
+  --button-bg-hover-color: var(--clr-primary-lavender);
+  --button-color: var(--clr-primary-royalblue);
+  --button-min-height: 3rem;
+  --button-outline-color: var(--clr-primary-royalblue);
+  --button-padding: 1.7rem;
+
+  &.selected {
+    --button-bg-color: var(--clr-primary-royalblue);
+    --button-bg-hover-color: var(--clr-primary-cornflowerblue);
+    --button-color: var(--clr-neutral-100);
+  }
+}

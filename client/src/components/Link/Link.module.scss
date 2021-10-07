@@ -1,0 +1,13 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.link {
+  @include mixins.transition(color);
+
+  color: var(--clr-primary-blueviolet);
+  text-decoration: underline;
+
+  &:focus-visible,
+  &:hover {
+    color: var(--clr-primary-royalblue);
+  }
+}

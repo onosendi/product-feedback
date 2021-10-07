@@ -1,0 +1,12 @@
+{
+  "restartable": "rs",
+  "verbose": false,
+  "watch": [
+    "src/",
+    "../.env"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "ts"
+}

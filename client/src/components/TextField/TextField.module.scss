@@ -1,0 +1,34 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.control {
+  @include mixins.transition(border-color);
+
+  --textfield-padding: 2.4rem;
+
+  background-color: var(--clr-primary-ghostwhite);
+  border: 0.1rem solid var(--textfield-border-color, transparent);
+  border-radius: 0.5rem;
+  color: var(--clr-primary-darkslateblue);
+  min-height: 4.6rem;
+  padding-left: var(--textfield-padding);
+  padding-right: var(--textfield-padding);
+  width: 100%;
+
+  &:focus {
+    --textfield-border-color: var(--clr-primary-royalblue);
+  }
+}
+
+.textarea {
+  --textfield-textarea-padding: 1.2rem;
+
+  min-height: unset;
+  padding-bottom: var(--textfield-textarea-padding);
+  padding-top: var(--textfield-textarea-padding);
+  resize: vertical;
+}
+
+.error {
+  --textfield-border-color: var(--clr-primary-crimson);
+  caret-color: var(--clr-primary-crimson);
+};

@@ -1,0 +1,134 @@
+@use '../abstracts/mixins';
+@use '../abstracts/palette';
+
+body {
+  background-color: var(--clr-primary-ghostwhite);
+  color: red; // Use a noticable color so we know it's overwritten
+  font-family: Arial, sans-serif;
+
+  @include mixins.respond-to(md) {
+    overflow: auto !important;
+  }
+}
+
+input {
+  -webkit-appearance: none;
+}
+
+button {
+  @include mixins.button();
+}
+
+fieldset {
+  border: unset;
+}
+
+ul {
+  list-style: none;
+  margin: unset;
+  padding: unset;
+}
+
+.sr-only,
+[aria-hidden="true"] {
+  @include mixins.sr-only;
+}
+
+:focus {
+  outline: unset;
+}
+
+// TODO
+::selection {}
+
+.fade-open {
+  animation: fade-open 0.25s ease-out forwards;
+}
+
+.fade-close {
+  animation: fade-close 0.25s ease-in forwards;
+}
+
+@keyframes fade-open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-close {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.select-list {
+  @include mixins.z-index(popover);
+
+  --select-list-dropshadow-color: #{palette.$darkslategray};
+  --select-list-border-color: #{palette.$darkslateblue};
+
+  background-color: var(--clr-neutral-100);
+  border-radius: var(--root-border-radius);
+  box-shadow: 0 1rem 4rem -0.7rem hsl(var(--select-list-dropshadow-color) / 50%);
+  overflow: hidden;
+  position: absolute;
+  top: calc(100% + 1.6rem);
+  width: 100%;
+
+  & > li + li {
+    border-top: 0.1rem solid hsl(var(--select-list-border-color) / 15%);
+  }
+
+  & > li > button {
+    @include mixins.transition((color, background-color));
+    @include mixins.type(body1);
+
+    --select-item-button-padding: 2.4rem;
+
+    background-color: var(--select-item-bg-color, transparent);
+    color: var(--select-item-color, var(--clr-primary-slategray));
+    justify-content: flex-start;
+    min-height: 4.6rem;
+    padding-left: var(--select-item-button-padding);
+    padding-right: var(--select-item-button-padding);
+    position: relative;
+    width: 100%;
+
+    &:hover {
+      --select-item-color: var(--clr-primary-blueviolet);
+    }
+
+    &:focus-visible {
+      --select-item-bg-color: var(--clr-primary-ghostwhite);
+    }
+
+    &[data-selected="true"]::after {
+      content: '';
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMSI+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUQxRkVBIiBzdHJva2Utd2lkdGg9IjIiIGQ9Ik0xIDUuMjMzTDQuNTIyIDkgMTIgMSIvPjwvc3ZnPg==);
+      background-size: 100%;
+      height: 1.1rem;
+      position: absolute;
+      right: 2.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.3rem;
+    }
+  }
+}
+
+// TODO: check if this can be included in nest.
+@supports not selector(.select-list > li > button:focus-visible) {
+  .select-list > li > button:focus {
+    background-color: var(--clr-primary-ghostwhite);
+  }
+}
+
+// * {
+//   outline: 1px solid red;
+// }

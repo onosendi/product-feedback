@@ -1,0 +1,19 @@
+@use '../abstracts/palette';
+
+:root {
+  --root-border-radius: 1rem;
+  --root-container-wrapper-padding: 2.4rem;
+  --root-paper-padding: 2.4rem;
+  --root-user-bar-height: 5rem;
+
+  @each $category, $category-map in palette.$palette {
+    @each $name, $value in $category-map {
+      --clr-#{$category}-#{$name}: hsl(#{$value});
+    }
+  }
+
+  @for $n from 0 through 100 {
+    $calculated: $n * 1%;
+    --clr-neutral-#{$n}: hsl(0 0% #{$calculated});
+  }
+}

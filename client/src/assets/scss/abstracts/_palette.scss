@@ -1,0 +1,42 @@
+$ghostwhite: 230 60% 98%; // #F7F8FD
+$aliceblue: 231 100% 97%; // #F2F4FF
+$lavender: 230 100% 90%; // #CFD7FF
+$lightslategray: 230 20% 62%; // #8C92B3
+$slategray: 224 20% 49%; // #647196
+$darkslateblue: 231 33% 34%; // #3A4374
+$darkslategray: 230 30% 31%; // #373f68
+$cornflowerblue: 229 91% 73%; // #7C91F9
+$royalblue: 230 76% 59%; // #4661E6
+$lightskyblue: 204 94% 68%; // #62BCFA
+$dodgerblue: 201 85% 54%; // #28A7ED
+$mediumorchid: 281 89% 65%; // #C75AF6
+$blueviolet: 282 83% 52%; // #AD1FEA
+$lightsalmon: 14 83% 74%; // #F49F8F
+$lightcoral: 0 68% 72%; // #E98888
+$indianred: 346 77% 60%; // #E84D70
+$crimson: 0 66% 52%; // #D73737
+
+$palette: (
+  primary: (
+    "ghostwhite": $ghostwhite,
+    "aliceblue": $aliceblue,
+    "lavender": $lavender,
+    "lightslategray": $lightslategray,
+    "slategray": $slategray,
+    "darkslateblue": $darkslateblue,
+    "darkslategray": $darkslategray,
+    "cornflowerblue": $cornflowerblue,
+    "royalblue": $royalblue,
+    "lightskyblue": $lightskyblue,
+    "dodgerblue": $dodgerblue,
+    "mediumorchid": $mediumorchid,
+    "blueviolet": $blueviolet,
+    "lightsalmon": $lightsalmon,
+    "lightcoral": $lightcoral,
+    "indianred": $indianred,
+    "crimson": $crimson,
+  ),
+  alert: (
+    danger: $crimson,
+  ),
+);

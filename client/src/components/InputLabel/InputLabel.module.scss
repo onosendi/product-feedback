@@ -1,0 +1,54 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.label {
+  display: block;
+  width: 100%;
+}
+
+.wrapper {
+  --inputlabel-wrapper-bottom-margin: 1.5rem;
+
+  display: block;
+  padding-bottom: var(--inputlabel-wrapper-bottom-margin);
+  padding-right: 5rem;
+  position: relative;
+}
+
+.text {
+  color: var(--clr-primary-darkslateblue);
+  display: block;
+}
+
+.description {
+  color: var(--clr-primary-slategray);
+  display: block;
+  font-size: 1.3rem;
+
+  @include mixins.respond-to(md) {
+    font-size: 1.4rem;
+  }
+}
+
+.charsLeft {
+  color: var(--clr-primary-darkslateblue);
+  bottom: var(--inputlabel-wrapper-bottom-margin);
+  display: block;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 0;
+}
+
+.helper {
+  color: var(--clr-primary-slategray);
+  display: block;
+  font-size: 1.3rem;
+  margin-top: 0.4rem;
+
+  @include mixins.respond-to(md) {
+    font-size: 1.4rem;
+  }
+
+  &.error {
+    color: var(--clr-primary-crimson);
+  }
+}

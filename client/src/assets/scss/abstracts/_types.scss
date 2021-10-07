@@ -1,0 +1,107 @@
+$types: (
+  jost: (
+    font-family: 'Jost',
+    font-weight: normal,
+  ),
+  jost-medium: (
+    font-family: 'Jost',
+    font-weight: 500,
+  ),
+  jost-semibold: (
+    font-family: 'Jost',
+    font-weight: 600,
+  ),
+  jost-bold: (
+    font-family: 'Jost',
+    font-weight: 700,
+  ),
+  1: (
+    font-family: 'Jost',
+    font-size: 1.8rem,
+    font-weight: 700,
+    letter-spacing: -0.025rem,
+    line-height: normal,
+    respond-to: (
+      md: (
+        font-size: 2.4rem,
+        letter-spacing: -0.033rem,
+        line-height: 3.5rem,
+      ),
+    ),
+  ),
+  2: (
+    font-family: 'Jost',
+    font-size: 1.5rem,
+    font-weight: 700,
+    letter-spacing: -0.019rem,
+    line-height: normal,
+    respond-to: (
+      md: (
+        font-size: 2rem,
+        letter-spacing: -0.025rem,
+        line-height: 2.9rem,
+      ),
+    ),
+  ),
+  3: (
+    font-family: 'Jost',
+    font-size: 1.3rem,
+    font-weight: 700,
+    letter-spacing: -0.018rem,
+    line-height: normal,
+    respond-to: (
+      md: (
+        font-size: 1.8rem,
+        letter-spacing: -0.025rem,
+        line-height: 2.6rem,
+      ),
+    ),
+  ),
+  4: (
+    font-family: 'Jost',
+    font-size: 1.3rem,
+    font-weight: 700,
+    letter-spacing: normal,
+    line-height: normal,
+    respond-to: (
+      md: (
+        font-size: 1.4rem,
+        letter-spacing: -0.02rem,
+        line-height: 2rem,
+      ),
+    ),
+  ),
+  body1: (
+    font-family: 'Jost',
+    font-size: 1.3rem,
+    font-weight: normal,
+    letter-spacing: normal,
+    line-height: normal,
+    respond-to: (
+      md: (
+        font-size: 1.6rem,
+        line-height: 2.3rem,
+      ),
+    ),
+  ),
+  body2: (
+    font-family: 'Jost',
+    font-size: 1.3rem,
+    font-weight: normal,
+    letter-spacing: normal,
+    line-height: 2.2rem,
+    respond-to: (
+      md: (
+        font-size: 1.5rem,
+        line-height: noraml,
+      ),
+    ),
+  ),
+  body3: (
+    font-family: 'Jost',
+    font-size: 1.3rem,
+    font-weight: 600,
+    letter-spacing: normal,
+    line-height: 1.9rem,
+  ),
+);
