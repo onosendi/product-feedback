@@ -16,7 +16,7 @@ server.use(morgan('dev'));
 
 server.use('/auth', authRoute);
 
-server.listen(config.port as number, config.ip, () => {
+server.listen(<number>config.port, config.ip, () => {
   // eslint-disable-next-line no-console
   console.log(`> Listening on ${config.ip}:${config.port}`);
 });
