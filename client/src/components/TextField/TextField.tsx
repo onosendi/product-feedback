@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
@@ -9,7 +9,7 @@ const TextField = ({
   defaultValue,
   description,
   error,
-  helperText,
+  helperText: string,
   id,
   label,
   labelClassName,
@@ -25,7 +25,7 @@ const TextField = ({
 }) => {
   const [charsLeft, setCharsLeft] = useState(maxLength - (defaultValue?.length ?? 0));
 
-  const onChange = (event) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (maxLength) {
       const charLength = event.currentTarget.value.length;
       setCharsLeft(maxLength - charLength);

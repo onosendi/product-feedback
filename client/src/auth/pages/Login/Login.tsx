@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -18,7 +18,7 @@ const Login = () => {
   const [errors, setErrors] = useState(false);
   const history = useHistory();
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { username, password } = event.currentTarget;

@@ -34,6 +34,8 @@ const Container = forwardRef(({
   return component;
 });
 
+Container.displayName = 'Container';
+
 Container.defaultProps = {
   children: null,
   className: null,

@@ -5,12 +5,13 @@ export default {
   feedback: {
     create: '/feedback/create',
     detail: {
-      edit: (slug) => `/feedback/${slug}/edit`,
-      index: (slug) => `/feedback/${slug}`,
+      edit: (slug: string) => `/feedback/${slug}/edit`,
+      index: (slug: string) => `/feedback/${slug}`,
     },
     index: '/feedback',
     roadmap: '/feedback/roadmap',
   },
+  index: '/',
   user: {
     edit: 'user/edit',
     register: 'user/register',
