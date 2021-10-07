@@ -4,18 +4,24 @@
         "es2021": true
     },
     "extends": [
+        "airbnb",
+        "airbnb-typescript",
         "plugin:react/recommended",
-        "airbnb"
+        "react-app",
+        "react-app/jest"
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
         "ecmaVersion": 12,
+        "project": "./tsconfig.json",
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "@typescript-eslint"
     ],
     "rules": {
         "import/prefer-default-export": "off",
