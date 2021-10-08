@@ -1,10 +1,20 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import {
+  ElementType,
+  forwardRef,
+  ReactNode,
+} from 'react';
 
 import styles from './Paper.module.scss';
 
-const Paper = forwardRef(({
+interface PaperProps {
+  children: ReactNode,
+  className: string | null,
+  component: ElementType | string,
+}
+
+const Paper = forwardRef<HTMLElement, PaperProps>(({
   children,
   className,
   component: Component,
@@ -23,7 +33,8 @@ Paper.defaultProps = {
 Paper.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  component: PropTypes.string,
+  // @ts-ignore
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 };
 
 export default Paper;
