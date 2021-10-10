@@ -33,7 +33,6 @@ Paper.defaultProps = {
 Paper.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  // @ts-ignore
   component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 };
 

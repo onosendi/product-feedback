@@ -7,18 +7,16 @@ import styles from './Button.module.scss';
 
 interface ButtonProps {
   children: ReactNode,
-  className: string | null,
-  fullWidth: boolean,
-  href: string | null,
-  prependPlus: boolean,
-  selected: boolean,
-  type: 'button' | 'submit',
+  className?: string | null,
+  fullWidth?: boolean,
+  href?: string | null,
+  prependPlus?: boolean,
+  selected?: boolean,
+  type?: 'button' | 'submit',
   variant: '1' | '2' | '3' | '4' | '5',
 }
 
-type ButtonRef = HTMLButtonElement | HTMLAnchorElement;
-
-const Button = forwardRef<ButtonRef, ButtonProps>(({
+const Button = forwardRef<any, ButtonProps>(({
   children,
   className,
   fullWidth,
