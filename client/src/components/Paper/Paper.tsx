@@ -5,7 +5,6 @@ import {
   forwardRef,
   ReactNode,
 } from 'react';
-
 import styles from './Paper.module.scss';
 
 interface PaperProps {
@@ -35,5 +34,6 @@ Paper.propTypes = {
   className: PropTypes.string,
   component: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 };
+
 
 export default Paper;

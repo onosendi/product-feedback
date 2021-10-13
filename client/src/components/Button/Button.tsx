@@ -1,24 +1,25 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-
 import styles from './Button.module.scss';
 
-interface ButtonProps {
-  children: ReactNode,
-  className?: string | null,
-  fullWidth?: boolean,
-  href?: string | null,
-  prependPlus?: boolean,
-  selected?: boolean,
-  type?: 'button' | 'submit',
-  variant: '1' | '2' | '3' | '4' | '5',
-}
+const buttonPropTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  fullWidth: PropTypes.bool,
+  href: PropTypes.string,
+  prependPlus: PropTypes.bool,
+  selected: PropTypes.bool,
+  type: PropTypes.oneOf(['button', 'submit'] as const),
+  variant: PropTypes.oneOf(['1', '2', '3', '4', '5'] as const).isRequired,
+};
 
-const Button = forwardRef<any, ButtonProps>(({
+type ButtonProps = PropTypes.InferProps<typeof buttonPropTypes>;
+
+const Button = forwardRef(({
   children,
-  className,
+  className = null,
   fullWidth,
   href,
   prependPlus,
@@ -26,7 +27,7 @@ const Button = forwardRef<any, ButtonProps>(({
   type,
   variant,
   ...props
-}, fRef) => {
+}: ButtonProps, forwardedRef) => {
   const commonProps = {
     className: cx(
       'type-4',
@@ -37,7 +38,7 @@ const Button = forwardRef<any, ButtonProps>(({
       styles.button,
       className,
     ),
-    ref: fRef,
+    ref: forwardedRef,
     ...props,
   };
 
@@ -56,15 +57,5 @@ Button.defaultProps = {
   type: 'button',
 };
 
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  fullWidth: PropTypes.bool,
-  href: PropTypes.string,
-  prependPlus: PropTypes.bool,
-  selected: PropTypes.bool,
-  type: PropTypes.oneOf(['button', 'submit']),
-  variant: PropTypes.oneOf(['1', '2', '3', '4', '5']).isRequired,
-};
 
 export default Button;
