@@ -5,8 +5,10 @@ import routes from '../lib/routes';
 
 const Login = lazy(() => import('./pages/Login/Login'));
 
-export default [
+const authRoutes = [
   <Route exact key="auth-login" path={routes.auth.login}>
     <Login />
   </Route>,
 ];
+
+export default authRoutes;
