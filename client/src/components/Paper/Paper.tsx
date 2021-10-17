@@ -6,16 +6,14 @@ interface PaperProps {
   children: ReactNode,
   className?: string | null,
   component?: ElementType | string,
-  [Index: string]: any,
 }
 
 const Paper = forwardRef<HTMLElement, PaperProps>(({
   children,
   className = null,
   component: Component = 'div',
-  ...props
-}, ref) => (
-  <Component className={cx(styles.paper, className)} ref={ref} {...props}>
+}, forwardedRef) => (
+  <Component className={cx(styles.paper, className)} ref={forwardedRef}>
     {children}
   </Component>
 ));
