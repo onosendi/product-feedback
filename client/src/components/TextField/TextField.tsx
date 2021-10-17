@@ -1,27 +1,43 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, HTMLInputTypeAttribute, useState } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
+type TextFieldProps = {
+  defaultValue?: string | undefined,
+  description?: string | null,
+  error?: boolean | null,
+  helperText?: string | null,
+  id: string,
+  label: string,
+  labelClassName?: string | null,
+  labelTextClassName?: string | null,
+  labelWrapperClassName?: string | null,
+  maxLength?: number | null,
+  multiline?: boolean | null,
+  name: string,
+  showCharsLeft?: boolean | null,
+  showLabel?: boolean | null,
+  type: HTMLInputTypeAttribute,
+};
+
 const TextField = ({
-  defaultValue,
-  description,
-  error,
-  helperText: string,
+  defaultValue = undefined,
+  description = null,
+  error = false,
+  helperText = null,
   id,
   label,
-  labelClassName,
-  labelTextClassName,
-  labelWrapperClassName,
-  maxLength,
-  multiline,
+  labelClassName = null,
+  labelTextClassName = null,
+  labelWrapperClassName = null,
+  maxLength = null,
+  multiline = false,
   name,
-  showCharsLeft,
-  showLabel,
-  type,
-  ...props
-}) => {
+  showCharsLeft = true,
+  showLabel = true,
+  type = 'text',
+}: TextFieldProps) => {
   const [charsLeft, setCharsLeft] = useState(maxLength - (defaultValue?.length ?? 0));
 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,7 +53,6 @@ const TextField = ({
     maxLength,
     name,
     onChange,
-    ...props,
   };
 
   const commonClasses = cx('type-body2', styles.control, error && styles.error);
@@ -74,39 +89,6 @@ const TextField = ({
       {renderControl()}
     </InputLabel>
   );
-};
-
-TextField.defaultProps = {
-  defaultValue: undefined,
-  description: null,
-  error: false,
-  helperText: null,
-  labelClassName: null,
-  labelTextClassName: null,
-  labelWrapperClassName: null,
-  maxLength: null,
-  multiline: false,
-  showCharsLeft: true,
-  showLabel: true,
-  type: 'text',
-};
-
-TextField.propTypes = {
-  defaultValue: PropTypes.string,
-  description: PropTypes.string,
-  error: PropTypes.bool,
-  helperText: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  labelClassName: PropTypes.string,
-  labelTextClassName: PropTypes.string,
-  labelWrapperClassName: PropTypes.string,
-  maxLength: PropTypes.number,
-  multiline: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  showCharsLeft: PropTypes.bool,
-  showLabel: PropTypes.bool,
-  type: PropTypes.string,
 };
 
 export default TextField;
