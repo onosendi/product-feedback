@@ -1,20 +1,22 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import styles from './Link.module.scss';
 
-const Link = forwardRef(({
+type LinkProps = {
+  children: ReactNode,
+  className?: string | null,
+  href?: string | null,
+};
+
+const Link = forwardRef<any, LinkProps>(({
   children,
-  className,
-  href,
-  type,
-  ...props
-}, fRef) => {
+  className = null,
+  href = null,
+}, forwardedRef) => {
   const commonProps = {
     className: cx(styles.link, className),
-    ref: fRef,
-    ...props,
+    ref: forwardedRef,
   };
 
   if (href) {
@@ -29,20 +31,7 @@ const Link = forwardRef(({
     );
   }
 
-  return <button type={type} {...commonProps}>{children}</button>;
+  return <button type="button" {...commonProps}>{children}</button>;
 });
-
-Link.defaultProps = {
-  className: null,
-  href: null,
-  type: 'button',
-};
-
-Link.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  href: PropTypes.string,
-  type: PropTypes.oneOf(['button', 'submit']),
-};
 
 export default Link;
