@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
 import authRoutes from '../../auth/routes';
 import feedbackRoutes from '../../feedback/routes';
 import routes from '../../lib/routes';

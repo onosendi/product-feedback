@@ -1,7 +1,6 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
 import { ChangeEvent, useState } from 'react';
-
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 

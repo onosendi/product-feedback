@@ -1,7 +1,6 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-
 import styles from './Container.module.scss';
 
 const Container = forwardRef(({

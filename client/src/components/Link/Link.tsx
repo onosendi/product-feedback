@@ -2,7 +2,6 @@ import cx from 'clsx';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-
 import styles from './Link.module.scss';
 
 const Link = forwardRef(({

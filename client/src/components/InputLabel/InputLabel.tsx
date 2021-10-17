@@ -1,6 +1,5 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
-
 import styles from './InputLabel.module.scss';
 
 const InputLabel = ({
