@@ -15,9 +15,6 @@ type ButtonProps = {
   [Index: string]: any,
 };
 
-// type ButtonRef = Ref<HTMLAnchorElement | HTMLButtonElement>;
-type ButtonRef = any;
-
 const Button = forwardRef(({
   children,
   className = null,
@@ -28,7 +25,7 @@ const Button = forwardRef(({
   type = 'button',
   variant,
   ...props
-}: ButtonProps, forwardedRef: ButtonRef) => {
+}: ButtonProps, forwardedRef: any) => {
   const commonProps = {
     className: cx(
       'type-4',
