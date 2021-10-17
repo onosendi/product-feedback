@@ -12,10 +12,9 @@ type ButtonProps = {
   selected?: boolean,
   type?: 'button' | 'submit',
   variant: '1' | '2' | '3' | '4' | '5',
-  [Index: string]: any,
 };
 
-const Button = forwardRef(({
+const Button = forwardRef<any, ButtonProps>(({
   children,
   className = null,
   fullWidth = false,
@@ -24,8 +23,7 @@ const Button = forwardRef(({
   selected = false,
   type = 'button',
   variant,
-  ...props
-}: ButtonProps, forwardedRef: any) => {
+}, forwardedRef) => {
   const commonProps = {
     className: cx(
       'type-4',
@@ -37,7 +35,6 @@ const Button = forwardRef(({
       className,
     ),
     ref: forwardedRef,
-    ...props,
   };
 
   return href
