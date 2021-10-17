@@ -1,11 +1,14 @@
 import crypto from 'crypto';
 
-const hashPbkdf2 = (password: string, salt:string) => (
+const hashPbkdf2 = (password: string, salt: string) => (
   crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex'));
 
-export const createPassword = (password: string) => {
-  const salt = crypto.randomBytes(16).toString('hex');
-  const pbkdf2 = hashPbkdf2(password, salt);
+export const createPassword = (
+  password: string,
+  salt: string | null = null,
+) => {
+  const newSalt = salt || crypto.randomBytes(16).toString('hex');
+  const pbkdf2 = hashPbkdf2(password, newSalt);
   return `${salt}$${pbkdf2}`;
 };
 
