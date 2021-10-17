@@ -1,7 +1,7 @@
 {
-    "compilerOptions": {
-        "allowJs": true,
-        "esModuleInterop": true,
-        "strict": true
-    }
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strict": true
+  }
 }

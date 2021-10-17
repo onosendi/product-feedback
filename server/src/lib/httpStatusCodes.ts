@@ -1,4 +1,4 @@
-export default {
+const httpStatusCodes: { [Key: string]: number } = {
   HTTP_100_CONTINUE: 100,
   HTTP_101_SWITCHING_PROTOCOLS: 101,
   HTTP_200_OK: 200,
@@ -60,3 +60,5 @@ export default {
   HTTP_510_NOT_EXTENDED: 510,
   HTTP_511_NETWORK_AUTHENTICATION_REQUIRED: 511,
 };
+
+export default httpStatusCodes;

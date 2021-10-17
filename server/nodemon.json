@@ -2,8 +2,7 @@
   "restartable": "rs",
   "verbose": false,
   "watch": [
-    "src/",
-    "../.env"
+    "src"
   ],
   "env": {
     "NODE_ENV": "development"

@@ -1,9 +1,7 @@
 import path from 'path';
 
-import config from './src/config';
-
 export default {
-  ...config.database,
+  // knex config
   migrations: {
     directory: path.resolve(__dirname, './database/migrations'),
   },
