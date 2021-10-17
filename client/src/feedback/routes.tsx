@@ -6,7 +6,7 @@ import routes from '../lib/routes';
 const Index = lazy(() => import('./pages/Index/Index'));
 const Roadmap = lazy(() => import('./pages/Roadmap/Roadmap'));
 
-export default [
+const feedbackRoutes = [
   <Route exact key="feedback-index" path={routes.feedback.index}>
     <Index />
   </Route>,
@@ -14,3 +14,5 @@ export default [
     <Roadmap />
   </Route>,
 ];
+
+export default feedbackRoutes;

@@ -1,4 +1,4 @@
-export default {
+const appRoutes = {
   auth: {
     login: '/auth/login',
   },
@@ -17,3 +17,5 @@ export default {
     register: 'user/register',
   },
 };
+
+export default appRoutes;

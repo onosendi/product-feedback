@@ -1,4 +1,4 @@
-const httpStatusCodes: { [K: string]: number } = {
+const httpStatusCodes: { [Key: string]: number } = {
   HTTP_100_CONTINUE: 100,
   HTTP_101_SWITCHING_PROTOCOLS: 101,
   HTTP_200_OK: 200,
