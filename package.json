@@ -13,7 +13,9 @@
     "lint": "npm-run-all --print-label lint:*",
     "lint:server": "cd server && npm run lint",
     "lint:client": "cd client && npm run lint",
-    "test": "cd client && npm test"
+    "test": "npm-run-all --print-label test:*",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test"
   },
   "keywords": [],
   "author": "",
