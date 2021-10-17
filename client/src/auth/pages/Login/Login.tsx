@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import cx from 'clsx';
 import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -26,7 +27,8 @@ const Login = () => {
       setErrors(false);
       await api(desc.token(username.value, password.value));
       // history.push(routes.feedback.index);
-    } catch (error) {
+    } catch (err: unknown) {
+      const error = err as AxiosError;
       if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);
       }
