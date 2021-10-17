@@ -18,7 +18,7 @@ type TextFieldProps = {
   name: string,
   showCharsLeft?: boolean | null,
   showLabel?: boolean | null,
-  type: HTMLInputTypeAttribute,
+  type?: HTMLInputTypeAttribute,
 };
 
 const TextField = ({
