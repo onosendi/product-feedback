@@ -1,22 +1,36 @@
 import cx from 'clsx';
-import PropTypes from 'prop-types';
+import { ReactNode } from 'react';
 import styles from './InputLabel.module.scss';
 
+type InputLabelProps = {
+  charsLeft?: number | null,
+  children: ReactNode,
+  className?: string | null,
+  description?: string | null,
+  error?: boolean | null,
+  helperText?: string | null,
+  htmlFor: string,
+  label: string,
+  labelTextClassName: string | null,
+  labelWrapperClassName: string | null,
+  showCharsLeft?: boolean | null,
+  showLabel?: boolean | null,
+};
+
 const InputLabel = ({
-  charsLeft,
+  charsLeft = null,
   children,
-  className,
-  description,
-  error,
-  helperText,
+  className = null,
+  description = null,
+  error = false,
+  helperText = null,
   htmlFor,
   label,
-  labelTextClassName,
-  labelWrapperClassName,
-  showCharsLeft,
-  showLabel,
-  ...props
-}) => {
+  labelTextClassName = null,
+  labelWrapperClassName = null,
+  showCharsLeft = true,
+  showLabel = true,
+}: InputLabelProps) => {
   const renderLabel = () => {
     if (showLabel) {
       return (
@@ -35,11 +49,7 @@ const InputLabel = ({
   };
 
   return (
-    <label
-      className={cx(styles.label, className)}
-      htmlFor={htmlFor}
-      {...props}
-    >
+    <label className={cx(styles.label, className)} htmlFor={htmlFor}>
       {renderLabel()}
       {children}
       {!!helperText && (
@@ -49,33 +59,6 @@ const InputLabel = ({
       )}
     </label>
   );
-};
-
-InputLabel.defaultProps = {
-  charsLeft: null,
-  className: null,
-  description: null,
-  error: false,
-  helperText: null,
-  labelTextClassName: null,
-  labelWrapperClassName: null,
-  showCharsLeft: true,
-  showLabel: true,
-};
-
-InputLabel.propTypes = {
-  charsLeft: PropTypes.number,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  description: PropTypes.string,
-  error: PropTypes.bool,
-  helperText: PropTypes.string,
-  htmlFor: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  labelTextClassName: PropTypes.string,
-  labelWrapperClassName: PropTypes.string,
-  showCharsLeft: PropTypes.bool,
-  showLabel: PropTypes.bool,
 };
 
 export default InputLabel;
