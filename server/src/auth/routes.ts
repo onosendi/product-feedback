@@ -1,4 +1,5 @@
 import { FastifyPluginCallback } from 'fastify';
+import status from '../lib/httpStatusCodes';
 import { tokenSchema } from './schemas';
 
 const authRoutes: FastifyPluginCallback = (fastify, opts, done) => {
@@ -7,11 +8,11 @@ const authRoutes: FastifyPluginCallback = (fastify, opts, done) => {
   }>({
     url: '/token',
     method: 'POST',
-    handler: async (request) => {
+    handler: async (request, reply) => {
       const { username, password = '' } = request.body;
       // eslint-disable-next-line no-console
       console.log(username, password);
-      return { foo: 'bar' };
+      reply.status(status.HTTP_201_CREATED).send('Created');
     },
     schema: tokenSchema,
   });
