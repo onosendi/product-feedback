@@ -12,6 +12,8 @@
   "dependencies": {
     "camelcase-keys": "^7.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.22.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.11",
     "pg": "^8.7.1",
