@@ -1,4 +1,5 @@
 import { FastifyPluginCallback } from 'fastify';
+import { tokenSchema } from './schemas';
 
 const authRoutes: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.route<{
@@ -12,16 +13,7 @@ const authRoutes: FastifyPluginCallback = (fastify, opts, done) => {
       console.log(username, password);
       return { foo: 'bar' };
     },
-    schema: {
-      body: {
-        type: 'object',
-        required: ['password', 'username'],
-        properties: {
-          password: { type: 'string' },
-          username: { type: 'string' },
-        },
-      },
-    },
+    schema: tokenSchema,
   });
   done();
 };
