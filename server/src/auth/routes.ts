@@ -1,15 +1,23 @@
-import { FastifyPluginCallback } from 'fastify';
-import { postTokenSchema } from './schemas';
-import { PostToken } from './types';
+import { FastifyPluginCallback, RouteShorthandOptionsWithHandler } from 'fastify';
+import { token } from './controllers';
 
-const authRoutes: FastifyPluginCallback = (fastify, opts, next) => {
-  fastify.post<PostToken>('/token', { schema: postTokenSchema }, async (req) => {
-    const { username, password = '' } = req.body;
-    console.log(username, password);
-    return { foo: 'bar' };
-  });
+const tokenOptions = {
+  handler: token,
+  schema: {
+    body: {
+      type: 'object',
+      required: ['password', 'username'],
+      properties: {
+        password: { type: 'string' },
+        username: { type: 'string' },
+      },
+    },
+  },
+};
 
-  next();
+const authRoutes: FastifyPluginCallback = (fastify, options, done) => {
+  fastify.post('/token', tokenOptions as RouteShorthandOptionsWithHandler);
+  done();
 };
 
 export default authRoutes;
