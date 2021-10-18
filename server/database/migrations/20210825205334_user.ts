@@ -1,4 +1,6 @@
-export const up = (knex) => knex.schema.createTable('user', (t) => {
+import { Knex } from 'knex';
+
+export const up = (knex: Knex) => knex.schema.createTable('user', (t) => {
   t.uuid('id').primary();
   t.datetime('created_at').defaultTo(knex.fn.now()).notNullable();
   t.datetime('last_login');
@@ -10,4 +12,4 @@ export const up = (knex) => knex.schema.createTable('user', (t) => {
   t.enu('role', ['user', 'admin']).defaultTo('user');
 });
 
-export const down = (knex) => knex.schema.dropTableIfExists('user');
+export const down = (knex: Knex) => knex.schema.dropTableIfExists('user');

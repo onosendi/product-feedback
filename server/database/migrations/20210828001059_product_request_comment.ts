@@ -1,4 +1,6 @@
-export const up = (knex) => knex.schema.createTable('product_request_comment', (t) => {
+import { Knex } from 'knex';
+
+export const up = (knex: Knex) => knex.schema.createTable('product_request_comment', (t) => {
   t.uuid('id').primary();
   t.datetime('created_at').defaultTo(knex.fn.now()).notNullable();
   t.string('content', 255).notNullable();
@@ -21,4 +23,4 @@ export const up = (knex) => knex.schema.createTable('product_request_comment', (
     .onDelete('cascade');
 });
 
-export const down = (knex) => knex.schema.dropTableIfExists('product_request_comment');
+export const down = (knex: Knex) => knex.schema.dropTableIfExists('product_request_comment');

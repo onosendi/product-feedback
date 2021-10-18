@@ -1,4 +1,6 @@
-export const up = (knex) => knex.schema.createTable('product_request', (t) => {
+import { Knex } from 'knex';
+
+export const up = (knex: Knex) => knex.schema.createTable('product_request', (t) => {
   t.uuid('id').primary();
   t.datetime('created_at').defaultTo(knex.fn.now()).notNullable();
   t.string('title', 75).notNullable();
@@ -20,4 +22,4 @@ export const up = (knex) => knex.schema.createTable('product_request', (t) => {
   t.index('slug');
 });
 
-export const down = (knex) => knex.schema.dropTableIfExists('product_request');
+export const down = (knex: Knex) => knex.schema.dropTableIfExists('product_request');
