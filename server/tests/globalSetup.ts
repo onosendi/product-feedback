@@ -1,12 +1,11 @@
 import dotenv from 'dotenv';
 import knex from 'knex';
 import path from 'path';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import 'ts-node/register';
 
 dotenv.config();
-
 const { env } = process;
+const testDatabaseName = `test_${env.DB_NAME}`;
 
 const createTestDatabase = async () => {
   const db = knex({
@@ -18,8 +17,8 @@ const createTestDatabase = async () => {
   });
 
   try {
-    await db.raw(`drop database if exists test_${env.DB_NAME}`);
-    await db.raw(`create database test_${env.DB_NAME}`);
+    await db.raw(`drop database if exists ${testDatabaseName}`);
+    await db.raw(`create database ${testDatabaseName}`);
   } catch (error: any) {
     throw new Error(error);
   } finally {
@@ -31,12 +30,15 @@ const migrateAndSeedTestDatabase = async () => {
   const db = knex({
     client: 'pg',
     connection: {
-      database: 'test_productfeedback',
+      database: testDatabaseName,
       password: env.DB_PASSWORD,
       user: env.DB_USER,
     },
     migrations: {
       directory: path.resolve(__dirname, '../database/migrations'),
+    },
+    seeds: {
+      directory: path.resolve(__dirname, '../database/seeds'),
     },
   });
 

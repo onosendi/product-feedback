@@ -5,7 +5,7 @@ dotenv.config();
 
 const { env } = process;
 
-export default {
+const knexConfig = {
   client: 'pg',
   connection: {
     database: env.DB_NAME,
@@ -19,3 +19,5 @@ export default {
     directory: path.resolve(__dirname, './database/seeds'),
   },
 };
+
+export default knexConfig;

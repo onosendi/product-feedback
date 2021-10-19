@@ -1,6 +1,7 @@
 import knex from 'knex';
 
 const { env } = process;
+const testDatabaseName = `test_${env.DB_NAME}`;
 
 const teardown = async () => {
   const db = knex({
@@ -12,7 +13,7 @@ const teardown = async () => {
   });
 
   try {
-    await db.raw(`drop database if exists test_${env.DB_NAME}`);
+    await db.raw(`drop database if exists ${testDatabaseName}`);
     process.exit();
   } catch (error) {
     // eslint-disable-next-line no-console

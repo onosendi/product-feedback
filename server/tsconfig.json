@@ -5,9 +5,13 @@
     "strict": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    // Exclude because Jest doesn't like it.
+    "tests/*.ts"
   ],
   "include": [
-    "src"
+    "src",
+    // Include for linting.
+    "tests/*.ts"
   ]
 }
