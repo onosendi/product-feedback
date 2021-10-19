@@ -1,6 +1,6 @@
 import knex from '../lib/knex';
 
 export const getUserByUsername = (username: string) => knex('user')
-  .select('id', 'password')
+  .select('id')
   .where({ username })
   .first();
