@@ -1,11 +1,12 @@
 import dotenv from 'dotenv';
 import knex from 'knex';
 import path from 'path';
+import foo from '../src/lib/knex';
 import 'ts-node/register';
 
 dotenv.config();
 const { env } = process;
-const testDatabaseName = `test_${env.DB_NAME}`;
+const testDatabaseName = `testing_${env.DB_NAME}`;
 
 const createTestDatabase = async () => {
   const db = knex({
@@ -27,27 +28,10 @@ const createTestDatabase = async () => {
 };
 
 const migrateAndSeedTestDatabase = async () => {
-  const db = knex({
-    client: 'pg',
-    connection: {
-      database: testDatabaseName,
-      password: env.DB_PASSWORD,
-      user: env.DB_USER,
-    },
-    migrations: {
-      directory: path.resolve(__dirname, '../database/migrations'),
-    },
-    seeds: {
-      directory: path.resolve(__dirname, '../database/seeds'),
-    },
-  });
-
   try {
-    await db.migrate.latest();
+    await foo.migrate.latest();
   } catch (error: any) {
     throw new Error(error);
-  } finally {
-    await db.destroy();
   }
 };
 

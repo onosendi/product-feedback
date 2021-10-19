@@ -7,7 +7,7 @@
     "build": "NODE_ENV=production babel src --out-dir build --extensions .ts",
     "start": "NODE_ENV=production node build/index.js",
     "lint": "eslint --ext js .",
-    "test": "jest --config ./.jestconfig.json"
+    "test": "NODE_ENV=testing jest --config ./.jestconfig.json"
   },
   "dependencies": {
     "camelcase-keys": "^7.0.0",
@@ -31,6 +31,7 @@
     "@types/cors": "^2.8.12",
     "@types/jest": "^27.0.2",
     "@types/jsonwebtoken": "^8.5.5",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",

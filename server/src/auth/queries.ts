@@ -1,4 +1,4 @@
-import knex from '../lib/db';
+import knex from '../lib/knex';
 
 export const getUserByUsername = (username: string) => knex('user')
   .select('id', 'password')

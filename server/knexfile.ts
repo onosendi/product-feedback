@@ -2,13 +2,12 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 dotenv.config();
-
 const { env } = process;
 
 const knexConfig = {
   client: 'pg',
   connection: {
-    database: env.DB_NAME,
+    database: env.NODE_ENV === 'testing' ? `testing_${env.DB_NAME}` : env.DB_NAME,
     pasword: env.DB_PASSWORD,
     user: env.DB_USER,
   },
