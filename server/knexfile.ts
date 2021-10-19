@@ -1,22 +1,38 @@
-import dotenv from 'dotenv';
+import camelCaseKeys from 'camelcase-keys';
+import { Knex } from 'knex';
 import path from 'path';
+import config from './config';
 
-dotenv.config();
-const { env } = process;
-
-const knexConfig = {
-  client: 'pg',
-  connection: {
-    database: env.NODE_ENV === 'testing' ? `testing_${env.DB_NAME}` : env.DB_NAME,
-    pasword: env.DB_PASSWORD,
-    user: env.DB_USER,
-  },
-  migrations: {
-    directory: path.resolve(__dirname, './database/migrations'),
-  },
-  seeds: {
-    directory: path.resolve(__dirname, './database/seeds'),
-  },
+type GetKnexConfig = {
+  includeDatabaseName?: boolean,
 };
 
-export default knexConfig;
+const getKnexConfig = (args: GetKnexConfig = {}) => {
+  const { includeDatabaseName = true } = args;
+  const connection: {
+    password: string | undefined,
+    user: string | undefined,
+    database?: string,
+  } = {
+    password: config.DB_PASSWORD,
+    user: config.DB_USER,
+  };
+
+  if (includeDatabaseName) {
+    connection.database = config.DB_NAME;
+  }
+
+  return {
+    client: 'pg',
+    connection,
+    migrations: {
+      directory: path.resolve(__dirname, './database/migrations'),
+    },
+    postProcessResponse: (response: Knex) => camelCaseKeys(response, { deep: true }),
+    seeds: {
+      directory: path.resolve(__dirname, './database/seeds'),
+    },
+  };
+};
+
+export default getKnexConfig;

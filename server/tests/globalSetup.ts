@@ -1,37 +1,32 @@
-import dotenv from 'dotenv';
-import knex from 'knex';
-import path from 'path';
-import foo from '../src/lib/knex';
+import Knex from 'knex';
+import config from '../config';
+import getKnexConfig from '../knexfile';
 import 'ts-node/register';
 
-dotenv.config();
-const { env } = process;
-const testDatabaseName = `testing_${env.DB_NAME}`;
-
 const createTestDatabase = async () => {
-  const db = knex({
-    client: 'pg',
-    connection: {
-      password: env.DB_PASSWORD,
-      user: env.DB_USER,
-    },
-  });
+  const knexConfig = getKnexConfig({ includeDatabaseName: false });
+  const knex = Knex(knexConfig);
 
   try {
-    await db.raw(`drop database if exists ${testDatabaseName}`);
-    await db.raw(`create database ${testDatabaseName}`);
+    await knex.raw(`drop database if exists ${config.DB_NAME}`);
+    await knex.raw(`create database ${config.DB_NAME}`);
   } catch (error: any) {
     throw new Error(error);
   } finally {
-    await db.destroy();
+    await knex.destroy();
   }
 };
 
 const migrateAndSeedTestDatabase = async () => {
+  const knexConfig = getKnexConfig();
+  const knex = Knex(knexConfig);
+
   try {
-    await foo.migrate.latest();
+    await knex.migrate.latest();
   } catch (error: any) {
     throw new Error(error);
+  } finally {
+    await knex.destroy();
   }
 };
 

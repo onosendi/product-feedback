@@ -7,11 +7,13 @@
   "exclude": [
     "node_modules",
     // Exclude because Jest doesn't like it.
-    "tests/*.ts"
+    "tests/*.ts",
+    "config.ts"
   ],
   "include": [
     "src",
     // Include for linting.
-    "tests/*.ts"
+    "tests/*.ts",
+    "config.ts"
   ]
 }

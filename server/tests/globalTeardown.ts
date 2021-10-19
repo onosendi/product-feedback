@@ -1,27 +1,19 @@
-import knex from 'knex';
-import foo from '../src/lib/knex';
-
-const { env } = process;
-const testDatabaseName = `testing_${env.DB_NAME}`;
+import Knex from 'knex';
+import config from '../config';
+import getKnexConfig from '../knexfile';
 
 const teardown = async () => {
-  const db = knex({
-    client: 'pg',
-    connection: {
-      password: env.DB_PASSWORD,
-      user: env.DB_USER,
-    },
-  });
+  const knexConfig = getKnexConfig({ includeDatabaseName: false });
+  const knex = Knex(knexConfig);
 
   try {
-    foo.destroy();
-    await db.raw(`drop database if exists ${testDatabaseName}`);
-    db.destroy();
-    process.exit();
+    await knex.raw(`drop database if exists ${config.DB_NAME}`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
     process.exit(1);
+  } finally {
+    await knex.destroy();
   }
 };
 
