@@ -7,7 +7,7 @@ type GetKnexConfig = {
   includeDatabaseName?: boolean,
 };
 
-const getKnexConfig = (args: GetKnexConfig = {}) => {
+const getKnexConfig = (args: GetKnexConfig = {}): Knex.Config => {
   const { includeDatabaseName = true } = args;
   const connection: {
     password: string | undefined,

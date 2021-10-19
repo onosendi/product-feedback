@@ -14,17 +14,17 @@ const BASE_CONFIG = {
 
 const TESTING_CONFIG = {
   ...BASE_CONFIG,
-  DB_NAME: `testing_${env.DB_NAME}`,
+  DB_NAME: `test_${env.DB_NAME}`,
 };
 
 const DEVELOPMENT_CONFIG = { ...BASE_CONFIG };
 
 const PRODUCTION_CONFIG = { ...BASE_CONFIG };
 
-export type Environments = 'testing' | 'development' | 'production';
+export type Environments = 'test' | 'development' | 'production';
 
 const getConfig = (environment: Environments) => {
-  if (environment === 'testing') {
+  if (environment === 'test') {
     return TESTING_CONFIG;
   }
   if (environment === 'development') {
