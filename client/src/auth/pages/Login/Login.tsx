@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import cx from 'clsx';
 import { FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Link,
@@ -16,7 +16,7 @@ import styles from './Login.module.scss';
 
 const Login = () => {
   const [errors, setErrors] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,7 +26,7 @@ const Login = () => {
     try {
       setErrors(false);
       await api(desc.token(username.value, password.value));
-      // history.push(routes.feedback.index);
+      // navigate(routes.feedback.index);
     } catch (err: unknown) {
       const error = err as AxiosError;
       if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {

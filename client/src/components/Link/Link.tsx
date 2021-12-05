@@ -20,15 +20,7 @@ const Link = forwardRef<any, LinkProps>(({
   };
 
   if (href) {
-    return (
-      <ReactRouterLink
-        href={href}
-        to={href}
-        {...commonProps}
-      >
-        {children}
-      </ReactRouterLink>
-    );
+    return <ReactRouterLink to={href} {...commonProps}>{children}</ReactRouterLink>;
   }
 
   return <button type="button" {...commonProps}>{children}</button>;

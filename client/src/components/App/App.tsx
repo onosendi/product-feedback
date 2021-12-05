@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import authRoutes from '../../auth/routes';
 import feedbackRoutes from '../../feedback/routes';
 import routes from '../../lib/routes';
@@ -14,13 +14,11 @@ const Fallback = () => null;
 
 const App = () => (
   <Suspense fallback={<Fallback />}>
-    <Switch>
-      <Route exact path="/">
-        <Redirect to={routes.feedback.index} />
-      </Route>
+    <Routes>
+      <Route element={<Navigate to={routes.feedback.index} />} path="/" />
       {routerRoutes}
       {/* TODO: 404 route goes here */}
-    </Switch>
+    </Routes>
   </Suspense>
 );
 

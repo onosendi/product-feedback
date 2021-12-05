@@ -38,7 +38,7 @@ const Button = forwardRef<any, ButtonProps>(({
   };
 
   return href
-    ? <Link to={href} href={href} {...commonProps}>{children}</Link>
+    ? <Link to={href} {...commonProps}>{children}</Link>
     // eslint-disable-next-line react/button-has-type
     : <button type={type} {...commonProps}>{children}</button>;
 });
