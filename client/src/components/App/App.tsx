@@ -12,14 +12,14 @@ const routerRoutes = [
 // TODO
 const Fallback = () => null;
 
-const App = () => (
-  <Suspense fallback={<Fallback />}>
-    <Routes>
-      <Route element={<Navigate to={routes.feedback.index} />} path="/" />
-      {routerRoutes}
-      {/* TODO: 404 route goes here */}
-    </Routes>
-  </Suspense>
-);
-
-export default App;
+export default function App() {
+  return (
+    <Suspense fallback={<Fallback />}>
+      <Routes>
+        <Route element={<Navigate to={routes.feedback.index} />} path="/" />
+        {routerRoutes}
+        {/* TODO: 404 route goes here */}
+      </Routes>
+    </Suspense>
+  );
+}

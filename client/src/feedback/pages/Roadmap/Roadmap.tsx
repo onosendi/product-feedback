@@ -1,5 +1,5 @@
-const Roadmap = () => (
-  <p>Feedback Roadmap</p>
-);
-
-export default Roadmap;
+export default function Roadmap() {
+  return (
+    <p>Feedback Roadmap</p>
+  );
+}

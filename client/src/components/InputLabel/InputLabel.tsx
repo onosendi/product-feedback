@@ -17,7 +17,7 @@ type InputLabelProps = {
   showLabel?: boolean | null,
 };
 
-const InputLabel = ({
+export default function InputLabel({
   charsLeft = null,
   children,
   className = null,
@@ -30,7 +30,7 @@ const InputLabel = ({
   labelWrapperClassName = null,
   showCharsLeft = true,
   showLabel = true,
-}: InputLabelProps) => {
+}: InputLabelProps) {
   const renderLabel = () => {
     if (showLabel) {
       return (
@@ -59,6 +59,4 @@ const InputLabel = ({
       )}
     </label>
   );
-};
-
-export default InputLabel;
+}

@@ -21,7 +21,7 @@ type TextFieldProps = {
   type?: HTMLInputTypeAttribute,
 };
 
-const TextField = ({
+export default function TextField({
   defaultValue = undefined,
   description = null,
   error = false,
@@ -37,7 +37,7 @@ const TextField = ({
   showCharsLeft = true,
   showLabel = true,
   type = 'text',
-}: TextFieldProps) => {
+}: TextFieldProps) {
   const [charsLeft, setCharsLeft] = useState(maxLength - (defaultValue?.length ?? 0));
 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -89,6 +89,4 @@ const TextField = ({
       {renderControl()}
     </InputLabel>
   );
-};
-
-export default TextField;
+}

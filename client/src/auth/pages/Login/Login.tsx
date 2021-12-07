@@ -14,7 +14,7 @@ import routes from '../../../lib/routes';
 import desc from '../../descriptors';
 import styles from './Login.module.scss';
 
-const Login = () => {
+export default function Login() {
   const [errors, setErrors] = useState(false);
   const navigate = useNavigate();
 
@@ -68,6 +68,4 @@ const Login = () => {
       </p>
     </main>
   );
-};
-
-export default Login;
+}
