@@ -13,7 +13,9 @@ const authRoutes: FastifyPluginCallback = (fastify, opts, done) => {
       const { username, password = '' } = request.body;
       // eslint-disable-next-line no-console
       console.log(username, password);
-      reply.status(status.HTTP_201_CREATED).send('Created');
+      reply
+        .status(status.HTTP_201_CREATED)
+        .send(status.HTTP_201_CREATED);
     },
   });
   done();
