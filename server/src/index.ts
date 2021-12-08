@@ -1,10 +1,9 @@
 import Fastify, { FastifyInstance } from 'fastify';
-import { IncomingMessage, Server, ServerResponse } from 'http';
 import config from '../config';
 import { authenticate } from './auth/decorators';
 import authRoutes from './auth/routes';
 
-const fastify: FastifyInstance<Server, IncomingMessage, ServerResponse> = Fastify({
+const fastify: FastifyInstance = Fastify({
   logger: process.env.NODE_ENV === 'development',
 });
 
