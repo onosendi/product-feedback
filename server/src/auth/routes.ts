@@ -9,7 +9,6 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
     method: 'POST',
     url: '/token',
     schema: tokenSchema,
-    preValidation: [fastify.authenticate],
     handler: async (request, reply) => {
       const { username, password = '' } = request.body;
       // eslint-disable-next-line no-console
