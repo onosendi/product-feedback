@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import cx from 'clsx';
 import { FormEvent, useState } from 'react';
+import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -42,22 +43,50 @@ export default function Login() {
         {errors && (
           <p className={cx('type-jost-semibold', styles.error)}>Invalid username or password</p>
         )}
-        <form className={cx(styles.form)} noValidate onSubmit={onSubmit}>
-          <TextField
-            id="username"
-            label="Username"
-            name="username"
-            showCharsLeft={false}
-          />
-          <TextField
-            id="password"
-            label="Password"
-            name="password"
-            showCharsLeft={false}
-            type="password"
-          />
-          <Button fullWidth type="submit" variant="1">Login</Button>
-        </form>
+        <Form
+          onSubmit={() => {
+            console.log('Submit');
+          }}
+          render={({ handleSubmit, submitting, values }) => (
+            <>
+              <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
+                <Field
+                  name="username"
+                  render={({ input, meta }) => (
+                    <TextField
+                      id="username"
+                      label="Username"
+                      maxLength={30}
+                      showCharsLeft
+                      {...input}
+                    />
+                  )}
+                />
+                <Field
+                  name="password"
+                  render={({ input }) => (
+                    <TextField
+                      id="password"
+                      label="Password"
+                      maxLength={30}
+                      showCharsLeft
+                      type="password"
+                      {...input}
+                    />
+                  )}
+                />
+                <Button
+                  disabled={submitting}
+                  fullWidth
+                  type="submit"
+                  variant="1"
+                >
+                  Login
+                </Button>
+              </form>
+            </>
+          )}
+        />
       </Paper>
       <p className={cx('type-body2', styles.register)}>
         {'Not registered? '}
