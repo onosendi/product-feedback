@@ -6,6 +6,7 @@ import styles from './Button.module.scss';
 type ButtonProps = {
   children: ReactNode,
   className?: string | null,
+  disabled?: boolean,
   fullWidth?: boolean,
   href?: string | null,
   prependPlus?: boolean,
@@ -17,6 +18,7 @@ type ButtonProps = {
 const Button = forwardRef<any, ButtonProps>(({
   children,
   className = null,
+  disabled = false,
   fullWidth = false,
   href = null,
   prependPlus = false,
@@ -34,6 +36,7 @@ const Button = forwardRef<any, ButtonProps>(({
       styles.button,
       className,
     ),
+    disabled,
     ref: forwardedRef,
   };
 
