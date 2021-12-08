@@ -2,7 +2,10 @@
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "typeRoots": [
+      "@types"
+    ]
   },
   "exclude": [
     "node_modules",
