@@ -10,11 +10,24 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
     url: '/',
     schema: registerSchema,
     handler: async (request, reply) => {
+      const token = fastify.jwt.sign({ userId: 1 });
       reply
         .status(status.HTTP_201_CREATED)
-        .send(status.HTTP_201_CREATED);
+        .send({ token });
     },
   });
+
+  fastify.route({
+    method: 'GET',
+    url: '/test',
+    preValidation: [fastify.authenticate],
+    handler: async (request, reply) => {
+      reply
+        .status(status.HTTP_200_OK)
+        .send('Yep');
+    },
+  });
+
   done();
 };
 
