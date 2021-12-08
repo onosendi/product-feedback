@@ -1,8 +1,8 @@
-import { FastifyPluginCallback } from 'fastify';
+import { FastifyPlugin } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { tokenSchema } from './schemas';
 
-const authRoutes: FastifyPluginCallback = (fastify, opts, done) => {
+const authRoutes: FastifyPlugin = (fastify, opts, done) => {
   fastify.route<{
     Body: { username: string, password: string },
   }>({
