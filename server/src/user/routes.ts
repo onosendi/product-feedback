@@ -22,6 +22,8 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
     url: '/test',
     preValidation: [fastify.authenticate],
     handler: async (request, reply) => {
+      const t = await fastify.knex('user');
+      console.log(t);
       reply
         .status(status.HTTP_200_OK)
         .send('Yep');

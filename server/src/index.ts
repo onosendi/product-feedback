@@ -2,6 +2,7 @@ import Fastify, { FastifyInstance } from 'fastify';
 import config from '../config';
 import { authenticate } from './auth/decorators';
 import authRoutes from './auth/routes';
+import knex from './lib/decorators';
 import userRoutes from './user/routes';
 
 const fastify: FastifyInstance = Fastify({
@@ -14,6 +15,7 @@ const fastify: FastifyInstance = Fastify({
   logger: process.env.NODE_ENV === 'development',
 });
 
+fastify.register(knex);
 fastify.register(authenticate);
 
 fastify.register(authRoutes, { prefix: '/auth' });
