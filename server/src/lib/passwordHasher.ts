@@ -9,7 +9,7 @@ export const createPassword = (
 ) => {
   const newSalt = salt || crypto.randomBytes(16).toString('hex');
   const pbkdf2 = hashPbkdf2(password, newSalt);
-  return `${salt}$${pbkdf2}`;
+  return `${newSalt}$${pbkdf2}`;
 };
 
 export const checkPassword = (password: string, encoded: string) => {

@@ -1,6 +1,8 @@
 import { FastifyPlugin } from 'fastify';
-import { registerSchema } from './schemas';
+import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
+import { createPassword } from '../lib/passwordHasher';
+import { registerSchema } from './schemas';
 
 const userRoutes: FastifyPlugin = (fastify, opts, done) => {
   fastify.route<{
@@ -10,7 +12,26 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
     url: '/',
     schema: registerSchema,
     handler: async (request, reply) => {
-      const token = fastify.jwt.sign({ userId: 1 });
+      const { username, password } = request.body;
+
+      const user = await fastify.knex('user').where({ username }).first();
+      if (user) {
+        const error = new Error('Username already exists');
+        reply
+          .status(status.HTTP_400_BAD_REQUEST)
+          .send(error);
+        return;
+      }
+
+      const userId = uuidv4();
+      const passwordHash = createPassword(password);
+      await fastify.knex('user').insert({
+        id: userId,
+        username,
+        password: passwordHash,
+      });
+
+      const token = fastify.jwt.sign({ userId, role: 'user' });
       reply
         .status(status.HTTP_201_CREATED)
         .send({ token });
@@ -22,11 +43,10 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
     url: '/test',
     preValidation: [fastify.authenticate],
     handler: async (request, reply) => {
-      const t = await fastify.knex('user');
-      console.log(t);
+      const { user } = request;
       reply
         .status(status.HTTP_200_OK)
-        .send('Yep');
+        .send(user);
     },
   });
 
