@@ -5,6 +5,7 @@ import { createPassword } from '../lib/passwordHasher';
 import { registerSchema } from './schemas';
 
 const userRoutes: FastifyPlugin = (fastify, opts, done) => {
+  // Create user.
   fastify.route<{
     Body: { username: string, password: string, passwordConfirm: string },
   }>({
@@ -38,6 +39,7 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
     },
   });
 
+  // Test
   fastify.route({
     method: 'GET',
     url: '/test',

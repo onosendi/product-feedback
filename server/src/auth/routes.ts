@@ -3,6 +3,7 @@ import status from '../lib/httpStatusCodes';
 import { tokenSchema } from './schemas';
 
 const authRoutes: FastifyPlugin = (fastify, opts, done) => {
+  // Authenticate
   fastify.route<{
     Body: { username: string, password: string },
   }>({
