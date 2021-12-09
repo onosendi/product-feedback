@@ -18,9 +18,7 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
       const user = await fastify.knex('user').where({ username }).first();
       if (user) {
         const error = new Error('Username already exists');
-        reply
-          .status(status.HTTP_400_BAD_REQUEST)
-          .send(error);
+        reply.status(status.HTTP_400_BAD_REQUEST).send(error);
         return;
       }
 
@@ -38,6 +36,25 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
         .send({ token });
     },
   });
+
+  // // Verify user exists
+  // fastify.route<{
+  //   Params: { username: string },
+  // }>({
+  //   method: 'GET',
+  //   url: '/:username',
+  //   handler: async (request, reply) => {
+  //     const { username } = request.params;
+
+  //     const user = await fastify.knex('user').where({ username }).first();
+  //     if (user) {
+  //       reply.status(status.HTTP_200_OK).send(status.HTTP_200_OK);
+  //       return;
+  //     }
+
+  //     reply.status(status.HTTP_404_NOT_FOUND).send(status.HTTP_404_NOT_FOUND);
+  //   },
+  // });
 
   // Test
   fastify.route({
