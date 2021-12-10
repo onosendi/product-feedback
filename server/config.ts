@@ -6,6 +6,7 @@ const { env } = process;
 const BASE_CONFIG = {
   APP_HOST: env.APP_HOST || 'localhost',
   APP_PORT: Number(env.APP_PORT) || 8000,
+  APP_SECRET: env.APP_SECRET as string,
 
   DB_NAME: env.DB_NAME,
   DB_USER: env.DB_USER,

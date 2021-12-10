@@ -6,7 +6,6 @@ const knexDecorator: FastifyPlugin = (fastify, opts, done) => {
   if (!fastify.knex) {
     fastify.decorate('knex', knex);
   }
-
   done();
 };
 

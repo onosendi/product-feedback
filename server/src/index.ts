@@ -16,8 +16,9 @@ const fastify: FastifyInstance = Fastify({
 });
 
 fastify.register(knex);
-fastify.register(authenticate);
-// fastify.register(userDecorator);
+fastify.register(authenticate, {
+  secret: config.APP_SECRET,
+});
 
 fastify.register(authRoutes, { prefix: '/auth' });
 fastify.register(userRoutes, { prefix: '/user' });

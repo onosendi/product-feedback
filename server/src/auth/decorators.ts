@@ -1,11 +1,9 @@
 import { FastifyPlugin, FastifyReply, FastifyRequest } from 'fastify';
-import FastifyJWT from 'fastify-jwt';
+import FastifyJWT, { FastifyJWTOptions } from 'fastify-jwt';
 import fp from 'fastify-plugin';
 
-export const authenticate: FastifyPlugin = fp(async (fastify) => {
-  fastify.register(FastifyJWT, {
-    secret: 'foo',
-  });
+export const authenticate: FastifyPlugin<FastifyJWTOptions> = fp(async (fastify, opts) => {
+  fastify.register(FastifyJWT, opts);
 
   fastify.decorate(
     'authenticate',
