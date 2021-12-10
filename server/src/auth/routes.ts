@@ -1,5 +1,6 @@
 import { FastifyPlugin } from 'fastify';
 import status from '../lib/httpStatusCodes';
+import { checkPassword } from '../lib/passwordHasher';
 import { tokenSchema } from './schemas';
 
 const authRoutes: FastifyPlugin = (fastify, opts, done) => {
@@ -12,11 +13,28 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
     schema: tokenSchema,
     handler: async (request, reply) => {
       const { username, password = '' } = request.body;
-      // eslint-disable-next-line no-console
-      console.log(username, password);
+
+      const user = await fastify
+        .knex('user')
+        .select('id', 'password')
+        .where({ username })
+        .first();
+
+      if (!checkPassword(password, user?.password)) {
+        const error = new Error('Invalid username or password');
+        reply.status(status.HTTP_401_UNAUTHORIZED).send(error);
+        return;
+      }
+
+      await fastify
+        .knex('user')
+        .where({ id: user.id })
+        .update({ last_login: new Date() });
+
+      const token = fastify.jwt.sign({ userId: user.id });
       reply
-        .status(status.HTTP_201_CREATED)
-        .send(status.HTTP_201_CREATED);
+        .status(status.HTTP_200_OK)
+        .send({ token });
     },
   });
   done();

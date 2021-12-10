@@ -13,7 +13,11 @@ export const createPassword = (
 };
 
 export const checkPassword = (password: string, encoded: string) => {
-  const [salt, hash] = encoded.split('$');
-  const pbkdf2 = hashPbkdf2(password, salt);
-  return pbkdf2 === hash;
+  try {
+    const [salt, hash] = encoded.split('$');
+    const pbkdf2 = hashPbkdf2(password, salt);
+    return pbkdf2 === hash;
+  } catch {
+    return false;
+  }
 };

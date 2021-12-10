@@ -30,7 +30,7 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
         password: passwordHash,
       });
 
-      const token = fastify.jwt.sign({ userId, role: 'user' });
+      const token = fastify.jwt.sign({ userId });
       reply
         .status(status.HTTP_201_CREATED)
         .send({ token });

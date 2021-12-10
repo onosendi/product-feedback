@@ -12,6 +12,21 @@ export const authenticate: FastifyPlugin = fp(async (fastify) => {
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         await request.jwtVerify();
+        const { userId } = request.user;
+        request.user = await fastify
+          .knex('user')
+          .select(
+            'created_at',
+            'first_name',
+            'id',
+            'last_login',
+            'last_name',
+            'picture',
+            'role',
+            'username',
+          )
+          .where({ id: userId })
+          .first();
       } catch (error) {
         reply.send(error);
       }
