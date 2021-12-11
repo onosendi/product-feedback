@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { ChangeEvent, HTMLInputTypeAttribute, useState } from 'react';
+import { ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
@@ -13,9 +13,10 @@ type TextFieldProps = {
   labelClassName?: string | null,
   labelTextClassName?: string | null,
   labelWrapperClassName?: string | null,
-  maxLength?: number,
+  maxLength?: number | undefined,
   multiline?: boolean | null,
   name: string,
+  onChange: ChangeEventHandler,
   showCharsLeft?: boolean | null,
   showLabel?: boolean | null,
   type?: HTMLInputTypeAttribute,
@@ -31,22 +32,20 @@ export default function TextField({
   labelClassName = null,
   labelTextClassName = null,
   labelWrapperClassName = null,
-  maxLength = 0,
+  maxLength = undefined,
   multiline = false,
   name,
+  onChange,
   showCharsLeft = true,
   showLabel = true,
   type = 'text',
 }: TextFieldProps) {
-  const [charsLeft, setCharsLeft] = useState(maxLength - (defaultValue?.length ?? 0));
-
-  const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (maxLength) {
-      const charLength = event.currentTarget.value.length;
-      setCharsLeft(maxLength - charLength);
-    }
-  };
-
+  // const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   if (maxLength) {
+  //     const charLength = event.currentTarget.value.length;
+  //     setCharsLeft(maxLength - charLength);
+  //   }
+  // };
   const commonProps = {
     defaultValue,
     id,
@@ -74,7 +73,6 @@ export default function TextField({
 
   return (
     <InputLabel
-      charsLeft={charsLeft}
       className={labelClassName}
       description={description}
       error={error}

@@ -19,22 +19,26 @@ export default function Login() {
   const [errors, setErrors] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const { username, password } = event.currentTarget;
-
-    try {
-      setErrors(false);
-      await api(desc.token(username.value, password.value));
-      // navigate(routes.feedback.index);
-    } catch (err: unknown) {
-      const error = err as AxiosError;
-      if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
-        setErrors(true);
-      }
-    }
+  const onSubmit = (values: { username: string, password: string }) => {
+    console.log(values);
   };
+
+  // const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+
+  //   const { username, password } = event.currentTarget;
+
+  //   try {
+  //     setErrors(false);
+  //     await api(desc.token(username.value, password.value));
+  //     // navigate(routes.feedback.index);
+  //   } catch (err: unknown) {
+  //     const error = err as AxiosError;
+  //     if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
+  //       setErrors(true);
+  //     }
+  //   }
+  // };
 
   return (
     <main>
@@ -44,20 +48,16 @@ export default function Login() {
           <p className={cx('type-jost-semibold', styles.error)}>Invalid username or password</p>
         )}
         <Form
-          onSubmit={() => {
-            console.log('Submit');
-          }}
+          onSubmit={onSubmit}
           render={({ handleSubmit, submitting, values }) => (
             <>
               <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                 <Field
                   name="username"
-                  render={({ input, meta }) => (
+                  render={({ input }) => (
                     <TextField
                       id="username"
                       label="Username"
-                      maxLength={30}
-                      showCharsLeft
                       {...input}
                     />
                   )}
@@ -68,8 +68,6 @@ export default function Login() {
                     <TextField
                       id="password"
                       label="Password"
-                      maxLength={30}
-                      showCharsLeft
                       type="password"
                       {...input}
                     />
