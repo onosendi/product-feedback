@@ -1,5 +1,10 @@
 import cx from 'clsx';
-import { ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  HTMLInputTypeAttribute,
+  useState,
+} from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
@@ -40,18 +45,31 @@ export default function TextField({
   showLabel = true,
   type = 'text',
 }: TextFieldProps) {
-  // const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   if (maxLength) {
-  //     const charLength = event.currentTarget.value.length;
-  //     setCharsLeft(maxLength - charLength);
-  //   }
-  // };
+  const shouldShowCharsLeft = showCharsLeft && maxLength;
+
+  const [charsLeft, setCharsLeft] = useState(() => {
+    if (shouldShowCharsLeft) {
+      return maxLength - (defaultValue?.length ?? 0);
+    }
+    return null;
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (shouldShowCharsLeft) {
+      const charLength = event.currentTarget.value.length;
+      setCharsLeft(maxLength - charLength);
+    }
+
+    // Handle events sent from React Final Form
+    onChange(event);
+  };
+
   const commonProps = {
     defaultValue,
     id,
     maxLength,
     name,
-    onChange,
+    onChange: handleChange,
   };
 
   const commonClasses = cx('type-body2', styles.control, error && styles.error);
@@ -73,6 +91,7 @@ export default function TextField({
 
   return (
     <InputLabel
+      charsLeft={charsLeft}
       className={labelClassName}
       description={description}
       error={error}
