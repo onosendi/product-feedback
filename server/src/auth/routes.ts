@@ -33,10 +33,16 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
 
       const token = fastify.jwt.sign({ userId: user.id });
       reply
+        .setCookie('token', token, {
+          path: '/',
+          httpOnly: true,
+          sameSite: true,
+        })
         .status(status.HTTP_200_OK)
-        .send({ token });
+        .send(status.HTTP_200_OK);
     },
   });
+
   done();
 };
 

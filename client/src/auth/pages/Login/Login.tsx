@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import cx from 'clsx';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -19,8 +19,17 @@ export default function Login() {
   const [errors, setErrors] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = (values: { username: string, password: string }) => {
-    console.log(values);
+  const onSubmit = async (values: { username: string, password: string }) => {
+    const { username, password } = values;
+    try {
+      await api(desc.token(username, password));
+      // api({
+      //   method: 'get',
+      //   url: '/user/test',
+      // });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -93,6 +102,17 @@ export default function Login() {
         <Link href={routes.index}>home</Link>
         .
       </p>
+      <button
+        onClick={() => {
+          api({
+            method: 'get',
+            url: '/user/test',
+          });
+        }}
+        type="button"
+      >
+        Foo
+      </button>
     </main>
   );
 }
