@@ -1,5 +1,4 @@
 import Fastify, { FastifyInstance } from 'fastify';
-import FastifyCookie from 'fastify-cookie';
 import config from '../config';
 import { authenticate } from './auth/decorators';
 import authRoutes from './auth/routes';
@@ -17,12 +16,7 @@ const fastify: FastifyInstance = Fastify({
 });
 
 fastify.register(knex);
-fastify.register(FastifyCookie);
 fastify.register(authenticate, {
-  cookie: {
-    cookieName: 'token',
-    signed: false,
-  },
   secret: config.APP_SECRET,
 });
 

@@ -30,6 +30,11 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
         password: passwordHash,
       });
 
+      await fastify
+        .knex('user')
+        .where({ id: user.id })
+        .update({ last_login: new Date() });
+
       const token = fastify.jwt.sign({ userId });
       reply
         .status(status.HTTP_201_CREATED)
