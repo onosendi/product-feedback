@@ -1,8 +1,13 @@
-import { AnyAction, combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
-import authReducer from '../auth/slice';
+import authReducer from '../auth/redux/slice';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
@@ -26,17 +31,13 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = configureStore({
+export const store = configureStore({
   middleware: getDefaultMiddleware({
     serializableCheck: false,
   }),
   reducer: persistedReducer,
 });
 
-const persistor = persistStore(store);
-
-const storeAndPersistor = { store, persistor };
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof combinedReducers>;
-
-export default storeAndPersistor;

@@ -12,7 +12,7 @@ import {
 import api from '../../../lib/api';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
-import { loginThunk } from '../../slice';
+import { loginThunk } from '../../redux/thunks';
 import styles from './Login.module.scss';
 
 export default function Login() {
@@ -100,7 +100,22 @@ export default function Login() {
         }}
         type="button"
       >
-        Foo
+        Logout
+      </button>
+      <button
+        onClick={async () => {
+          try {
+            await api({
+              method: 'get',
+              url: '/user/test',
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }}
+        type="button"
+      >
+        Test
       </button>
     </main>
   );
