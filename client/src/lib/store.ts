@@ -1,4 +1,4 @@
-import { AnyAction, combineReducers, configureStore } from '@reduxjs/toolkit';
+import { AnyAction, combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
@@ -27,13 +27,16 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
   reducer: persistedReducer,
 });
 
 const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof combinedReducers>;
-
 const storeAndPersistor = { store, persistor };
+
+export type RootState = ReturnType<typeof combinedReducers>;
 
 export default storeAndPersistor;
