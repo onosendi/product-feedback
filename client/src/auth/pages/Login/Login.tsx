@@ -2,7 +2,7 @@ import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Link,
@@ -18,6 +18,7 @@ import styles from './Login.module.scss';
 export default function Login() {
   const [errors, setErrors] = useState(false);
   const navigate = useNavigate();
+  const { state } = useLocation();
   const dispatch = useDispatch();
 
   const onSubmit = async (values: { username: string, password: string }) => {
@@ -26,7 +27,7 @@ export default function Login() {
 
     try {
       await dispatch(loginThunk(username, password));
-      navigate(routes.index);
+      navigate(state?.path || routes.index);
     } catch (error: any) {
       if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);
