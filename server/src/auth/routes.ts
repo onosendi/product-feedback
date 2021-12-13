@@ -16,7 +16,7 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
 
       const user = await fastify
         .knex('user')
-        .select('id', 'password')
+        .select('id', 'password', 'role')
         .where({ username })
         .first();
 
@@ -34,7 +34,11 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
       const token = fastify.jwt.sign({ userId: user.id });
       reply
         .status(status.HTTP_200_OK)
-        .send({ token });
+        .send({
+          role: user.role,
+          token,
+          username,
+        });
     },
   });
 

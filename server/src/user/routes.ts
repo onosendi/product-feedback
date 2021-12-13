@@ -15,7 +15,11 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
-      const user = await fastify.knex('user').where({ username }).first();
+      const user = await fastify
+        .knex('user')
+        .select('id', 'role')
+        .where({ username })
+        .first();
       if (user) {
         const error = new Error('Username already exists');
         reply.status(status.HTTP_400_BAD_REQUEST).send(error);
@@ -24,21 +28,28 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
 
       const userId = uuidv4();
       const passwordHash = createPassword(password);
-      await fastify.knex('user').insert({
-        id: userId,
-        username,
-        password: passwordHash,
-      });
+      const [role] = await fastify
+        .knex('user')
+        .insert({
+          id: userId,
+          username,
+          password: passwordHash,
+        })
+        .returning('role');
 
       await fastify
         .knex('user')
-        .where({ id: user.id })
+        .where({ id: userId })
         .update({ last_login: new Date() });
 
       const token = fastify.jwt.sign({ userId });
       reply
         .status(status.HTTP_201_CREATED)
-        .send({ token });
+        .send({
+          role,
+          token,
+          username,
+        });
     },
   });
 

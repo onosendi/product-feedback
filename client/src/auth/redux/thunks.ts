@@ -7,6 +7,6 @@ export const loginThunk = (
   username: string,
   password: string,
 ) => async (dispatch: Dispatch) => {
-  const { token } = await api(desc.login(username, password));
-  dispatch(actSetAuth({ token, username }));
+  const response = await api(desc.login(username, password));
+  dispatch(actSetAuth(response));
 };
