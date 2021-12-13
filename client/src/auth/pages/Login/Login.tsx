@@ -26,6 +26,7 @@ export default function Login() {
 
     try {
       await dispatch(loginThunk(username, password));
+      navigate(routes.index);
     } catch (error: any) {
       if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);
@@ -43,39 +44,37 @@ export default function Login() {
         <Form
           onSubmit={onSubmit}
           render={({ handleSubmit, submitting, values }) => (
-            <>
-              <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
-                <Field
-                  name="username"
-                  render={({ input }) => (
-                    <TextField
-                      id="username"
-                      label="Username"
-                      {...input}
-                    />
-                  )}
-                />
-                <Field
-                  name="password"
-                  render={({ input }) => (
-                    <TextField
-                      id="password"
-                      label="Password"
-                      type="password"
-                      {...input}
-                    />
-                  )}
-                />
-                <Button
-                  disabled={submitting}
-                  fullWidth
-                  type="submit"
-                  variant="1"
-                >
-                  Login
-                </Button>
-              </form>
-            </>
+            <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
+              <Field
+                name="username"
+                render={({ input }) => (
+                  <TextField
+                    id="username"
+                    label="Username"
+                    {...input}
+                  />
+                )}
+              />
+              <Field
+                name="password"
+                render={({ input }) => (
+                  <TextField
+                    id="password"
+                    label="Password"
+                    type="password"
+                    {...input}
+                  />
+                )}
+              />
+              <Button
+                disabled={submitting}
+                fullWidth
+                type="submit"
+                variant="1"
+              >
+                Login
+              </Button>
+            </form>
           )}
         />
       </Paper>
@@ -86,37 +85,6 @@ export default function Login() {
         <Link href={routes.index}>home</Link>
         .
       </p>
-      <button
-        onClick={async () => {
-          dispatch({ type: 'auth/logout' });
-          try {
-            // await api({
-            //   method: 'get',
-            //   url: '/user/test',
-            // });
-          } catch (error) {
-            console.log(error);
-          }
-        }}
-        type="button"
-      >
-        Logout
-      </button>
-      <button
-        onClick={async () => {
-          try {
-            await api({
-              method: 'get',
-              url: '/user/test',
-            });
-          } catch (error) {
-            console.log(error);
-          }
-        }}
-        type="button"
-      >
-        Test
-      </button>
     </main>
   );
 }
