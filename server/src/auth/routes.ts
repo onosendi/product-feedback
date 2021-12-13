@@ -12,7 +12,7 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
     url: '/token',
     schema: tokenSchema,
     handler: async (request, reply) => {
-      const { username, password = '' } = request.body;
+      const { username, password } = request.body;
 
       const user = await fastify
         .knex('user')

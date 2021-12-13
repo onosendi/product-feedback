@@ -1,7 +1,7 @@
-import { AxiosError } from 'axios';
 import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -12,42 +12,26 @@ import {
 import api from '../../../lib/api';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
-import desc from '../../descriptors';
+import { loginThunk } from '../../slice';
 import styles from './Login.module.scss';
 
 export default function Login() {
   const [errors, setErrors] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (values: { username: string, password: string }) => {
-    const { username, password } = values;
+    setErrors(false);
+    const { username = '', password = '' } = values;
+
     try {
-      await api(desc.token(username, password));
-      // api({
-      //   method: 'get',
-      //   url: '/user/test',
-      // });
-    } catch (error) {
-      console.log(error);
+      await dispatch(loginThunk(username, password));
+    } catch (error: any) {
+      if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
+        setErrors(true);
+      }
     }
   };
-
-  // const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-
-  //   const { username, password } = event.currentTarget;
-
-  //   try {
-  //     setErrors(false);
-  //     await api(desc.token(username.value, password.value));
-  //     // navigate(routes.feedback.index);
-  //   } catch (err: unknown) {
-  //     const error = err as AxiosError;
-  //     if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
-  //       setErrors(true);
-  //     }
-  //   }
-  // };
 
   return (
     <main>
@@ -103,11 +87,15 @@ export default function Login() {
         .
       </p>
       <button
-        onClick={() => {
-          api({
-            method: 'get',
-            url: '/user/test',
-          });
+        onClick={async () => {
+          try {
+            await api({
+              method: 'get',
+              url: '/user/test',
+            });
+          } catch (error) {
+            console.log(error);
+          }
         }}
         type="button"
       >
