@@ -9,7 +9,8 @@ type AuthState = {
   username: string | null,
 };
 const initialState: AuthState = {
-  username: localStorage.getItem('username') || null,
+  // username: localStorage.getItem('username') || null,
+  username: null,
 };
 
 export const authSlice = createSlice({
@@ -31,7 +32,7 @@ export const loginThunk = (
 ) => async (dispatch: Dispatch) => {
   await api(desc.login(username, password));
   dispatch(actSetUser(username));
-  localStorage.setItem('username', username);
+  // localStorage.setItem('username', username);
 };
 
 export default authSlice.reducer;

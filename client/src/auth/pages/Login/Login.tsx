@@ -88,11 +88,12 @@ export default function Login() {
       </p>
       <button
         onClick={async () => {
+          dispatch({ type: 'auth/logout' });
           try {
-            await api({
-              method: 'get',
-              url: '/user/test',
-            });
+            // await api({
+            //   method: 'get',
+            //   url: '/user/test',
+            // });
           } catch (error) {
             console.log(error);
           }
