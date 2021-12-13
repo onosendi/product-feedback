@@ -6,10 +6,11 @@ import desc from './descriptors';
 const NAMESPACE = 'auth';
 
 type AuthState = {
+  token: string | null,
   username: string | null,
 };
 const initialState: AuthState = {
-  // username: localStorage.getItem('username') || null,
+  token: null,
   username: null,
 };
 
@@ -17,22 +18,18 @@ export const authSlice = createSlice({
   name: NAMESPACE,
   initialState,
   reducers: {
-    actSetUser: (state, { payload: username }) => {
-      // eslint-disable-next-line no-param-reassign
-      state.username = username;
-    },
+    actSetAuth: (state, { payload }) => payload,
   },
 });
 
-export const { actSetUser } = authSlice.actions;
+export const { actSetAuth } = authSlice.actions;
 
 export const loginThunk = (
   username: string,
   password: string,
 ) => async (dispatch: Dispatch) => {
-  await api(desc.login(username, password));
-  dispatch(actSetUser(username));
-  // localStorage.setItem('username', username);
+  const { token } = await api(desc.login(username, password));
+  dispatch(actSetAuth({ token, username }));
 };
 
 export default authSlice.reducer;
