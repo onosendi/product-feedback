@@ -6,9 +6,11 @@ import desc from './descriptors';
 const NAMESPACE = 'auth';
 
 type AuthState = {
-  username?: string,
+  username: string | null,
 };
-const initialState: AuthState = {};
+const initialState: AuthState = {
+  username: localStorage.getItem('username') || null,
+};
 
 export const authSlice = createSlice({
   name: NAMESPACE,
@@ -29,6 +31,7 @@ export const loginThunk = (
 ) => async (dispatch: Dispatch) => {
   await api(desc.login(username, password));
   dispatch(actSetUser(username));
+  localStorage.setItem('username', username);
 };
 
 export default authSlice.reducer;
