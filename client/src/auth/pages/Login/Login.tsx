@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
-  Container,
   Link,
   Paper,
   TextField,
 } from '../../../components';
+import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
@@ -49,10 +49,7 @@ export default function Login() {
       <Helmet>
         <title>{`Login - ${APP_NAME}`}</title>
       </Helmet>
-      <Container
-        className={cx(styles.container)}
-        wrapperClassName={cx(styles.wrapper)}
-      >
+      <AuthLayout>
         <main>
           <Paper className={cx(styles.paper)}>
             <h1 className={cx('type-1', styles.heading)}>Login</h1>
@@ -104,7 +101,7 @@ export default function Login() {
             .
           </p>
         </main>
-      </Container>
+      </AuthLayout>
     </>
   );
 }
