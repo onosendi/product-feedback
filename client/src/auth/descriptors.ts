@@ -7,7 +7,7 @@ const descriptors = {
   ): AxiosRequestConfig => ({
     data: { username, password },
     method: 'post',
-    url: '/auth/token',
+    url: '/auth/login',
   }),
 };
 

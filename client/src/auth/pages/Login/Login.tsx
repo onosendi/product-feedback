@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
+  Container,
   Link,
   Paper,
   TextField,
@@ -12,7 +13,7 @@ import {
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
 import { selectIsAuthenticated } from '../../redux/selectors';
-import { loginThunk } from '../../redux/thunks';
+import { login } from '../../redux/thunks';
 import styles from './Login.module.scss';
 
 export default function Login() {
@@ -27,7 +28,7 @@ export default function Login() {
     const { username = '', password = '' } = values;
 
     try {
-      await dispatch(loginThunk(username.trim(), password));
+      await dispatch(login(username.trim(), password));
     } catch (error: any) {
       if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);
@@ -42,56 +43,61 @@ export default function Login() {
   }, [isAuthenticated, navigate, state?.path]);
 
   return (
-    <main>
-      <Paper className={cx(styles.paper)}>
-        <h1 className={cx('type-1', styles.heading)}>Login</h1>
-        {errors && (
-          <p className={cx('type-jost-semibold', styles.error)}>Invalid username or password</p>
-        )}
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, values }) => (
-            <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
-              <Field
-                name="username"
-                render={({ input }) => (
-                  <TextField
-                    id="username"
-                    label="Username"
-                    {...input}
-                  />
-                )}
-              />
-              <Field
-                name="password"
-                render={({ input }) => (
-                  <TextField
-                    id="password"
-                    label="Password"
-                    type="password"
-                    {...input}
-                  />
-                )}
-              />
-              <Button
-                disabled={submitting}
-                fullWidth
-                type="submit"
-                variant="1"
-              >
-                Login
-              </Button>
-            </form>
+    <Container
+      className={cx(styles.container)}
+      wrapperClassName={cx(styles.wrapper)}
+    >
+      <main>
+        <Paper className={cx(styles.paper)}>
+          <h1 className={cx('type-1', styles.heading)}>Login</h1>
+          {errors && (
+            <p className={cx('type-jost-semibold', styles.error)}>Invalid username or password</p>
           )}
-        />
-      </Paper>
-      <p className={cx('type-body2', styles.register)}>
-        {'Not registered? '}
-        <Link href={routes.user.register}>Register</Link>
-        {', or go '}
-        <Link href={routes.index}>home</Link>
-        .
-      </p>
-    </main>
+          <Form
+            onSubmit={onSubmit}
+            render={({ handleSubmit, submitting, values }) => (
+              <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
+                <Field
+                  name="username"
+                  render={({ input }) => (
+                    <TextField
+                      id="username"
+                      label="Username"
+                      {...input}
+                    />
+                  )}
+                />
+                <Field
+                  name="password"
+                  render={({ input }) => (
+                    <TextField
+                      id="password"
+                      label="Password"
+                      type="password"
+                      {...input}
+                    />
+                  )}
+                />
+                <Button
+                  disabled={submitting}
+                  fullWidth
+                  type="submit"
+                  variant="1"
+                >
+                  Login
+                </Button>
+              </form>
+            )}
+          />
+        </Paper>
+        <p className={cx('type-body2', styles.register)}>
+          {'Not registered? '}
+          <Link href={routes.user.register}>Register</Link>
+          {', or go '}
+          <Link href={routes.index}>home</Link>
+          .
+        </p>
+      </main>
+    </Container>
   );
 }

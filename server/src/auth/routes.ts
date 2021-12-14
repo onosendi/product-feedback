@@ -9,7 +9,7 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
     Body: { username: string, password: string },
   }>({
     method: 'POST',
-    url: '/token',
+    url: '/login',
     schema: tokenSchema,
     handler: async (request, reply) => {
       const { username, password } = request.body;

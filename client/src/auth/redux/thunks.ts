@@ -3,7 +3,7 @@ import { Dispatch } from '../../lib/types/redux';
 import desc from '../descriptors';
 import { actSetAuth } from './slice';
 
-export const loginThunk = (
+export const login = (
   username: string,
   password: string,
 ) => async (dispatch: Dispatch) => {
