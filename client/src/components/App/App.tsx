@@ -3,9 +3,11 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import authRoutes from '../../auth/routes';
 import feedbackRoutes from '../../feedback/routes';
 import routes from '../../lib/routes';
+import userRoutes from '../../user/routes';
 
 const routerRoutes = [
   authRoutes,
+  userRoutes,
   feedbackRoutes,
 ];
 

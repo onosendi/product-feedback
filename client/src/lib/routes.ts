@@ -13,8 +13,8 @@ const appRoutes = {
   },
   index: '/',
   user: {
-    edit: 'user/edit',
-    register: 'user/register',
+    edit: '/user/edit',
+    register: '/user/register',
   },
 };
 

@@ -7,12 +7,14 @@ interface LinkProps {
   children: ReactNode;
   className?: string | null;
   href?: string | null;
+  type?: 'button' | 'submit' | undefined;
 }
 
 const Link = forwardRef<any, LinkProps>(({
   children,
   className = null,
   href = null,
+  type = 'button',
 }, forwardedRef) => {
   const commonProps = {
     className: cx(styles.link, className),
@@ -23,7 +25,8 @@ const Link = forwardRef<any, LinkProps>(({
     return <ReactRouterLink to={href} {...commonProps}>{children}</ReactRouterLink>;
   }
 
-  return <button type="button" {...commonProps}>{children}</button>;
+  // eslint-disable-next-line react/button-has-type
+  return <button type={type} {...commonProps}>{children}</button>;
 });
 
 export default Link;

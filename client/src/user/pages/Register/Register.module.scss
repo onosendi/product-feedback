@@ -1,0 +1,19 @@
+.paper {
+  margin-bottom: 1.5rem;
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+}
+
+.heading {
+  color: var(--clr-primary-darkslateblue);
+  margin-bottom: 1rem;
+}
+
+.form > * + * {
+  margin-top: 2rem;
+}
+
+.login {
+  color: var(--clr-primary-slategray);
+  text-align: center;
+}
