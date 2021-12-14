@@ -12,7 +12,6 @@ type AuthRouteProps = {
 export default function AuthRoute({
   children,
   requiresAuthentication,
-  ...rest
 }: AuthRouteProps) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const location = useLocation();
