@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "strict": true,
     "typeRoots": [
-      "src/lib/types"
+      "types"
     ]
   },
   "exclude": [
