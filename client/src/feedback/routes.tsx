@@ -8,8 +8,7 @@ const Roadmap = lazy(() => import('./pages/Roadmap/Roadmap'));
 
 const feedbackRoutes = [
   <Route element={<Index />} key="feedback-index" path={routes.feedback.index} />,
-  // @ts-ignore
-  <Route element={<AuthRoute needs="auth"><Roadmap /></AuthRoute>} key="feedback-roadmap" path={routes.feedback.roadmap} />,
+  <Route element={<AuthRoute requiresAuthentication><Roadmap /></AuthRoute>} key="feedback-roadmap" path={routes.feedback.roadmap} />,
 ];
 
 export default feedbackRoutes;
