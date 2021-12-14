@@ -6,7 +6,10 @@ import { tokenSchema } from './schemas';
 const authRoutes: FastifyPlugin = (fastify, opts, done) => {
   // Authenticate
   fastify.route<{
-    Body: { username: string, password: string },
+    Body: {
+      username: string,
+      password: string,
+    },
   }>({
     method: 'POST',
     url: '/login',
@@ -14,7 +17,7 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
-      const user = await fastify
+      const user: DBUser = await fastify
         .knex('user')
         .select('id', 'password', 'role')
         .where({ username })
@@ -32,13 +35,14 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
         .update({ last_login: new Date() });
 
       const token = fastify.jwt.sign({ userId: user.id });
+      const response: AuthResponse = {
+        role: user.role,
+        token,
+        username,
+      };
       reply
         .status(status.HTTP_200_OK)
-        .send({
-          role: user.role,
-          token,
-          username,
-        });
+        .send(response);
     },
   });
 

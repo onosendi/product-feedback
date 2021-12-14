@@ -7,7 +7,11 @@ import { registerSchema } from './schemas';
 const userRoutes: FastifyPlugin = (fastify, opts, done) => {
   // Create user.
   fastify.route<{
-    Body: { username: string, password: string, passwordConfirm: string },
+    Body: {
+      username: string,
+      password: string,
+      passwordConfirm: string,
+    },
   }>({
     method: 'POST',
     url: '/',
@@ -43,13 +47,14 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
         .update({ last_login: new Date() });
 
       const token = fastify.jwt.sign({ userId });
+      const response: AuthResponse = {
+        role,
+        token,
+        username,
+      };
       reply
         .status(status.HTTP_201_CREATED)
-        .send({
-          role,
-          token,
-          username,
-        });
+        .send(response);
     },
   });
 
