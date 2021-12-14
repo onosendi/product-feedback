@@ -1,10 +1,7 @@
-import { FastifyPlugin, FastifyReply, FastifyRequest } from 'fastify';
-import FastifyJWT, { FastifyJWTOptions } from 'fastify-jwt';
+import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 
-export const authenticate: FastifyPlugin<FastifyJWTOptions> = fp(async (fastify, opts) => {
-  fastify.register(FastifyJWT, opts);
-
+const authenticateDecoratorFunc: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.decorate(
     'authenticate',
     async (request: FastifyRequest, reply: FastifyReply) => {
@@ -30,4 +27,7 @@ export const authenticate: FastifyPlugin<FastifyJWTOptions> = fp(async (fastify,
       }
     },
   );
-});
+
+  done();
+};
+export const authenticateDecorator = fp(authenticateDecoratorFunc);

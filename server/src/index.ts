@@ -1,9 +1,9 @@
 import Fastify, { FastifyInstance } from 'fastify';
+import FastifyJWT from 'fastify-jwt';
 import config from '../config';
-import { authenticate } from './auth/decorators';
-import authRoutes from './auth/routes';
-import knex from './lib/decorators';
-import userRoutes from './user/routes';
+import auth from './auth';
+import project from './project';
+import user from './user';
 
 const fastify: FastifyInstance = Fastify({
   ajv: {
@@ -15,13 +15,13 @@ const fastify: FastifyInstance = Fastify({
   logger: process.env.NODE_ENV === 'development',
 });
 
-fastify.register(knex);
-fastify.register(authenticate, {
+fastify.register(FastifyJWT, {
   secret: config.APP_SECRET,
 });
 
-fastify.register(authRoutes, { prefix: '/auth' });
-fastify.register(userRoutes, { prefix: '/user' });
+fastify.register(project);
+fastify.register(auth);
+fastify.register(user);
 
 const start = async () => {
   try {
