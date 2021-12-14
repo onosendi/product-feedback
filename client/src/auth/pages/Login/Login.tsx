@@ -27,7 +27,7 @@ export default function Login() {
     const { username = '', password = '' } = values;
 
     try {
-      await dispatch(loginThunk(username, password));
+      await dispatch(loginThunk(username.trim(), password));
     } catch (error: any) {
       if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);

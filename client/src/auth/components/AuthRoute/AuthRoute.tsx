@@ -17,16 +17,14 @@ export default function AuthRoute({
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const location = useLocation();
 
-  if (requiresAuthentication) {
-    return isAuthenticated
-      ? children
-      : (
-        <Navigate
-          to={routes.auth.login}
-          replace
-          state={{ path: location.pathname }}
-        />
-      );
+  if (requiresAuthentication && !isAuthenticated) {
+    return (
+      <Navigate
+        to={routes.auth.login}
+        replace
+        state={{ path: location.pathname }}
+      />
+    );
   }
 
   return children;
