@@ -8,7 +8,7 @@ import {
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
-type TextFieldProps = {
+interface TextFieldProps {
   defaultValue?: string | undefined,
   description?: string | null,
   error?: boolean | null,
@@ -25,7 +25,7 @@ type TextFieldProps = {
   showCharsLeft?: boolean | null,
   showLabel?: boolean | null,
   type?: HTMLInputTypeAttribute,
-};
+}
 
 export default function TextField({
   defaultValue = undefined,

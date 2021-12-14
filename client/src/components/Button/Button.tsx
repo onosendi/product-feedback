@@ -3,7 +3,7 @@ import { forwardRef, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 
-type ButtonProps = {
+interface ButtonProps {
   children: ReactNode,
   className?: string | null,
   disabled?: boolean,
@@ -13,7 +13,7 @@ type ButtonProps = {
   selected?: boolean,
   type?: 'button' | 'submit',
   variant: '1' | '2' | '3' | '4' | '5',
-};
+}
 
 const Button = forwardRef<any, ButtonProps>(({
   children,

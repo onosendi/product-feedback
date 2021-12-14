@@ -2,7 +2,7 @@ import cx from 'clsx';
 import { ReactNode } from 'react';
 import styles from './InputLabel.module.scss';
 
-type InputLabelProps = {
+interface InputLabelProps {
   charsLeft?: number | null,
   children: ReactNode,
   className?: string | null,
@@ -15,7 +15,7 @@ type InputLabelProps = {
   labelWrapperClassName: string | null,
   showCharsLeft?: boolean | null,
   showLabel?: boolean | null,
-};
+}
 
 export default function InputLabel({
   charsLeft = null,

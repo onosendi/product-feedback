@@ -3,11 +3,11 @@ import { forwardRef, ReactNode } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import styles from './Link.module.scss';
 
-type LinkProps = {
+interface LinkProps {
   children: ReactNode,
   className?: string | null,
   href?: string | null,
-};
+}
 
 const Link = forwardRef<any, LinkProps>(({
   children,
