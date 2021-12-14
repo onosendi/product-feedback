@@ -13,15 +13,15 @@ const combinedReducers = combineReducers({
   auth: authReducer,
 });
 
-const rootReducer = (
+function rootReducer(
   state: ReturnType<typeof combinedReducers> | undefined,
   action: AnyAction,
-) => {
+) {
   if (action.type === 'auth/logout') {
     return combinedReducers(undefined, { type: undefined });
   }
   return combinedReducers(state, action);
-};
+}
 
 const persistConfig = {
   key: 'root',

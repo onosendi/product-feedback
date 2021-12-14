@@ -17,9 +17,7 @@ axios.interceptors.request.use(
   (error: AxiosError) => Promise.reject(error),
 );
 
-const api = async (descriptor: AxiosRequestConfig) => {
+export default async function api(descriptor: AxiosRequestConfig) {
   const { data } = await axios(descriptor);
   return data;
-};
-
-export default api;
+}
