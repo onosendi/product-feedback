@@ -3,18 +3,18 @@ import { ReactNode } from 'react';
 import styles from './InputLabel.module.scss';
 
 interface InputLabelProps {
-  charsLeft?: number | null,
-  children: ReactNode,
-  className?: string | null,
-  description?: string | null,
-  error?: boolean | null,
-  helperText?: string | null,
-  htmlFor: string,
-  label: string,
-  labelTextClassName: string | null,
-  labelWrapperClassName: string | null,
-  showCharsLeft?: boolean | null,
-  showLabel?: boolean | null,
+  charsLeft?: number | null;
+  children: ReactNode;
+  className?: string | null;
+  description?: string | null;
+  error?: boolean | null;
+  helperText?: string | null;
+  htmlFor: string;
+  label: string;
+  labelTextClassName: string | null;
+  labelWrapperClassName: string | null;
+  showCharsLeft?: boolean | null;
+  showLabel?: boolean | null;
 }
 
 export default function InputLabel({

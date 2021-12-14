@@ -9,22 +9,22 @@ import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
 interface TextFieldProps {
-  defaultValue?: string | undefined,
-  description?: string | null,
-  error?: boolean | null,
-  helperText?: string | null,
-  id: string,
-  label: string,
-  labelClassName?: string | null,
-  labelTextClassName?: string | null,
-  labelWrapperClassName?: string | null,
-  maxLength?: number | undefined,
-  multiline?: boolean | null,
-  name: string,
-  onChange: ChangeEventHandler,
-  showCharsLeft?: boolean | null,
-  showLabel?: boolean | null,
-  type?: HTMLInputTypeAttribute,
+  defaultValue?: string | undefined;
+  description?: string | null;
+  error?: boolean | null;
+  helperText?: string | null;
+  id: string;
+  label: string;
+  labelClassName?: string | null;
+  labelTextClassName?: string | null;
+  labelWrapperClassName?: string | null;
+  maxLength?: number | undefined;
+  multiline?: boolean | null;
+  name: string;
+  onChange: ChangeEventHandler;
+  showCharsLeft?: boolean | null;
+  showLabel?: boolean | null;
+  type?: HTMLInputTypeAttribute;
 }
 
 export default function TextField({

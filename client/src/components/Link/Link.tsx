@@ -4,9 +4,9 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import styles from './Link.module.scss';
 
 interface LinkProps {
-  children: ReactNode,
-  className?: string | null,
-  href?: string | null,
+  children: ReactNode;
+  className?: string | null;
+  href?: string | null;
 }
 
 const Link = forwardRef<any, LinkProps>(({

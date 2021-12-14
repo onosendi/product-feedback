@@ -4,8 +4,9 @@ import { Container } from '../../components';
 import styles from './AuthLayout.module.scss';
 
 interface AuthLayoutProps {
-  children: ReactNode,
+  children: ReactNode;
 }
+
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <Container

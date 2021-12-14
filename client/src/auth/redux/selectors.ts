@@ -1,5 +1,9 @@
 import { RootState } from '../../lib/store';
 
-export const selectAuth = (state: RootState) => state.auth;
+export function selectAuth(state: RootState) {
+  return state.auth;
+}
 
-export const selectIsAuthenticated = (state: RootState) => !!state.auth.token;
+export function selectIsAuthenticated(state: RootState) {
+  return !!state.auth.token;
+}

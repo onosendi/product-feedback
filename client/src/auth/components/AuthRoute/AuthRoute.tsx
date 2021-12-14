@@ -4,10 +4,10 @@ import { Navigate, useLocation } from 'react-router-dom';
 import routes from '../../../lib/routes';
 import { selectIsAuthenticated } from '../../redux/selectors';
 
-type AuthRouteProps = {
-  children: ReactElement,
-  requiresAuthentication?: boolean,
-};
+interface AuthRouteProps {
+  children: ReactElement;
+  requiresAuthentication?: boolean;
+}
 
 export default function AuthRoute({
   children,

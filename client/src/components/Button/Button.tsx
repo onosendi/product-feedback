@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 
 interface ButtonProps {
-  children: ReactNode,
-  className?: string | null,
-  disabled?: boolean,
-  fullWidth?: boolean,
-  href?: string | null,
-  prependPlus?: boolean,
-  selected?: boolean,
-  type?: 'button' | 'submit',
-  variant: '1' | '2' | '3' | '4' | '5',
+  children: ReactNode;
+  className?: string | null;
+  disabled?: boolean;
+  fullWidth?: boolean;
+  href?: string | null;
+  prependPlus?: boolean;
+  selected?: boolean;
+  type?: 'button' | 'submit';
+  variant: '1' | '2' | '3' | '4' | '5';
 }
 
 const Button = forwardRef<any, ButtonProps>(({

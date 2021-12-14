@@ -3,9 +3,9 @@ import { ElementType, forwardRef, ReactNode } from 'react';
 import styles from './Paper.module.scss';
 
 interface PaperProps {
-  children: ReactNode,
-  className?: string | null,
-  component?: ElementType | string,
+  children: ReactNode;
+  className?: string | null;
+  component?: ElementType | string;
 }
 
 const Paper = forwardRef<HTMLElement, PaperProps>(({

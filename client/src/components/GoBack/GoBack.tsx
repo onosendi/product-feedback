@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from './GoBack.module.scss';
 
 interface GoBackProps {
-  className?: string,
-  shade: 'light' | 'dark',
+  className?: string;
+  shade: 'light' | 'dark';
 }
 
 export default function GoBack({

@@ -3,12 +3,12 @@ import { ElementType, forwardRef, ReactNode } from 'react';
 import styles from './Container.module.scss';
 
 interface ContainerProps {
-  children: ReactNode,
-  className?: string | null,
-  component?: ElementType | string,
-  noWrapper?: boolean,
-  wrapperClassName?: string | null,
-  wrapperComponent?: ElementType | string,
+  children: ReactNode;
+  className?: string | null;
+  component?: ElementType | string;
+  noWrapper?: boolean;
+  wrapperClassName?: string | null;
+  wrapperComponent?: ElementType | string;
 }
 
 const Container = forwardRef<HTMLElement, ContainerProps>(({
