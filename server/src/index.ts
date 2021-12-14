@@ -23,7 +23,7 @@ fastify.register(project);
 fastify.register(auth);
 fastify.register(user);
 
-const start = async () => {
+async function start() {
   try {
     await fastify.listen({
       host: config.APP_HOST,
@@ -33,6 +33,6 @@ const start = async () => {
     fastify.log.error(err);
     process.exit(1);
   }
-};
+}
 
 start();
