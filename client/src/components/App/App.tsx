@@ -1,14 +1,14 @@
 import { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import authRoutes from '../../auth/routes';
-import feedbackRoutes from '../../feedback/routes';
 import routes from '../../lib/routes';
+import suggestionsRoutes from '../../suggestions/routes';
 import userRoutes from '../../user/routes';
 
 const routerRoutes = [
   authRoutes,
+  suggestionsRoutes,
   userRoutes,
-  feedbackRoutes,
 ];
 
 // TODO
@@ -18,7 +18,7 @@ export default function App() {
   return (
     <Suspense fallback={<Fallback />}>
       <Routes>
-        <Route element={<Navigate to={routes.feedback.index} />} path="/" />
+        <Route element={<Navigate to={routes.suggestions.list} />} path="/" />
         {routerRoutes}
         {/* TODO: 404 route goes here */}
       </Routes>

@@ -1,0 +1,35 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.wrapper {
+  @include mixins.z-index(app-bar);
+
+  background-color: var(--clr-primary-ghostwhite);
+  position: relative;
+}
+
+.userBar {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  min-height: var(--root-user-bar-height);
+
+  @include mixins.respond-to(md) {
+    --root-user-bar-height: 6rem;
+
+    position: unset;
+  }
+
+  & > * + * {
+    margin-left: 1rem;
+
+    &::before {
+      color: var(--clr-primary-slategray);
+      content: '|';
+      margin-right: 1rem;
+    }
+  }
+}
+
+.loginOrRegister {
+  color: var(--clr-primary-slategray);
+}

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 
 const NAMESPACE = 'auth';
 
@@ -21,6 +21,8 @@ export const authSlice = createSlice({
     actSetAuth: (state, { payload }) => payload,
   },
 });
+
+export const actLogout = createAction<undefined>(`${NAMESPACE}/logout`);
 
 export const { actSetAuth } = authSlice.actions;
 
