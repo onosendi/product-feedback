@@ -22,6 +22,11 @@ interface OnSubmitValues {
   passwordConfirm: string,
 }
 
+const required = (value: any) => {
+  console.log(value);
+  return value ? undefined : 'Required';
+};
+
 export default function Register() {
   useNavigateAuthorized();
 
@@ -47,8 +52,10 @@ export default function Register() {
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
-                    render={({ input }) => (
+                    render={({ input, meta }) => (
                       <TextField
+                        error={meta.error && meta.touched}
+                        helperText={(meta.error && meta.touched) && meta.error}
                         id="username"
                         label="Username"
                         maxLength={50}
@@ -56,6 +63,7 @@ export default function Register() {
                         {...input}
                       />
                     )}
+                    validate={required}
                   />
                   <Field
                     name="password"

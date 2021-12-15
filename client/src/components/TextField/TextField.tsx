@@ -44,6 +44,7 @@ export default function TextField({
   showCharsLeft = true,
   showLabel = true,
   type = 'text',
+  ...rest
 }: TextFieldProps) {
   const shouldShowCharsLeft = showCharsLeft && maxLength;
 
@@ -70,6 +71,7 @@ export default function TextField({
     maxLength,
     name,
     onChange: handleChange,
+    ...rest,
   };
 
   const commonClasses = cx('type-body2', styles.control, error && styles.error);
