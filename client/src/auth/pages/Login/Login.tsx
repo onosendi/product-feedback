@@ -2,8 +2,7 @@ import cx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   Button,
   Link,
@@ -14,7 +13,7 @@ import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
-import { selectIsAuthenticated } from '../../redux/selectors';
+import { useNeedsToBeAnonymous } from '../../hooks';
 import { login } from '../../redux/thunks';
 import styles from './Login.module.scss';
 
@@ -24,11 +23,10 @@ interface OnSubmitValues {
 }
 
 export default function Login() {
+  useNeedsToBeAnonymous();
+
   const [errors, setErrors] = useState(false);
-  const navigate = useNavigate();
-  const { state } = useLocation();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const onSubmit = async (values: OnSubmitValues) => {
     setErrors(false);
@@ -42,12 +40,6 @@ export default function Login() {
       }
     }
   };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(state?.path || routes.index);
-    }
-  }, [isAuthenticated, navigate, state?.path]);
 
   return (
     <>

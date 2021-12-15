@@ -1,7 +1,9 @@
+// TODO: Registration validation
 import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch } from 'react-redux';
+import { useNeedsToBeAnonymous } from '../../../auth/hooks';
 import {
   Button,
   Link,
@@ -21,6 +23,8 @@ interface OnSubmitValues {
 }
 
 export default function Register() {
+  useNeedsToBeAnonymous();
+
   const dispatch = useDispatch();
 
   const onSubmit = async (values: OnSubmitValues) => {
