@@ -1,1 +1,1 @@
-export { default as useNeedsToBeAnonymous } from './useNeedsToBeAnonymous';
+export { default as useNavigateAuthorized } from './useNavigateAuthorized';

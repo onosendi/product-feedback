@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch } from 'react-redux';
-import { useNeedsToBeAnonymous } from '../../../auth/hooks';
+import { useNavigateAuthorized } from '../../../auth/hooks';
 import {
   Button,
   Link,
@@ -23,7 +23,7 @@ interface OnSubmitValues {
 }
 
 export default function Register() {
-  useNeedsToBeAnonymous();
+  useNavigateAuthorized();
 
   const dispatch = useDispatch();
 

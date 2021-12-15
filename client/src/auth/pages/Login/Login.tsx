@@ -13,7 +13,7 @@ import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
-import { useNeedsToBeAnonymous } from '../../hooks';
+import { useNavigateAuthorized } from '../../hooks';
 import { login } from '../../redux/thunks';
 import styles from './Login.module.scss';
 
@@ -23,7 +23,7 @@ interface OnSubmitValues {
 }
 
 export default function Login() {
-  useNeedsToBeAnonymous();
+  useNavigateAuthorized();
 
   const [errors, setErrors] = useState(false);
   const dispatch = useDispatch();
