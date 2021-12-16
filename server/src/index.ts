@@ -3,6 +3,7 @@ import FastifyJWT from 'fastify-jwt';
 import config from '../config';
 import auth from './auth';
 import project from './project';
+import suggestions from './suggestions';
 import user from './user';
 
 const fastify: FastifyInstance = Fastify({
@@ -22,6 +23,7 @@ fastify.register(FastifyJWT, {
 fastify.register(project);
 fastify.register(auth);
 fastify.register(user);
+fastify.register(suggestions);
 
 async function start() {
   try {
