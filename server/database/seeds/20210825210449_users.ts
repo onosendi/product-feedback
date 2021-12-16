@@ -1,11 +1,11 @@
+import { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
 import { createPassword } from '../../src/lib/passwordHasher';
 
-export const seed = async (knex) => {
+export async function seed(knex: Knex) {
   await knex('user').del();
-
-  const password = createPassword({ password: 'testing' });
+  const password = createPassword('testing');
 
   return knex('user').insert([
     {
@@ -41,4 +41,4 @@ export const seed = async (knex) => {
       password,
     },
   ]);
-};
+}

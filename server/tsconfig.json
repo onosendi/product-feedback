@@ -16,6 +16,7 @@
   ],
   "include": [
     "src",
+    "database",
 
     // Include for linting.
     "tests/*.ts",

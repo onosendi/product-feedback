@@ -1,6 +1,7 @@
+import { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
-export const seed = async (knex) => {
+export async function seed(knex: Knex) {
   await knex('product_request_vote').del();
 
   const users = await knex('user').select('id', 'username');
@@ -26,4 +27,4 @@ export const seed = async (knex) => {
       product_request_id: third.id,
     },
   ]);
-};
+}

@@ -1,13 +1,14 @@
+import { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
-export const seed = async (knex) => {
+export async function seed(knex: Knex) {
   await knex('product_request_comment').del();
 
   const users = await knex('user').select('id', 'username');
-  const onosendi = users.find((u) => u.username === 'onosendi');
-  const jim = users.find((u) => u.username === 'jim');
-  const mike = users.find((u) => u.username === 'mike');
-  const april = users.find((u) => u.username === 'april');
+  const onosendi = users.find((u: DBUser) => u.username === 'onosendi');
+  const jim = users.find((u: DBUser) => u.username === 'jim');
+  const mike = users.find((u: DBUser) => u.username === 'mike');
+  const april = users.find((u: DBUser) => u.username === 'april');
 
   const productRequest = await knex('product_request').select('id').first();
 
@@ -71,4 +72,4 @@ export const seed = async (knex) => {
       product_request_id: productRequest.id,
     },
   ]);
-};
+}

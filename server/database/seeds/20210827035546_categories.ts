@@ -1,6 +1,7 @@
+import { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
-export const seed = async (knex) => {
+export async function seed(knex: Knex) {
   await knex('product_request_category').del();
 
   return knex('product_request_category').insert([
@@ -10,4 +11,4 @@ export const seed = async (knex) => {
     { id: uuidv4(), category: 'enhancement', display: 'Enhancement' },
     { id: uuidv4(), category: 'bug', display: 'Bug' },
   ]);
-};
+}

@@ -1,17 +1,20 @@
 import crypto from 'crypto';
 import faker from 'faker';
+import { Knex } from 'knex';
 import slugify from 'slugify';
 import { v4 as uuidv4 } from 'uuid';
 
-const makeSlug = ({ title }) => {
+function makeSlug(title: string) {
   const randomBytes = crypto.randomBytes(4).toString('hex');
   const newTitle = `${title.substring(0, 83)}-${randomBytes}`;
   return slugify(newTitle, { lower: true, strict: true });
-};
+}
 
-const getDescription = () => faker.lorem.paragraph().substring(0, 300);
+function getDescription() {
+  return faker.lorem.paragraph().substring(0, 300);
+}
 
-export const seed = async (knex) => {
+export async function seed(knex: Knex) {
   await knex('product_request').del();
 
   const users = await knex('user').select('id', 'username');
@@ -49,7 +52,7 @@ export const seed = async (knex) => {
     {
       id: uuidv4(),
       title: title1,
-      slug: makeSlug({ title: title1 }),
+      slug: makeSlug(title1),
       description: getDescription(),
       status: 'suggestion',
       user_id: onosendi.id,
@@ -58,7 +61,7 @@ export const seed = async (knex) => {
     {
       id: uuidv4(),
       title: title2,
-      slug: makeSlug({ title: title2 }),
+      slug: makeSlug(title2),
       description: getDescription(),
       status: 'suggestion',
       user_id: jim.id,
@@ -67,7 +70,7 @@ export const seed = async (knex) => {
     {
       id: uuidv4(),
       title: title3,
-      slug: makeSlug({ title: title3 }),
+      slug: makeSlug(title3),
       description: getDescription(),
       status: 'suggestion',
       user_id: jim.id,
@@ -76,7 +79,7 @@ export const seed = async (knex) => {
     {
       id: uuidv4(),
       title: title4,
-      slug: makeSlug({ title: title4 }),
+      slug: makeSlug(title4),
       description: getDescription(),
       status: 'live',
       user_id: jim.id,
@@ -85,7 +88,7 @@ export const seed = async (knex) => {
     {
       id: uuidv4(),
       title: title5,
-      slug: makeSlug({ title: title5 }),
+      slug: makeSlug(title5),
       description: getDescription(),
       status: 'planned',
       user_id: mike.id,
