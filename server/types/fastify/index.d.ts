@@ -6,4 +6,10 @@ declare module 'fastify' {
     authenticate: (request: FastifyRequest, reply: FastifyReply) => void;
     knex: Knex;
   }
+
+  interface FastifyRequest {
+    // dbuser: DBUser | null;
+    // TODO
+    dbuser: any;
+  }
 }
