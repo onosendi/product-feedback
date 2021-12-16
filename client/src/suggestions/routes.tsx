@@ -2,11 +2,11 @@ import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 import routes from '../lib/routes';
 
-const ListSuggestion = lazy(() => import('./pages/ListSuggestion'));
+const ListSuggestions = lazy(() => import('./pages/ListSuggestions'));
 
 const suggestionRoutes = [
   <Route
-    element={<ListSuggestion />}
+    element={<ListSuggestions />}
     key="suggestions-list"
     path={routes.suggestions.list}
   />,

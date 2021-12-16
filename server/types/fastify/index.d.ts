@@ -1,9 +1,9 @@
 import 'fastify';
-import Knex from 'knex';
+import { Knex } from 'knex';
 
 declare module 'fastify' {
   interface FastifyInstance {
     authenticate: (request: FastifyRequest, reply: FastifyReply) => void;
-    knex: typeof Knex;
+    knex: Knex;
   }
 }
