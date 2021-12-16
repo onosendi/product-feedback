@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 
-export const up = (knex: Knex) => knex.schema.createTable('product_request_vote', (t) => {
+export const up = (knex: Knex) => knex.schema.createTable('suggestion_vote', (t) => {
   t.uuid('id').primary();
   t.datetime('created_at').defaultTo(knex.fn.now()).notNullable();
   t
@@ -10,12 +10,12 @@ export const up = (knex: Knex) => knex.schema.createTable('product_request_vote'
     .onDelete('cascade')
     .notNullable();
   t
-    .uuid('product_request_id')
+    .uuid('suggestion_id')
     .references('id')
-    .inTable('product_request')
+    .inTable('suggestion')
     .onDelete('cascade')
     .notNullable();
-  t.unique(['user_id', 'product_request_id']);
+  t.unique(['user_id', 'suggestion_id']);
 });
 
-export const down = (knex: Knex) => knex.schema.dropTableIfExists('product_request_vote');
+export const down = (knex: Knex) => knex.schema.dropTableIfExists('suggestion_vote');

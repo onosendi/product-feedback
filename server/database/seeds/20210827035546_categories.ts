@@ -2,9 +2,9 @@ import { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function seed(knex: Knex) {
-  await knex('product_request_category').del();
+  await knex('suggestion_category').del();
 
-  return knex('product_request_category').insert([
+  return knex('suggestion_category').insert([
     { id: uuidv4(), category: 'feature', display: 'Feature' },
     { id: uuidv4(), category: 'ui', display: 'UI' },
     { id: uuidv4(), category: 'ux', display: 'UX' },

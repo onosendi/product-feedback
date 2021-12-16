@@ -15,7 +15,7 @@ function getDescription() {
 }
 
 export async function seed(knex: Knex) {
-  await knex('product_request').del();
+  await knex('suggestion').del();
 
   const users = await knex('user').select('id', 'username');
   const onosendi = users.find((u) => u.username === 'onosendi');
@@ -28,27 +28,27 @@ export async function seed(knex: Knex) {
   const title4 = faker.lorem.sentence();
   const title5 = faker.lorem.sentence();
 
-  const feature = await knex('product_request_category')
+  const feature = await knex('suggestion_category')
     .select('id')
     .where({ category: 'feature' })
     .first();
 
-  const ui = await knex('product_request_category')
+  const ui = await knex('suggestion_category')
     .select('id')
     .where({ category: 'ui' })
     .first();
 
-  const ux = await knex('product_request_category')
+  const ux = await knex('suggestion_category')
     .select('id')
     .where({ category: 'ux' })
     .first();
 
-  const enhancement = await knex('product_request_category')
+  const enhancement = await knex('suggestion_category')
     .select('id')
     .where({ category: 'enhancement' })
     .first();
 
-  return knex('product_request').insert([
+  return knex('suggestion').insert([
     {
       id: uuidv4(),
       title: title1,
@@ -95,4 +95,4 @@ export async function seed(knex: Knex) {
       category_id: enhancement.id,
     },
   ]);
-};
+}
