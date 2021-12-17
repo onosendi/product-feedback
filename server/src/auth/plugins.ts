@@ -4,6 +4,7 @@ import {
   FastifyRequest,
 } from 'fastify';
 import fp from 'fastify-plugin';
+import { getUserById } from '../user/queries';
 
 const authenticateDecoratorFunc: FastifyPluginAsync = async (fastify) => {
   fastify.decorate(
@@ -31,20 +32,7 @@ const authUser: FastifyPluginAsync = async (fastify) => {
           // TODO
           const decoded: any = fastify.jwt.decode(token);
           const { userId } = decoded;
-          request.authUser = await fastify
-            .knex('user')
-            .select(
-              'created_at',
-              'first_name',
-              'id',
-              'last_login',
-              'last_name',
-              'picture',
-              'role',
-              'username',
-            )
-            .where({ id: userId })
-            .first();
+          request.authUser = await getUserById(fastify.knex, userId);
         } catch (error) {
           reply.send(error);
         }
