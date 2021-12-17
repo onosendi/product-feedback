@@ -29,8 +29,7 @@ const authUser: FastifyPluginAsync = async (fastify) => {
       if (authorization) {
         try {
           const [, token] = authorization.split(' ');
-          // TODO
-          const decoded: any = fastify.jwt.decode(token);
+          const decoded = fastify.jwt.decode(token) as JWTDecodePayload;
           const { userId } = decoded;
           request.authUser = await getUserById(fastify.knex, userId);
         } catch (error) {

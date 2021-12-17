@@ -20,6 +20,12 @@ interface DBUser {
 //
 type AuthUserID = string | undefined;
 
+interface JWTDecodePayload {
+  iat: string;
+  token: string;
+  userId: string;
+}
+
 interface AuthResponse {
   role: DBUserRole;
   token: string;
