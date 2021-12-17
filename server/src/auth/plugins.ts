@@ -5,6 +5,7 @@ import {
 } from 'fastify';
 import fp from 'fastify-plugin';
 import { getUserById } from '../user/queries';
+import status from '../lib/httpStatusCodes';
 
 const authenticateDecoratorFunc: FastifyPluginAsync = async (fastify) => {
   fastify.decorate(
@@ -31,7 +32,15 @@ const authUser: FastifyPluginAsync = async (fastify) => {
           const [, token] = authorization.split(' ');
           const decoded = fastify.jwt.decode(token) as JWTDecodePayload;
           const { userId } = decoded;
-          request.authUser = await getUserById(fastify.knex, userId);
+          const user = await getUserById(fastify.knex, userId);
+          if (!user) {
+            const error = new Error('Invalid user ID');
+            reply
+              .status(status.HTTP_400_BAD_REQUEST)
+              .send(error);
+            return;
+          }
+          request.authUser = user;
         } catch (error) {
           reply.send(error);
         }

@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 export default function useOutsideClick(
   callback: (event: MouseEvent) => void,
+  // TODO
   refs: any,
   enabled: boolean | null = null,
 ) {
