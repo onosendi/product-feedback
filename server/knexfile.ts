@@ -32,6 +32,7 @@ const getKnexConfig = (args: GetKnexConfig = {}): Knex.Config => {
     seeds: {
       directory: path.resolve(__dirname, './database/seeds'),
     },
+    debug: config.DB_DEBUG,
   };
 };
 

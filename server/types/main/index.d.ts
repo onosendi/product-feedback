@@ -15,6 +15,26 @@ interface DBUser {
   role: DBUserRole;
 }
 
+type DBSuggestionStatus = 'suggestion' | 'planned' | 'in-progress' | 'live';
+interface DBSuggestion {
+  id: string;
+  createdAt: Date;
+  title: string;
+  slug: string;
+  description: string;
+  status: DBSuggestionStatus;
+  userId: string;
+  categoryId: string;
+}
+
+type DBSuggestionCategories = 'feature' | 'ui' | 'ux' | 'enhancemenet' | 'bug';
+type DBSuggestionCategoryDisplay = 'Feature' | 'UI' | 'UX' | 'Enhancemenet' | 'Bug';
+interface DBSuggestionCategory {
+  id: string;
+  category: DBSuggestionCategories;
+  display: DBSuggestionCategoryDisplay;
+}
+
 //
 // Auth
 //

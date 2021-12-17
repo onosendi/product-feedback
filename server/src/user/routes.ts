@@ -8,9 +8,9 @@ const userRoutes: FastifyPluginAsync = async (fastify) => {
   // Create user.
   fastify.route<{
     Body: {
-      username: string,
-      password: string,
-      passwordConfirm: string,
+      username: string;
+      password: string;
+      passwordConfirm: string;
     },
   }>({
     method: 'POST',

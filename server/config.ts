@@ -11,6 +11,7 @@ const BASE_CONFIG = {
   DB_NAME: env.DB_NAME,
   DB_USER: env.DB_USER,
   DB_PASSWORD: env.DB_PASSWORD,
+  DB_DEBUG: env.DB_DEBUG === 'true',
 };
 
 const TESTING_CONFIG = {
