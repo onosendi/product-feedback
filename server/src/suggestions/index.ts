@@ -1,12 +1,10 @@
-import { FastifyPlugin } from 'fastify';
+import { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 import routes from './routes';
 
-const suggestions: FastifyPlugin = (fastify, opts, done) => {
+const suggestions: FastifyPluginAsync = async (fastify) => {
   // Routes
   fastify.register(routes, { prefix: '/suggestions' });
-
-  done();
 };
 
 export default fp(suggestions);

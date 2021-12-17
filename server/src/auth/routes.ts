@@ -1,9 +1,9 @@
-import { FastifyPlugin } from 'fastify';
+import { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { checkPassword } from '../lib/passwordHasher';
 import { tokenSchema } from './schemas';
 
-const authRoutes: FastifyPlugin = (fastify, opts, done) => {
+const authRoutes: FastifyPluginAsync = async (fastify) => {
   // Authenticate
   fastify.route<{
     Body: {
@@ -45,8 +45,6 @@ const authRoutes: FastifyPlugin = (fastify, opts, done) => {
         .send(response);
     },
   });
-
-  done();
 };
 
 export default authRoutes;

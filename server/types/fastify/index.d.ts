@@ -8,8 +8,6 @@ declare module 'fastify' {
   }
 
   interface FastifyRequest {
-    // dbuser: DBUser | null;
-    // TODO
-    dbuser: any;
+    authUser: DBUser;
   }
 }

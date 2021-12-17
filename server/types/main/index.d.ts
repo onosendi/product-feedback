@@ -18,6 +18,8 @@ interface DBUser {
 //
 // Auth
 //
+type AuthUserID = string | undefined;
+
 interface AuthResponse {
   role: DBUserRole;
   token: string;

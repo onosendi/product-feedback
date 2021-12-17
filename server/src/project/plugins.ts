@@ -1,12 +1,10 @@
-import { FastifyPluginCallback } from 'fastify';
+import { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 import knex from '../lib/knex';
 
-const knexDecoratorFunc: FastifyPluginCallback = (fastify, opts, done) => {
+const knexDecoratorFunc: FastifyPluginAsync = async (fastify) => {
   if (!fastify.knex) {
     fastify.decorate('knex', knex);
   }
-
-  done();
 };
 export const knexDecorator = fp(knexDecoratorFunc);

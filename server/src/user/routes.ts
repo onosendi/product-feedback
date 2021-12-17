@@ -1,10 +1,10 @@
-import { FastifyPlugin } from 'fastify';
+import { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import { createPassword } from '../lib/passwordHasher';
 import { registerSchema } from './schemas';
 
-const userRoutes: FastifyPlugin = (fastify, opts, done) => {
+const userRoutes: FastifyPluginAsync = async (fastify) => {
   // Create user.
   fastify.route<{
     Body: {
@@ -89,8 +89,6 @@ const userRoutes: FastifyPlugin = (fastify, opts, done) => {
         .send(user);
     },
   });
-
-  done();
 };
 
 export default userRoutes;
