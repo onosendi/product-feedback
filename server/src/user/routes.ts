@@ -83,10 +83,10 @@ const userRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/test',
     preValidation: [fastify.authenticate],
     handler: async (request, reply) => {
-      const { user } = request;
+      const { authUser } = request;
       reply
         .status(status.HTTP_200_OK)
-        .send(user);
+        .send(authUser);
     },
   });
 };
