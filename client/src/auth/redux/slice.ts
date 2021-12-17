@@ -14,7 +14,7 @@ const initialState: AuthState = {
   username: null,
 };
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: NAMESPACE,
   initialState,
   reducers: {
