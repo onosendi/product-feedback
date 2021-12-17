@@ -12,6 +12,9 @@ const appRoutes = {
     roadmap: '/feedback/roadmap',
   },
   index: '/',
+  roadmap: {
+    list: '/roadmap',
+  },
   suggestions: {
     list: '/suggestions',
   },

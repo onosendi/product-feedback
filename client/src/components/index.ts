@@ -1,4 +1,5 @@
 export { default as App } from './App';
+export { default as Backdrop } from './Backdrop';
 export { default as Button } from './Button';
 export { default as Container } from './Container';
 export { default as InputLabel } from './InputLabel';

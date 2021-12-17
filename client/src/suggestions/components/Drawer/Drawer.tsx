@@ -1,0 +1,48 @@
+import cx from 'clsx';
+import FocusTrap from 'focus-trap-react';
+import { ReactNode, useRef } from 'react';
+import { RoadmapInfo } from '..';
+import { useKeyDown, useNoScroll, useOutsideClick } from '../../../hooks';
+import styles from './Drawer.module.scss';
+
+interface DrawerProps {
+  closeDrawer: () => void;
+  onAnimationEnd: () => void;
+  startAnimatingOut: boolean;
+  toggleRef: ReactNode;
+}
+
+export default function Drawer({
+  closeDrawer,
+  onAnimationEnd,
+  startAnimatingOut,
+  toggleRef,
+}: DrawerProps) {
+  const drawerRef = useRef(null);
+
+  useKeyDown({ Escape: closeDrawer });
+  useOutsideClick(closeDrawer, [drawerRef, toggleRef]);
+  useNoScroll();
+
+  return (
+    <FocusTrap
+      focusTrapOptions={{
+        allowOutsideClick: true,
+        initialFocus: false,
+      }}
+    >
+      <div
+        className={cx(
+          styles.drawer,
+          startAnimatingOut ? styles.close : styles.open,
+        )}
+        id="drawer"
+        onAnimationEnd={onAnimationEnd}
+        ref={drawerRef}
+      >
+        {/* <FilterRequests /> */}
+        <RoadmapInfo />
+      </div>
+    </FocusTrap>
+  );
+}

@@ -1,0 +1,128 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.pageWrapperWrapper {
+  padding: unset;
+
+  @include mixins.respond-to(lg) {
+    padding-left: var(--root-container-wrapper-padding);
+    padding-right: var(--root-container-wrapper-padding);
+  }
+}
+
+.pageWrapper {
+  display: grid;
+
+  @include mixins.respond-to(md) {
+    grid-gap: 4rem;
+  }
+
+  @include mixins.respond-to(lg) {
+    grid-gap: 3rem;
+    grid-template-columns: 25.5rem auto;
+  }
+}
+
+.headerAndFilterControlContainerWrapper {
+  @include mixins.header-gradient;
+  @include mixins.z-index(app-bar);
+
+  padding-left: unset;
+  padding-right: unset;
+  position: relative;
+
+  @include mixins.respond-to(md) {
+    background-image: unset;
+    padding-left: var(--root-container-wrapper-padding);
+    padding-right: var(--root-container-wrapper-padding);
+  }
+
+  @include mixins.respond-to(lg) {
+    padding-left: unset;
+    padding-right: unset;
+  }
+}
+
+.headerAndFilterControlWrapper {
+  align-items: center;
+  display: grid;
+  min-height: 7.2rem;
+  padding: 0 var(--root-paper-padding);
+
+  @include mixins.respond-to(md) {
+    align-items: unset;
+    grid-gap: 1rem;
+    grid-template-columns: 33.333333333333% auto;
+    min-height: 14.2rem;
+    padding: unset;
+  }
+
+  @include mixins.respond-to(lg) {
+    grid-gap: 2.4rem;
+    grid-template-columns: unset;
+  }
+}
+
+.filterAndRoadmapWrapper {
+  display: none;
+
+  @include mixins.respond-to(md) {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mixins.respond-to(lg) {
+    grid-gap: 2.4rem;
+    grid-template-columns: unset;
+  }
+}
+
+.sortBarWrapper {
+  background-color: var(--clr-primary-darkslategray);
+
+  @include mixins.respond-to(md) {
+    background-color: unset;
+  }
+
+  @include mixins.respond-to(lg) {
+    padding: unset;
+  }
+}
+
+.sortBarContainer {
+  align-items: center;
+  display: flex;
+  min-height: 5.6rem;
+
+  @include mixins.respond-to(md) {
+    background-color: var(--clr-primary-darkslategray);
+    background-image: url(../../../assets/svg/icon-suggestions.svg);
+    background-position: left 2.4rem center;
+    background-repeat: no-repeat;
+    background-size: 2.3rem;
+    border-radius: var(--root-border-radius);
+    min-height: 7.2rem;
+    padding: 0 1.2rem 0 6.3rem;
+  }
+}
+
+.suggestionsCounter {
+  display: none;
+
+  @include mixins.respond-to(md) {
+    display: block;
+    margin-right: 3.8rem;
+  }
+}
+
+.addFeedbackButton {
+  margin-left: auto;
+}
+
+.requestsListWrapper {
+  margin-bottom: 4.8rem;
+
+  @include mixins.respond-to(lg) {
+    padding: unset;
+  }
+}

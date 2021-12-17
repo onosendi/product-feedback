@@ -1,0 +1,69 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.nav {
+  position: relative;
+}
+
+.heading {
+  color: var(--clr-primary-darkslateblue);
+  font-size: 1.8rem;
+}
+
+.viewLink {
+  @include mixins.transition(color);
+
+  color: var(--clr-primary-royalblue);
+  position: absolute;
+  right: var(--root-paper-padding);
+  top: calc(var(--root-paper-padding) + 0.3rem);
+
+  &:focus,
+  &:hover {
+    color: var(--clr-primary-cornflowerblue);
+  }
+}
+
+.list {
+  color: var(--clr-primary-slategray);
+  font-size: 1.6rem;
+  margin-top: 2.4rem;
+
+  & > div {
+    display: flex;
+    padding-left: 2.4rem;
+    position: relative;
+
+    & + div {
+      margin-top: 0.8rem;
+    }
+
+    &::before {
+      --roadmap-bullet-point-size: 0.8rem;
+
+      border-radius: 50%;
+      content: '';
+      height: var(--roadmap-bullet-point-size);
+      left: 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--roadmap-bullet-point-size);
+    }
+  }
+
+  dt {
+    flex-grow: 1;
+  }
+}
+
+.plannedBullet::before {
+  background-color: var(--clr-primary-lightsalmon);
+}
+
+.inProgressBullet::before {
+  background-color: var(--clr-primary-blueviolet);
+}
+
+.liveBullet::before {
+  background-color: var(--clr-primary-lightskyblue);
+}

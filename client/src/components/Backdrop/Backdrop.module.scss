@@ -1,0 +1,40 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.backdrop {
+  @include mixins.z-index(backdrop);
+
+  --backdrop-opacity: 0.8;
+
+  background-color: var(--clr-neutral-0);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.open {
+  animation: open 0.25s ease forwards;
+}
+
+.close {
+  animation: close 0.25s ease forwards;
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: var(--backdrop-opacity);
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: var(--backdrop-opacity);
+  }
+  to {
+    opacity: 0;
+  }
+}

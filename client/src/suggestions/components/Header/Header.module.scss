@@ -1,0 +1,164 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.header {
+  position: relative;
+
+  @include mixins.respond-to(md) {
+    @include mixins.header-gradient;
+
+    border-radius: var(--root-border-radius);
+    padding: var(--root-paper-padding);
+  }
+
+  @include mixins.respond-to(lg) {
+    min-height: 13.7rem;
+  }
+}
+
+.headerGroup {
+  %headings {
+    color: var(--clr-neutral-100);
+  }
+
+  @include mixins.respond-to(md) {
+    bottom: var(--root-paper-padding);
+    left: var(--root-paper-padding);
+    position: absolute;
+  }
+
+  & > h1 {
+    @extend %headings;
+  }
+
+  & > h2 {
+    @extend %headings;
+
+    font-size: 1.3rem;
+    opacity: 0.75;
+
+    @include mixins.respond-to(md) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.hamburger {
+  // Hamburger courtesy of https://jonsuh.com/hamburgers
+  overflow: visible;
+  padding: 1.5rem;
+  position: absolute;
+  right: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+
+  @include mixins.respond-to(md) {
+    display: none;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:focus-visible {
+    opacity: 0.7;
+  }
+}
+
+@supports not selector(.hamburger:focus-visible) {
+  .hamburger:focus {
+    opacity: 0.7;
+  }
+}
+
+.hamburger.hamburgerOpen:hover {
+  opacity: 0.7;
+}
+
+.hamburger.hamburgerOpen .hamburgerInner,
+.hamburger.hamburgerOpen .hamburgerInner::before,
+.hamburger.hamburgerOpen .hamburgerInner::after {
+  background-color: var(--clr-neutral-100);
+}
+
+.hamburgerBox {
+  display: inline-block;
+  height: 1.7rem;
+  position: relative;
+  width: 2.5rem;
+}
+
+.hamburgerInner {
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+  transition-duration: 0.075s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburgerInner,
+.hamburgerInner::before,
+.hamburgerInner::after {
+  background-color: var(--clr-neutral-100);
+  border-radius: 0.3rem;
+  height: 0.3rem;
+  position: absolute;
+  transition-duration: 0.15s;
+  transition-property: transform;
+  transition-timing-function: ease;
+  width: 100%;
+}
+
+.hamburgerInner::before,
+.hamburgerInner::after {
+  content: '';
+  display: block;
+}
+
+.hamburgerInner::before {
+  top: -0.8rem;
+  transition:
+    top 0.075s 0.12s ease,
+    opacity 0.075s ease;
+}
+
+.hamburgerInner::after {
+  bottom: -0.8rem;
+  transition:
+    bottom 0.075s 0.12s ease,
+    transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger.hamburgerOpen .hamburgerInner {
+  transform: rotate(45deg);
+  transition-delay: 0.12s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.hamburger.hamburgerOpen .hamburgerInner::before {
+  opacity: 0;
+  top: 0;
+  transition:
+    top 0.075s ease,
+    opacity 0.075s 0.12s ease;
+}
+
+.hamburger.hamburgerOpen .hamburgerInner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+  transition:
+    bottom 0.075s ease,
+    transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.backdrop {
+  --backdrop-opacity: 0.5 !important;
+
+  z-index: 1000 !important;
+
+  @include mixins.respond-to(md) {
+    display: none;
+  }
+}

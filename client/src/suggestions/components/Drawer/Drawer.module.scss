@@ -1,0 +1,47 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.drawer {
+  @include mixins.z-index(drawer);
+
+  background-color: var(--clr-primary-ghostwhite);
+  bottom: 0;
+  padding: 14.6rem 2.4rem 2.4rem;
+  position: fixed;
+  right: -100%;
+  top: 0;
+  width: 27.2rem;
+
+  @include mixins.respond-to(md) {
+    display: none;
+  }
+
+  & > * + * {
+    margin-top: 2.4rem;
+  }
+}
+
+.open {
+  animation: open 0.25s ease-out forwards;
+}
+
+.close {
+  animation: close 0.25s ease-in forwards;
+}
+
+@keyframes open {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes close {
+  from {
+    right: 0;
+  }
+  to {
+    right: -100%;
+  }
+}
