@@ -1,12 +1,21 @@
 import cx from 'clsx';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SuggestionsChild } from '..';
 import { Button, Paper } from '../../../components';
 import routes from '../../../lib/routes';
+import { selectList } from '../../redux/selectors';
+import { getSuggestions } from '../../redux/thunks';
 import styles from './SuggestionsParent.module.scss';
-import { SuggestionsChild } from '..';
 
 export default function SuggestionsParent() {
+  const dispatch = useDispatch();
   // TODO
-  const suggestions: any[] = [];
+  const suggestions: any[] = useSelector(selectList);
+
+  useEffect(() => {
+    dispatch(getSuggestions());
+  }, [dispatch]);
 
   if (!suggestions.length) {
     return (
