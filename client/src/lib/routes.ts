@@ -16,6 +16,8 @@ const appRoutes = {
     list: '/roadmap',
   },
   suggestions: {
+    detail: (slug: string) => `/suggestions/${slug}`,
+    edit: (slug: string) => `/suggestions/${slug}/edit`,
     list: '/suggestions',
   },
   user: {

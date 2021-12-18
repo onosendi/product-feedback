@@ -1,0 +1,186 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.link {
+  border: 0.1rem solid var(--request-list-item-border-color, transparent);
+  display: block;
+  overflow: hidden;
+  padding: 2.4rem 2.5rem 7.2rem;
+  position: relative;
+  text-decoration: none;
+
+  &.responsive {
+    @include mixins.respond-to(md) {
+      padding: 2.8rem 10.1rem 2.8rem 11.2rem;
+    }
+  }
+}
+
+a.link {
+  &:hover {
+    .heading {
+      color: var(--clr-primary-royalblue);
+    }
+  }
+
+  &:focus-visible {
+    --request-list-item-border-color: var(--clr-primary-lavender);
+
+    .heading {
+      --request-list-item-heading-color: var(--clr-primary-blueviolet);
+    }
+  }
+}
+
+@supports not selector(.link:focus-visible) {
+  .link:focus {
+    --request-list-item-border-color: var(--clr-primary-lavender);
+    --request-list-item-heading-color: var(--clr-primary-blueviolet);
+  }
+}
+
+.status {
+  padding-top: 6.2rem;
+
+  &::before {
+    content: '';
+    height: 0.6rem;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &planned::before {
+    background-color: var(--clr-primary-lightsalmon);
+  }
+
+  &in-progress::before {
+    background-color: var(--clr-primary-blueviolet);
+  }
+
+  &live::before {
+    background-color: var(--clr-primary-lightskyblue);
+  }
+}
+
+.statusText {
+  color: var(--clr-primary-slategray);
+  font-size: 1.3rem;
+  left: 2.5rem;
+  position: absolute;
+  top: 3.1rem;
+}
+
+.heading {
+  @include mixins.transition(color);
+
+  color: var(--request-list-item-heading-color, var(--clr-primary-darkslateblue));
+  margin-bottom: 0.9rem;
+
+  &.responsive {
+    @include mixins.respond-to(md) {
+      margin-bottom: 0.4rem;
+    }
+  }
+}
+
+.description {
+  color: var(--clr-primary-slategray);
+  margin-bottom: 1.2rem;
+  white-space: pre-line;
+}
+
+.comments {
+  align-items: center;
+  color: var(--clr-primary-darkslateblue);
+  bottom: 2.4rem;
+  display: inline-flex;
+  font-size: 1.3rem;
+  letter-spacing: 0.018rem;
+  opacity: var(--request-list-comment-opacity, 1);
+  position: absolute;
+  right: 2.4rem;
+
+  &.resonsive {
+    @include mixins.respond-to(md) {
+      bottom: 50%;
+      font-size: 1.6rem;
+      letter-spacing: 0.022rem;
+      transform: translateY(50%);
+    }
+  }
+
+  &.noComments {
+    --request-list-comment-opacity: 0.5;
+  }
+
+  &Icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTIuNjIgMTZIMS4zNDZsLjkwMi0uOTFjLjQ4Ni0uNDkxLjc5LTEuMTMuODcyLTEuODIzQzEuMDM2IDExLjg4NyAwIDkuODkgMCA3Ljc5NCAwIDMuOTI4IDMuNTIgMCA5LjAzIDAgMTQuODcgMCAxOCAzLjYxNSAxOCA3LjQ1NWMwIDMuODY2LTMuMTY0IDcuNDc4LTguOTcgNy40NzgtMS4wMTcgMC0yLjA3OC0uMTM3LTMuMDI1LS4zODhBNC43MDUgNC43MDUgMCAwMTIuNjIgMTZ6IiBmaWxsPSIjQ0REMkVFIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: inline-block;
+    height: 1.6rem;
+    margin-right: 0.9rem;
+    width: 1.8rem;
+
+    &.responsive {
+      @include mixins.respond-to(md) {
+        margin-right: 1.2rem;
+      }
+    }
+  }
+}
+
+.vote {
+  bottom: 2.4rem;
+  left: 2.5rem;
+  position: absolute;
+
+  &.responsive {
+    @include mixins.respond-to(md) {
+      bottom: unset;
+      left: 3.2rem;
+      top: 2.8rem;
+    }
+  }
+}
+
+.status {
+  padding-left: 2.4rem;
+
+  &::before {
+    border-radius: 50%;
+    content: '';
+    height: 0.8rem;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.8rem;
+  }
+}
+
+.planned::before {
+  background-color: var(--clr-primary-lightsalmon);
+}
+
+.in-progress::before {
+  background-color: var(--clr-primary-blueviolet);
+}
+
+.live::before {
+  background-color: var(--clr-primary-lightskyblue);
+}
+
+.category {
+  --category-pill-padding: 1.6rem;
+
+  align-items: center;
+  background-color: var(--clr-primary-aliceblue);
+  border-radius: var(--root-border-radius);
+  color: var(--clr-primary-royalblue);
+  display: inline-flex;
+  min-height: 3rem;
+  padding-left: var(--category-pill-padding);
+  padding-right: var(--category-pill-padding);
+}

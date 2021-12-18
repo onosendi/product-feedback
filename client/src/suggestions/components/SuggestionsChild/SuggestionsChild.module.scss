@@ -1,0 +1,17 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.list {
+  margin-top: 3.2rem;
+
+  @include mixins.respond-to(md) {
+    margin-top: 2.4rem;
+  }
+
+  li {
+    position: relative;
+
+    & + li {
+      margin-top: 1.6rem;
+    }
+  }
+}
