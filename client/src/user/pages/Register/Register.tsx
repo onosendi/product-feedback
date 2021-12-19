@@ -13,7 +13,6 @@ import {
 import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
-import { register } from '../../redux/thunks';
 import styles from './Register.module.scss';
 
 interface OnSubmitValues {
@@ -34,7 +33,6 @@ export default function Register() {
 
   const onSubmit = async (values: OnSubmitValues) => {
     const { username = '', password = '', passwordConfirm = '' } = values;
-    await dispatch(register(username.trim(), password, passwordConfirm));
   };
 
   return (

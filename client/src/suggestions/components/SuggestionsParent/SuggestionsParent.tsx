@@ -5,17 +5,12 @@ import { SuggestionsChild } from '..';
 import { Button, Paper } from '../../../components';
 import routes from '../../../lib/routes';
 import { selectList } from '../../redux/selectors';
-import { getSuggestions } from '../../redux/thunks';
 import styles from './SuggestionsParent.module.scss';
 
 export default function SuggestionsParent() {
   const dispatch = useDispatch();
   // TODO
   const suggestions: any[] = useSelector(selectList);
-
-  useEffect(() => {
-    dispatch(getSuggestions());
-  }, [dispatch]);
 
   if (!suggestions.length) {
     return (
