@@ -1,8 +1,7 @@
 import cx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
-import { useDispatch } from 'react-redux';
 import {
   Button,
   Link,
@@ -14,27 +13,26 @@ import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
 import { useNavigateAuthorized } from '../../hooks';
+import { useLoginMutation } from '../../api';
 import styles from './Login.module.scss';
-
-interface OnSubmitValues {
-  username: string,
-  password: string,
-}
 
 export default function Login() {
   useNavigateAuthorized();
 
   const [errors, setErrors] = useState(false);
-  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
 
-  const onSubmit = async (values: OnSubmitValues) => {
+  const onSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
     setErrors(false);
     const { username = '', password = '' } = values;
 
     try {
-      // TODO
+      await login({ username, password }).unwrap();
     } catch (error: any) {
-      if (error?.response?.status === status.HTTP_401_UNAUTHORIZED) {
+      if (error?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);
       }
     }

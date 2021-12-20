@@ -1,4 +1,5 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+// eslint-disable-next-line import/no-cycle
 import { RootState } from './store';
 
 const baseQuery = fetchBaseQuery({
@@ -6,7 +7,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const { token } = (getState() as RootState).auth;
     if (token) {
-      headers.set('authentication', `Bearer ${token}`);
+      headers.set('authorization', `Bearer ${token}`);
     }
     return headers;
   },
