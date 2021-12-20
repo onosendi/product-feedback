@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import FocusTrap from 'focus-trap-react';
-import { ReactNode, useRef } from 'react';
+import { RefObject, useRef } from 'react';
 import { RoadmapInfo } from '..';
 import { useKeyDown, useNoScroll, useOutsideClick } from '../../../hooks';
 import styles from './Drawer.module.scss';
@@ -9,7 +9,7 @@ interface DrawerProps {
   closeDrawer: () => void;
   onAnimationEnd: () => void;
   startAnimatingOut: boolean;
-  toggleRef: ReactNode;
+  toggleRef: RefObject<HTMLElement>;
 }
 
 export default function Drawer({
@@ -18,7 +18,7 @@ export default function Drawer({
   startAnimatingOut,
   toggleRef,
 }: DrawerProps) {
-  const drawerRef = useRef(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useKeyDown({ Escape: closeDrawer });
   useOutsideClick(closeDrawer, [drawerRef, toggleRef]);

@@ -7,7 +7,7 @@ const authApi = createApi({
   baseQuery,
   endpoints: (build) => ({
     login: build.mutation<{
-      role: 'user' | 'admin';
+      role: DBUserRole;
       token: string;
       username: string;
     },

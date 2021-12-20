@@ -7,7 +7,7 @@ import suggestionsApi from './api';
 const NAMESPACE = 'auth';
 
 interface AuthState {
-  role: 'user' | 'admin' | null;
+  role: DBUserRole | null;
   token: string | null;
   username: string | null;
   isAuthenticated: boolean;
