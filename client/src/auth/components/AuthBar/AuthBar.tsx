@@ -1,9 +1,9 @@
 import cx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Container, Link } from '../../../components';
 import routes from '../../../lib/routes';
-import { selectAuth, selectIsAuthenticated } from '../../redux/selectors';
-import { actLogout } from '../../redux/slice';
+import { useAuth } from '../../hooks';
+import { logout } from '../../slice';
 import styles from './AuthBar.module.scss';
 
 interface AuthBarProps {
@@ -16,11 +16,10 @@ export default function AuthBar({
   wrapperClassName = null,
 }: AuthBarProps) {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const auth = useSelector(selectAuth);
+  const { isAuthenticated, ...auth } = useAuth();
 
-  const logout = () => {
-    dispatch(actLogout());
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -34,7 +33,7 @@ export default function AuthBar({
         <Link href={routes.user.edit}>{auth.username}</Link>
       )}
       {isAuthenticated
-        ? <Link onClick={logout}>Logout</Link>
+        ? <Link onClick={handleLogout}>Logout</Link>
         : (
           <p className={cx('type-body2', styles.loginOrRegister)}>
             <Link href={routes.auth.login}>Login</Link>

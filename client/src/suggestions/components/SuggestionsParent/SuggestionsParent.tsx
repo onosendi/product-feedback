@@ -1,23 +1,17 @@
 import cx from 'clsx';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { SuggestionsChild } from '..';
 import { Button, Paper } from '../../../components';
 import routes from '../../../lib/routes';
-import { selectList } from '../../redux/selectors';
-import { getSuggestions } from '../../redux/thunks';
+import { useGetSuggestionsQuery } from '../../api';
 import styles from './SuggestionsParent.module.scss';
 
 export default function SuggestionsParent() {
-  const dispatch = useDispatch();
-  // TODO
-  const suggestions: any[] = useSelector(selectList);
+  // TODO: argument should be empty
+  const { data: suggestions = [], isFetching } = useGetSuggestionsQuery('');
 
-  useEffect(() => {
-    dispatch(getSuggestions());
-  }, [dispatch]);
+  // TODO: Loading spinner
 
-  if (!suggestions.length) {
+  if (!suggestions.length && !isFetching) {
     return (
       <Paper className={cx(styles.noFeedback)}>
         <h3 className={cx('type-1', styles.noFeedbackHeading)}>

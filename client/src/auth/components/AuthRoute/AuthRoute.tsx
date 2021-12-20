@@ -1,8 +1,7 @@
 import { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import routes from '../../../lib/routes';
-import { selectIsAuthenticated } from '../../redux/selectors';
+import { useAuth } from '../../hooks';
 
 interface AuthRouteProps {
   children: ReactElement;
@@ -13,7 +12,7 @@ export default function AuthRoute({
   children,
   requiresAuthentication,
 }: AuthRouteProps) {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (requiresAuthentication && !isAuthenticated) {

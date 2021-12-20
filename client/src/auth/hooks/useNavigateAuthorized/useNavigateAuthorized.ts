@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import routes from '../../../lib/routes';
-import { selectIsAuthenticated } from '../../redux/selectors';
+import useAuth from '../useAuth';
 
 export default function useNavigateAuthorized() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
