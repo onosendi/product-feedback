@@ -8,11 +8,12 @@ import { persistReducer } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
 import authReducer from '../auth/redux/slice';
-import suggestionsReducer from '../suggestions/redux/slice';
+// eslint-disable-next-line import/no-cycle
+import postApiReducer from '../suggestions/redux/api';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
-  suggestions: suggestionsReducer,
+  [postApiReducer.reducerPath]: postApiReducer.reducer,
 });
 
 function rootReducer(

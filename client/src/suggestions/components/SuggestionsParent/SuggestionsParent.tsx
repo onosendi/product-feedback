@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SuggestionsChild } from '..';
 import { Button, Paper } from '../../../components';
 import routes from '../../../lib/routes';
+import { useGetSuggestionsQuery } from '../../redux/api';
 import { selectList } from '../../redux/selectors';
 import styles from './SuggestionsParent.module.scss';
 
 export default function SuggestionsParent() {
   const dispatch = useDispatch();
   // TODO
-  const suggestions: any[] = useSelector(selectList);
+  const { data: suggestions = [] } = useGetSuggestionsQuery('');
 
   if (!suggestions.length) {
     return (
