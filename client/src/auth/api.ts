@@ -6,8 +6,16 @@ const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery,
   endpoints: (build) => ({
-    login: build.mutation({
-      query: (credentials: any) => ({
+    login: build.mutation<{
+      role: 'user' | 'admin';
+      token: string;
+      username: string;
+    },
+    any>({
+      query: (credentials: {
+        username: string;
+        password: string;
+      }) => ({
         method: 'post',
         url: '/auth/login',
         body: credentials,
