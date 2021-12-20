@@ -1,12 +1,11 @@
 import { useCallback, useEffect } from 'react';
 
 export default function useKeyDown(
-  // TODO
-  obj: { [key: string]: any },
+  keyAndFunctions: { [key: string]: VoidFunction | VoidFunction[]; },
   enabled: boolean | null = null,
 ) {
-  const listener = useCallback((event) => {
-    Object.entries(obj).forEach(([key, val]) => {
+  const listener = useCallback((event: KeyboardEvent) => {
+    Object.entries(keyAndFunctions).forEach(([key, val]) => {
       if (key === event.key) {
         const callbackArray = Array.isArray(val) ? val : [val];
         callbackArray.forEach((handler) => {
@@ -14,7 +13,7 @@ export default function useKeyDown(
         });
       }
     });
-  }, [obj]);
+  }, [keyAndFunctions]);
 
   useEffect(() => {
     if (typeof enabled === 'boolean' ? enabled : !enabled) {
@@ -26,5 +25,5 @@ export default function useKeyDown(
     return () => {
       document.removeEventListener('keydown', listener);
     };
-  }, [enabled, listener, obj]);
+  }, [enabled, listener, keyAndFunctions]);
 }
