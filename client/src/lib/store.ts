@@ -2,11 +2,8 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 import { persistReducer } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
-// eslint-disable-next-line import/no-cycle
 import authApi from '../auth/api';
-// eslint-disable-next-line import/no-cycle
 import authReducer from '../auth/slice';
-// eslint-disable-next-line import/no-cycle
 import suggestionsApi from '../suggestions/api';
 
 const combinedReducers = combineReducers({

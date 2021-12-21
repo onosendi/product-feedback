@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DBUserRole } from '@t/database';
-// eslint-disable-next-line import/no-cycle
-import { RootState } from '../lib/store';
-// eslint-disable-next-line import/no-cycle
+import type { RootState } from '../lib/store';
 import suggestionsApi from './api';
 
 const NAMESPACE = 'auth';

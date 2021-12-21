@@ -1,6 +1,5 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
-// eslint-disable-next-line import/no-cycle
-import { RootState } from './store';
+import type { RootState } from './store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_API_BASE_URL,
