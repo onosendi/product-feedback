@@ -1,3 +1,5 @@
+import { DBUser } from '@t/database';
+import { AuthResponse } from '@t/response';
 import { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { checkPassword } from '../lib/passwordHasher';

@@ -1,3 +1,4 @@
+import { DBSuggestionCategories } from '@t/database';
 import { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { getSuggestions } from './queries';

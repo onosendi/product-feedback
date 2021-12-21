@@ -1,4 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { DBUserRole } from '@t/database';
 // eslint-disable-next-line import/no-cycle
 import baseQuery from '../lib/baseQuery';
 

@@ -21,7 +21,9 @@
     "jsx": "react-jsx",
     "typeRoots": [
       "../types"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": { "@t/*": ["../types/*"], }
   },
   "include": [
     "src"

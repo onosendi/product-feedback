@@ -4,9 +4,10 @@
     "esModuleInterop": true,
     "strict": true,
     "typeRoots": [
-      "types",
-      "../types"
-    ]
+      "types"
+    ],
+    "baseUrl": ".",
+    "paths": { "@t/*": ["../types/*"], }
   },
   "exclude": [
     "node_modules",
@@ -18,6 +19,7 @@
   "include": [
     "src",
     "database",
+    "../types",
 
     // Include for linting.
     "tests/*.ts",

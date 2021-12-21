@@ -1,11 +1,8 @@
-import {
-  FastifyPluginAsync,
-  FastifyReply,
-  FastifyRequest,
-} from 'fastify';
+import { DBUser } from '@t/database';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
-import { getUserById } from '../user/queries';
 import status from '../lib/httpStatusCodes';
+import { getUserById } from '../user/queries';
 
 const authenticateDecoratorFunc: FastifyPluginAsync = async (fastify) => {
   fastify.decorate(
@@ -30,7 +27,11 @@ const authUser: FastifyPluginAsync = async (fastify) => {
       if (authorization) {
         try {
           const [, token] = authorization.split(' ');
-          const decoded = fastify.jwt.decode(token) as JWTDecodePayload;
+          const decoded = fastify.jwt.decode(token) as {
+            iat: string;
+            token: string;
+            userId: string;
+          };
           const { userId } = decoded;
           const user = await getUserById(fastify.knex, userId);
           if (!user) {
