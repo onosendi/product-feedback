@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { MouseEventHandler, ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 interface SelectListItemProps {
   children: ReactNode;

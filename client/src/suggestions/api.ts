@@ -1,6 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import { SuggestionResponse } from '@t/response';
-// eslint-disable-next-line import/no-cycle
+import type { SuggestionResponse } from '@t/response';
 import baseQuery from '../lib/baseQuery';
 
 const postApi = createApi({

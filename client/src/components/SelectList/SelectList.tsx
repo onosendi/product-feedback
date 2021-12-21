@@ -1,14 +1,8 @@
 import cx from 'clsx';
+import type { Options as FocusTrapOptions } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
-import { Options as FocusTrapOptions } from 'focus-trap';
-import React, {
-  Children,
-  cloneElement,
-  ElementType,
-  forwardRef,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import type { ElementType, ReactElement, ReactNode } from 'react';
+import { Children, cloneElement, forwardRef } from 'react';
 
 interface SelectListProps {
   children: ReactElement[];

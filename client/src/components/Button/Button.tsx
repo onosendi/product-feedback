@@ -1,5 +1,6 @@
 import cx from 'clsx';
-import { forwardRef, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 

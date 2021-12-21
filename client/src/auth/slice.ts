@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DBUserRole } from '@t/database';
+import type { DBUserRole } from '@t/database';
 import type { RootState } from '../lib/store';
 import suggestionsApi from './api';
 

@@ -32,4 +32,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
+// Use `import type { RootState } ...` to supress eslint no-cycle error
 export type RootState = ReturnType<typeof combinedReducers>;

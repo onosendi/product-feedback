@@ -1,4 +1,4 @@
-import { SuggestionResponse } from '@t/response';
+import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { Paper } from '../../../components';
 import routes from '../../../lib/routes';

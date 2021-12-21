@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Container } from '../../components';
 import styles from './AuthLayout.module.scss';
 

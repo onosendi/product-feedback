@@ -1,5 +1,6 @@
 import cx from 'clsx';
-import { forwardRef, MouseEventHandler, ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import styles from './Link.module.scss';
 

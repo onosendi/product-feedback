@@ -1,4 +1,4 @@
-import { SuggestionResponse } from '@t/response';
+import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { SuggestionsItem } from '..';
 import styles from './SuggestionsChild.module.scss';

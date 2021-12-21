@@ -1,5 +1,6 @@
+import type { DBUser } from '@t/database';
 import 'fastify';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 declare module 'fastify' {
   interface FastifyInstance {

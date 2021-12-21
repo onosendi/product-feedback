@@ -1,4 +1,5 @@
-import { Knex } from 'knex';
+import type { DBUser } from '@t/database';
+import type { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function seed(knex: Knex) {

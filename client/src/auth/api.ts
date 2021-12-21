@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import { AuthResponse } from '@t/response';
+import type { AuthResponse } from '@t/response';
 // eslint-disable-next-line import/no-cycle
 import baseQuery from '../lib/baseQuery';
 

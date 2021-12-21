@@ -1,10 +1,6 @@
 import cx from 'clsx';
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  HTMLInputTypeAttribute,
-  useState,
-} from 'react';
+import type { ChangeEvent, ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
+import { useState } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 

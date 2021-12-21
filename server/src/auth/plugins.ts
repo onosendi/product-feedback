@@ -1,5 +1,5 @@
-import { DBUser } from '@t/database';
-import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
+import type { DBUser } from '@t/database';
+import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 import { getUserById } from '../user/queries';

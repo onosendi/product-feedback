@@ -1,4 +1,5 @@
-import Fastify, { FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
+import Fastify from 'fastify';
 import FastifyJWT from 'fastify-jwt';
 import config from '../config';
 import auth from './auth';

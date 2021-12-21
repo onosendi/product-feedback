@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import faker from 'faker';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 import slugify from 'slugify';
 import { v4 as uuidv4 } from 'uuid';
 

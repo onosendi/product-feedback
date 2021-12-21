@@ -1,4 +1,4 @@
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 export const up = (knex: Knex) => (
   knex.schema.raw('create extension if not exists citext with schema public'));

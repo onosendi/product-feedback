@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import styles from './InputLabel.module.scss';
 
 interface InputLabelProps {

@@ -1,5 +1,5 @@
 import camelCaseKeys from 'camelcase-keys';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 import path from 'path';
 import config from './config';
 

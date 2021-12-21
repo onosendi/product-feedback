@@ -1,4 +1,4 @@
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 export const up = (knex: Knex) => knex.schema.createTable('suggestion_comment', (t) => {
   t.uuid('id').primary();

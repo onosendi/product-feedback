@@ -1,4 +1,4 @@
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 export function getSuggestions(knex: Knex, userId: string) {
   return knex('suggestion as s')

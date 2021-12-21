@@ -1,5 +1,6 @@
 import cx from 'clsx';
-import { ElementType, forwardRef, ReactNode } from 'react';
+import type { ElementType, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import styles from './Container.module.scss';
 
 interface ContainerProps {

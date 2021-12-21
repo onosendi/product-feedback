@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import FocusTrap from 'focus-trap-react';
-import { RefObject, useRef } from 'react';
+import type { RefObject } from 'react';
+import { useRef } from 'react';
 import { RoadmapInfo } from '..';
 import { useKeyDown, useNoScroll, useOutsideClick } from '../../../hooks';
 import styles from './Drawer.module.scss';
