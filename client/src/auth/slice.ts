@@ -3,8 +3,6 @@ import { DBUserRole } from '@t/database';
 import type { RootState } from '../lib/store';
 import suggestionsApi from './api';
 
-const NAMESPACE = 'auth';
-
 interface AuthState {
   role: DBUserRole | null;
   token: string | null;
@@ -20,7 +18,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: NAMESPACE,
+  name: 'auth',
   initialState,
   reducers: {
     logout: () => initialState,
