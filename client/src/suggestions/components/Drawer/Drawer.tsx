@@ -6,8 +6,8 @@ import { useKeyDown, useNoScroll, useOutsideClick } from '../../../hooks';
 import styles from './Drawer.module.scss';
 
 interface DrawerProps {
-  closeDrawer: () => void;
-  onAnimationEnd: () => void;
+  closeDrawer: VoidFunction;
+  onAnimationEnd: VoidFunction;
   startAnimatingOut: boolean;
   toggleRef: RefObject<HTMLElement>;
 }

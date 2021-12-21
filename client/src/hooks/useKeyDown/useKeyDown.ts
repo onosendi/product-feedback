@@ -1,7 +1,9 @@
 import { useCallback, useEffect } from 'react';
 
+type KeyboardKeys = 'Escape';
+
 export default function useKeyDown(
-  keyAndFunctions: { [key: string]: VoidFunction | VoidFunction[]; },
+  keyAndFunctions: { [Key in KeyboardKeys]: VoidFunction | VoidFunction[]; },
   enabled: boolean | null = null,
 ) {
   const listener = useCallback((event: KeyboardEvent) => {

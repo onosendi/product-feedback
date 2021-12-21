@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 export default function useAnimatedToggle() {
   const [mounted, setMounted] = useState(false);
   const [startAnimatingOut, setStartAnimatingOut] = useState(false);
-  const toggleRef = useRef(null);
+  const toggleRef = useRef<HTMLElement>(null);
 
   const open = () => {
     setMounted(true);
