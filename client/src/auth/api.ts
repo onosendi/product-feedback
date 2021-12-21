@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import { DBUserRole } from '@t/database';
+import { AuthResponse } from '@t/response';
 // eslint-disable-next-line import/no-cycle
 import baseQuery from '../lib/baseQuery';
 
@@ -7,12 +7,7 @@ const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery,
   endpoints: (build) => ({
-    login: build.mutation<{
-      role: DBUserRole;
-      token: string;
-      username: string;
-    },
-    any>({
+    login: build.mutation<AuthResponse, any>({
       query: (credentials: {
         username: string;
         password: string;
