@@ -24,7 +24,7 @@ export interface DBSuggestion {
 }
 
 export type DBSuggestionCategories = 'feature' | 'ui' | 'ux' | 'enhancemenet' | 'bug';
-export type DBSuggestionCategoryDisplay = 'Feature' | 'UI' | 'UX' | 'Enhancemenet' | 'Bug';
+export type DBSuggestionCategoryDisplay = 'Feature' | 'UI' | 'UX' | 'Enhancement' | 'Bug';
 export interface DBSuggestionCategory {
   id: string;
   category: DBSuggestionCategories;

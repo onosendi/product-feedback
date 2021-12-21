@@ -4,7 +4,12 @@ import AuthBar from '../../../auth/components/AuthBar';
 import { Button, Container } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
-import { Header, RoadmapInfo, SuggestionsParent } from '../../components';
+import {
+  FilterSuggestions,
+  Header,
+  RoadmapInfo,
+  SuggestionsParent,
+} from '../../components';
 import styles from './ListSuggestions.module.scss';
 
 export default function ListSuggestions() {
@@ -24,7 +29,7 @@ export default function ListSuggestions() {
         >
           <Header />
           <aside className={cx(styles.filterAndRoadmapWrapper)}>
-            {/* <FilterRequests /> */}
+            <FilterSuggestions />
             <RoadmapInfo />
           </aside>
         </Container>
