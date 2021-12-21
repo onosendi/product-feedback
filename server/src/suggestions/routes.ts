@@ -15,7 +15,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/',
     schema: listSuggestions,
     handler: async (request, reply) => {
-      const userId: AuthUserID = request.authUser.id;
+      const userId: string = request.authUser.id;
 
       const suggestions = getSuggestions(fastify.knex, userId)
         .where({ 's.status': 'suggestion' });
