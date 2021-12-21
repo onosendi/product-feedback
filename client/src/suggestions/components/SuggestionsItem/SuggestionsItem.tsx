@@ -1,12 +1,12 @@
+import { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { Paper } from '../../../components';
 import routes from '../../../lib/routes';
-import styles from './SuggestionsItem.module.scss';
 import { capitalize } from '../../../lib/utils';
+import styles from './SuggestionsItem.module.scss';
 
 interface SuggestionsItemProps {
-  // TODO
-  data: any;
+  data: SuggestionResponse;
   forRoadmap?: boolean;
   link?: boolean;
   showComments?: boolean;
@@ -56,11 +56,11 @@ export default function SuggestionsItem({
                 'type-jost-bold',
                 styles.comments,
                 responsive && styles.responsive,
-                data.comments === '0' && styles.noComments,
+                data.commentCount === '0' && styles.noComments,
               )}
             >
               <span className={cx(styles.commentsIcon, responsive && styles.responsive)} />
-              {data.comments}
+              {data.commentCount}
             </span>
           )}
         </article>

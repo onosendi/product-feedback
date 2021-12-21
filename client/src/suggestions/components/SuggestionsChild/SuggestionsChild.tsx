@@ -1,11 +1,11 @@
+import { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { SuggestionsItem } from '..';
 import styles from './SuggestionsChild.module.scss';
 
 interface SuggestionsChildProps {
   forRoadmap?: boolean;
-  // TODO
-  suggestions: any[];
+  suggestions: SuggestionResponse[];
 }
 
 export default function SuggestionsChild({
