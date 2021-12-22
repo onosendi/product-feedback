@@ -1,10 +1,10 @@
-import type { FilterSuggestionsCategories } from '@t/ui';
+import type { FilterSuggestionsCategoriesUI } from '@t/ui';
 import cx from 'clsx';
 import { useQuerystring } from 'src/hooks';
 import { Button, Paper } from '../../../components';
 import styles from './FilterCategories.module.scss';
 
-const filterDisplay: FilterSuggestionsCategories[] = [
+const filterDisplay: FilterSuggestionsCategoriesUI[] = [
   'All',
   'UI',
   'UX',
@@ -18,7 +18,7 @@ export default function FilterCategories() {
 
   const categories = map.category || [];
 
-  const isSelected = (filter: FilterSuggestionsCategories) => {
+  const isSelected = (filter: FilterSuggestionsCategoriesUI) => {
     const filterToLower = filter.toLowerCase();
     if (!categories.length && filterToLower === 'all') {
       return true;
@@ -26,7 +26,7 @@ export default function FilterCategories() {
     return categories.includes(filterToLower);
   };
 
-  const onClick = (filter: FilterSuggestionsCategories) => () => {
+  const onClick = (filter: FilterSuggestionsCategoriesUI) => () => {
     const filterToLower = filter.toLowerCase();
     if (filterToLower === 'all') {
       setSearchParams({});
