@@ -1,9 +1,9 @@
 import type { SuggestionsFilterDisplay } from '@t/ui';
 import cx from 'clsx';
 import { useQuerystring } from 'src/hooks';
-import { FilterSuggestionsItem } from '..';
+import { FilterCategoriesItem } from '..';
 import { Paper } from '../../../components';
-import styles from './FilterSuggestions.module.scss';
+import styles from './FilterCategories.module.scss';
 
 const filterDisplay: SuggestionsFilterDisplay[] = [
   'All',
@@ -14,7 +14,7 @@ const filterDisplay: SuggestionsFilterDisplay[] = [
   'Feature',
 ];
 
-export default function FilterSuggestions() {
+export default function FilterCategories() {
   const { map, setSearchParams } = useQuerystring();
 
   const categories = map.category || [];
@@ -48,7 +48,7 @@ export default function FilterSuggestions() {
       <ul className={cx(styles.filterList)}>
         {filterDisplay.map((filter) => (
           <li key={filter}>
-            <FilterSuggestionsItem
+            <FilterCategoriesItem
               filter={filter}
               onClick={onClick(filter)}
               selected={isSelected(filter)}

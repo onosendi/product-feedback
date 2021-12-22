@@ -2,7 +2,7 @@ import cx from 'clsx';
 import FocusTrap from 'focus-trap-react';
 import type { RefObject } from 'react';
 import { useRef } from 'react';
-import { FilterSuggestions, RoadmapInfo } from '..';
+import { FilterCategories, RoadmapInfo } from '..';
 import { useKeyDown, useNoScroll, useOutsideClick } from '../../../hooks';
 import styles from './Drawer.module.scss';
 
@@ -41,7 +41,7 @@ export default function Drawer({
         onAnimationEnd={onAnimationEnd}
         ref={drawerRef}
       >
-        <FilterSuggestions />
+        <FilterCategories />
         <RoadmapInfo />
       </div>
     </FocusTrap>

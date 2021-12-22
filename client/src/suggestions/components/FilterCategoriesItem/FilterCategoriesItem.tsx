@@ -1,18 +1,18 @@
 import type { SuggestionsFilterDisplay } from '@t/ui';
 import { Button } from '../../../components';
 
-interface FilterSuggestionsItemProps {
+interface FilterCategoriesItemProps {
   filter: SuggestionsFilterDisplay;
   // TODO
   onClick: any;
   selected: boolean;
 }
 
-export default function FilterSuggestionsItem({
+export default function FilterCategoriesItem({
   filter,
   onClick,
   selected,
-}: FilterSuggestionsItemProps) {
+}: FilterCategoriesItemProps) {
   // const filters = useSelector(selectFilters);
   // const router = useRouter();
 

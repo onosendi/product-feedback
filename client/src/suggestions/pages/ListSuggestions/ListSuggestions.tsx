@@ -5,7 +5,7 @@ import { Button, Container } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
 import {
-  FilterSuggestions,
+  FilterCategories,
   Header,
   RoadmapInfo,
   SuggestionsParent,
@@ -29,7 +29,7 @@ export default function ListSuggestions() {
         >
           <Header />
           <aside className={cx(styles.filterAndRoadmapWrapper)}>
-            <FilterSuggestions />
+            <FilterCategories />
             <RoadmapInfo />
           </aside>
         </Container>
