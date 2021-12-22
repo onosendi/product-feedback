@@ -1,11 +1,10 @@
-import type { SuggestionsFilterDisplay } from '@t/ui';
+import type { FilterSuggestionsCategories } from '@t/ui';
 import cx from 'clsx';
 import { useQuerystring } from 'src/hooks';
-import { FilterCategoriesItem } from '..';
-import { Paper } from '../../../components';
+import { Button, Paper } from '../../../components';
 import styles from './FilterCategories.module.scss';
 
-const filterDisplay: SuggestionsFilterDisplay[] = [
+const filterDisplay: FilterSuggestionsCategories[] = [
   'All',
   'UI',
   'UX',
@@ -19,7 +18,7 @@ export default function FilterCategories() {
 
   const categories = map.category || [];
 
-  const isSelected = (filter: SuggestionsFilterDisplay) => {
+  const isSelected = (filter: FilterSuggestionsCategories) => {
     const filterToLower = filter.toLowerCase();
     if (!categories.length && filterToLower === 'all') {
       return true;
@@ -27,7 +26,7 @@ export default function FilterCategories() {
     return categories.includes(filterToLower);
   };
 
-  const onClick = (filter: SuggestionsFilterDisplay) => () => {
+  const onClick = (filter: FilterSuggestionsCategories) => () => {
     const filterToLower = filter.toLowerCase();
     if (filterToLower === 'all') {
       setSearchParams({});
@@ -48,11 +47,13 @@ export default function FilterCategories() {
       <ul className={cx(styles.filterList)}>
         {filterDisplay.map((filter) => (
           <li key={filter}>
-            <FilterCategoriesItem
-              filter={filter}
+            <Button
               onClick={onClick(filter)}
               selected={isSelected(filter)}
-            />
+              variant="5"
+            >
+              {filter}
+            </Button>
           </li>
         ))}
       </ul>

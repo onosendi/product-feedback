@@ -1,3 +1,3 @@
 import type { DBSuggestionCategoryDisplay } from './database';
 
-export type SuggestionsFilterDisplay = DBSuggestionCategoryDisplay | 'All';
+export type FilterSuggestionsCategories = DBSuggestionCategoryDisplay | 'All';

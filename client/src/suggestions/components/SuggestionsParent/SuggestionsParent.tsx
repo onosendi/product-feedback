@@ -14,6 +14,11 @@ export default function SuggestionsParent() {
     isFetching,
   } = useGetSuggestionsQuery(querystring);
 
+  // TODO: Loading spinner
+  if (isFetching) {
+    return <p>Loading</p>;
+  }
+
   if (!suggestions.length && !isFetching) {
     return (
       <Paper className={cx(styles.noFeedback)}>
