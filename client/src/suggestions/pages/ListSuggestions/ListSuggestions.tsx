@@ -1,13 +1,14 @@
 import cx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import AuthBar from '../../../auth/components/AuthBar';
-import { Button, Container } from '../../../components';
+import { Button, Container, SelectListItem } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
 import {
   FilterCategories,
   Header,
   RoadmapInfo,
+  SortFilter,
   SuggestionsParent,
 } from '../../components';
 import styles from './ListSuggestions.module.scss';
@@ -39,12 +40,12 @@ export default function ListSuggestions() {
             wrapperClassName={cx(styles.sortBarWrapper)}
           >
             {/* <SuggestionsCounter className={cx(styles.suggestionsCounter)} /> */}
-            {/* <SortByFilter> */}
-            {/*   <SelectItem value="votes-desc">Most Upvotes</SelectItem> */}
-            {/*   <SelectItem value="votes-asc">Least Upvotes</SelectItem> */}
-            {/*   <SelectItem value="comments-desc">Most Comments</SelectItem> */}
-            {/*   <SelectItem value="comments-asc">Least Comments</SelectItem> */}
-            {/* </SortByFilter> */}
+            <SortFilter>
+              <SelectListItem value="votes-desc">Most Upvotes</SelectListItem>
+              <SelectListItem value="votes-asc">Least Upvotes</SelectListItem>
+              <SelectListItem value="comments-desc">Most Comments</SelectListItem>
+              <SelectListItem value="comments-asc">Least Comments</SelectListItem>
+            </SortFilter>
             <Button
               className={cx(styles.addFeedbackButton)}
               href={routes.feedback.create}

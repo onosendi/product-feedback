@@ -5,4 +5,7 @@ export { default as Container } from './Container';
 export { default as InputLabel } from './InputLabel';
 export { default as Link } from './Link';
 export { default as Paper } from './Paper';
+export { default as SelectCaret } from './SelectCaret';
+export { default as SelectList } from './SelectList';
+export { default as SelectListItem } from './SelectListItem';
 export { default as TextField } from './TextField';

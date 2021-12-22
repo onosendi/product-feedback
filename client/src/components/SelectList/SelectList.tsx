@@ -5,15 +5,15 @@ import type { ElementType, ReactElement, ReactNode } from 'react';
 import { Children, cloneElement, forwardRef } from 'react';
 
 interface SelectListProps {
-  children: ReactElement[];
+  children: ReactNode;
   className?: string | null;
   focusTrapOptions?: FocusTrapOptions;
   listComponent?: ElementType | string;
   listItemComponent?: ElementType | string;
-  onSelect?: (value: {
-    value: string;
-    children: ReactNode;
-  }) => void;
+  // TODO
+  onAnimationEnd?: any;
+  // TODO
+  onSelect?: any;
   selectedValue?: string | null;
 }
 
@@ -23,24 +23,29 @@ const SelectList = forwardRef<any, SelectListProps>(({
   focusTrapOptions = {},
   listComponent: ListComponent = 'ul',
   listItemComponent: ListItemComponent = 'li',
+  onAnimationEnd = () => {},
   onSelect = () => {},
   selectedValue = null,
 }, fRef) => {
-  const modifiedChildren = Children.map(children, (child: ReactElement) => cloneElement(
-    child,
-    {
-      'data-selected': child.props.value === selectedValue,
-      onClick: () => {
-        onSelect({ value: child.props.value, children: child.props.children });
+  const modifiedChildren = Children.map(children, (child) => {
+    const item = child as ReactElement;
+    return cloneElement(
+      item,
+      {
+        onClick: () => {
+          onSelect({ value: item.props.value, children: item.props.children });
+        },
+        selected: item.props.value === selectedValue,
       },
-    },
-    child.props.children,
-  ));
+      item.props.children,
+    );
+  });
 
   return (
     <FocusTrap focusTrapOptions={focusTrapOptions}>
       <ListComponent
         className={cx(className)}
+        onAnimationEnd={onAnimationEnd}
         ref={fRef}
       >
         {Children.map(modifiedChildren, (child) => (

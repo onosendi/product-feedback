@@ -1,0 +1,39 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.wrapper {
+  position: relative;
+}
+
+.list {
+  top: 6.5rem;
+  width: 25.5rem;
+
+  @include mixins.respond-to(md) {
+    top: 8rem;
+  }
+}
+
+.button {
+  color: var(--clr-primary-aliceblue);
+  padding: 1.5rem 2.4rem 1.5rem 0;
+  position: relative;
+
+  & > span {
+    display: inline-block;
+    font-weight: normal;
+
+    &::after {
+      content: ' :\00a0';
+    }
+  }
+
+  &:focus,
+  &:hover {
+    color: var(--clr-neutral-100);
+  }
+}
+
+.caret {
+  background-color: var(--clr-neutral-100);
+  right: 0;
+}
