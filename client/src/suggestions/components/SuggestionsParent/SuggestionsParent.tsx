@@ -1,15 +1,18 @@
 import cx from 'clsx';
 import { SuggestionsChild } from '..';
 import { Button, Paper } from '../../../components';
+import { useQuerystring } from '../../../hooks';
 import routes from '../../../lib/routes';
 import { useGetSuggestionsQuery } from '../../api';
 import styles from './SuggestionsParent.module.scss';
 
 export default function SuggestionsParent() {
-  // TODO: argument should be empty
-  const { data: suggestions = [], isFetching } = useGetSuggestionsQuery('');
+  const { querystring } = useQuerystring();
 
-  // TODO: Loading spinner
+  const {
+    data: suggestions = [],
+    isFetching,
+  } = useGetSuggestionsQuery(querystring);
 
   if (!suggestions.length && !isFetching) {
     return (

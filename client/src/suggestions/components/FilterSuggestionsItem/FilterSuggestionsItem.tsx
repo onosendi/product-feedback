@@ -3,10 +3,15 @@ import { Button } from '../../../components';
 
 interface FilterSuggestionsItemProps {
   filter: SuggestionsFilterDisplay;
+  // TODO
+  onClick: any;
+  selected: boolean;
 }
 
 export default function FilterSuggestionsItem({
   filter,
+  onClick,
+  selected,
 }: FilterSuggestionsItemProps) {
   // const filters = useSelector(selectFilters);
   // const router = useRouter();
@@ -33,6 +38,6 @@ export default function FilterSuggestionsItem({
   // };
 
   return (
-    <Button selected={false} variant="5">{filter}</Button>
+    <Button onClick={onClick} selected={selected} variant="5">{filter}</Button>
   );
 }

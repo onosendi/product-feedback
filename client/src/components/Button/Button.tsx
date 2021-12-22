@@ -10,6 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   href?: string | null;
+  onClick?: VoidFunction;
   prependPlus?: boolean;
   selected?: boolean;
   type?: 'button' | 'submit';
@@ -22,6 +23,7 @@ const Button = forwardRef<any, ButtonProps>(({
   disabled = false,
   fullWidth = false,
   href = null,
+  onClick = () => {},
   prependPlus = false,
   selected = false,
   type = 'button',
@@ -38,6 +40,7 @@ const Button = forwardRef<any, ButtonProps>(({
       className,
     ),
     disabled,
+    onClick,
     ref: forwardedRef,
   };
 

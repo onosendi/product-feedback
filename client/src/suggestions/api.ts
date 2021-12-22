@@ -7,8 +7,14 @@ const postApi = createApi({
   baseQuery,
   tagTypes: ['Suggestions'],
   endpoints: (build) => ({
-    getSuggestions: build.query<SuggestionResponse[], any>({
-      query: () => '/suggestions',
+    getSuggestions: build.query<SuggestionResponse[], string>({
+      query: (querystring) => {
+        let url = '/suggestions';
+        if (querystring) {
+          url += `?${querystring}`;
+        }
+        return url;
+      },
       providesTags: ['Suggestions'],
     }),
   }),

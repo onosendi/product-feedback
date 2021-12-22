@@ -21,14 +21,19 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       const suggestions = getSuggestions(fastify.knex, userId)
         .where({ 's.status': 'suggestion' });
 
-      const categories = request.query?.category?.split(',');
+      const { category } = request.query;
+      const categories = Array.isArray(category)
+        ? category
+        : category && category.split(' ');
       if (categories) {
         suggestions.whereIn('category', categories);
       }
 
       const order = request.query?.order === 'asc' ? 'asc' : 'desc';
       const sorting = request.query?.sort;
-      const sort = ['votes', 'comments'].includes(sorting) ? sorting : 'votes';
+      const sort = ['votes', 'comment_count'].includes(sorting)
+        ? sorting
+        : 'votes';
       suggestions.orderBy(sort, order);
 
       reply
