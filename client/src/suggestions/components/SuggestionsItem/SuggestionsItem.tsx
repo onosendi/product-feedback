@@ -56,7 +56,7 @@ export default function SuggestionsItem({
                 'type-jost-bold',
                 styles.comments,
                 responsive && styles.responsive,
-                data.commentCount === '0' && styles.noComments,
+                data.commentCount === 0 && styles.noComments,
               )}
             >
               <span className={cx(styles.commentsIcon, responsive && styles.responsive)} />

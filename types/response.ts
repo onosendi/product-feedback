@@ -18,7 +18,7 @@ export interface AuthResponse {
 //
 export interface SuggestionResponse {
   category: DBSuggestionCategoryDisplay;
-  commentCount: string;
+  commentCount: number;
   description: string;
   hasVoted: boolean;
   id: string;

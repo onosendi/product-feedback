@@ -3,7 +3,7 @@ import type { AuthResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { checkPassword } from '../lib/passwordHasher';
-import { tokenSchema } from './schemas';
+import { loginSchema } from './schemas';
 
 const authRoutes: FastifyPluginAsync = async (fastify) => {
   // Authenticate
@@ -15,7 +15,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
   }>({
     method: 'POST',
     url: '/login',
-    schema: tokenSchema,
+    schema: loginSchema,
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
