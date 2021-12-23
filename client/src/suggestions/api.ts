@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import type { SuggestionResponse } from '@t/response';
 import baseQuery from '../lib/baseQuery';
 
-const postApi = createApi({
+const suggestionsApi = createApi({
   reducerPath: 'suggestionsApi',
   baseQuery,
   tagTypes: ['Suggestions'],
@@ -20,6 +20,6 @@ const postApi = createApi({
   }),
 });
 
-export const { useGetSuggestionsQuery } = postApi;
+export const { useGetSuggestionsQuery } = suggestionsApi;
 
-export default postApi;
+export default suggestionsApi;
