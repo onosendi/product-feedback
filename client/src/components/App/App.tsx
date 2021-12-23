@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import authRoutes from '../../auth/routes';
 import routes from '../../lib/routes';
 import suggestionsRoutes from '../../suggestions/routes';
-import userRoutes from '../../user/routes';
+import userRoutes from '../../users/routes';
 
 const routerRoutes = [
   authRoutes,

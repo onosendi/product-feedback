@@ -5,7 +5,7 @@ import config from '../config';
 import auth from './auth';
 import project from './project';
 import suggestions from './suggestions';
-import user from './user';
+import users from './users';
 
 const fastify: FastifyInstance = Fastify({
   ajv: {
@@ -23,7 +23,7 @@ fastify.register(FastifyJWT, {
 
 fastify.register(project);
 fastify.register(auth);
-fastify.register(user);
+fastify.register(users);
 fastify.register(suggestions);
 
 async function start() {
