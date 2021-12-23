@@ -21,8 +21,8 @@ const appRoutes = {
     list: '/suggestions',
   },
   user: {
-    edit: '/user/edit',
-    register: '/user/register',
+    edit: '/users/edit',
+    register: '/users/register',
   },
 };
 

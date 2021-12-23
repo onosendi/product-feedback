@@ -6,6 +6,7 @@ import auth from './auth';
 import project from './project';
 import suggestions from './suggestions';
 import users from './users';
+import votes from './votes';
 
 const fastify: FastifyInstance = Fastify({
   ajv: {
@@ -25,6 +26,7 @@ fastify.register(project);
 fastify.register(auth);
 fastify.register(users);
 fastify.register(suggestions);
+fastify.register(votes);
 
 async function start() {
   try {

@@ -5,7 +5,7 @@ import status from '../lib/httpStatusCodes';
 import { createPassword } from '../lib/passwordHasher';
 import { registerSchema } from './schemas';
 
-const userRoutes: FastifyPluginAsync = async (fastify) => {
+const usersRoutes: FastifyPluginAsync = async (fastify) => {
   // Create user.
   fastify.route<{
     Body: {
@@ -92,4 +92,4 @@ const userRoutes: FastifyPluginAsync = async (fastify) => {
   });
 };
 
-export default userRoutes;
+export default usersRoutes;
