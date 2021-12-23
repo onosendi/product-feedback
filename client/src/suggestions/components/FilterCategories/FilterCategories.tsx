@@ -31,12 +31,13 @@ export default function FilterCategories() {
   const onClick = (filter: FilterSuggestionsCategories) => () => {
     const filterToLower = filter.toLowerCase();
     if (filterToLower === 'all') {
-      setSearchParams({});
+      const { category, ...rest } = map;
+      setSearchParams(rest);
     } else if (categories.includes(filterToLower)) {
       const newCategories = categories.filter((c) => c !== filterToLower);
-      setSearchParams({ category: newCategories });
+      setSearchParams({ ...map, category: newCategories });
     } else {
-      setSearchParams({ category: [...categories, filterToLower] });
+      setSearchParams({ ...map, category: [...categories, filterToLower] });
     }
   };
 

@@ -43,8 +43,8 @@ export default function ListSuggestions() {
             <SortFilter>
               <SelectListItem value="votes-desc">Most Upvotes</SelectListItem>
               <SelectListItem value="votes-asc">Least Upvotes</SelectListItem>
-              <SelectListItem value="comments-desc">Most Comments</SelectListItem>
-              <SelectListItem value="comments-asc">Least Comments</SelectListItem>
+              <SelectListItem value="comment_count-desc">Most Comments</SelectListItem>
+              <SelectListItem value="comment_count-asc">Least Comments</SelectListItem>
             </SortFilter>
             <Button
               className={cx(styles.addFeedbackButton)}
