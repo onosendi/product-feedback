@@ -1,12 +1,12 @@
 import cx from 'clsx';
 import type { ReactNode } from 'react';
-import { Children, isValidElement, useState } from 'react';
 import { SelectCaret, SelectList } from '../../../components';
 import {
   useAnimatedToggle,
   useKeyDown,
   useOutsideClick,
   useQuerystring,
+  useSelectValue,
 } from '../../../hooks';
 import styles from './SortFilter.module.scss';
 
@@ -24,11 +24,7 @@ export default function SortFilter({
   const order = map.order?.join('') === 'asc' ? 'asc' : 'desc';
   const sortOrder = `${sort}-${order}`;
 
-  const [display, setDisplay] = useState(() => {
-    const child = Children.toArray(children).find((c) => (
-      isValidElement(c) && c.props.value === sortOrder));
-    return isValidElement(child) ? child.props.children : null;
-  });
+  const [display, setDisplay] = useSelectValue(children, sortOrder);
 
   const {
     close,

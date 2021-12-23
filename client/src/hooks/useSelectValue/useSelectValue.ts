@@ -1,18 +1,22 @@
-import { Children, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { Children, isValidElement, useState } from 'react';
 
 export default function useSelectValue(
-  defaultValue: string | null,
-  // TODO
-  children: any,
+  children: ReactNode,
+  defaultValue?: string | null,
 ) {
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState(() => {
+    const child = Children.toArray(children).find((c) => (
+      isValidElement(c) && c.props.value === defaultValue));
+    if (child && isValidElement(child)) {
+      return child.props.children;
+    }
+    const firstChild = Children.toArray(children)[0];
+    if (firstChild && isValidElement(firstChild)) {
+      return firstChild.props.children;
+    }
+    return null;
+  });
 
-  useEffect(() => {
-    const def = Children.toArray(children).find((child: any) => (
-      child.props.value === defaultValue)) ?? children[0];
-    setValue(def.props);
-  }, [children, defaultValue]);
-
-  // TODO
-  return [value as any, setValue];
+  return [value, setValue];
 }
