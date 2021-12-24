@@ -1,0 +1,43 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.button {
+  --button-color: var(--clr-primary-darkslateblue);
+
+  font-size: 1.3rem;
+  letter-spacing: 0.018rem;
+  min-height: 3.2rem;
+  padding: 0 2rem 0 4.1rem;
+
+  &.responsive {
+    @include mixins.respond-to(md) {
+      min-height: unset;
+      min-width: 4rem;
+      padding: 3rem 0 1.3rem;
+    }
+  }
+
+  &::before {
+    background-color: var(--vote-chevron-color, var(--clr-primary-royalblue));
+    content: '';
+    height: 0.745rem;
+    mask: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSA2bDQtNCA0IDQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=);
+    mask-size: 100%;
+    left: 1.6rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.95rem;
+  }
+
+  &.responsive::before {
+    @include mixins.respond-to(md) {
+      left: 50%;
+      top: 1.2rem;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.hasVoted::before {
+  --vote-chevron-color: var(--clr-neutral-100);
+}

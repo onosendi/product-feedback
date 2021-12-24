@@ -1,5 +1,6 @@
 import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
+import { Vote } from 'src/votes/components';
 import { Paper } from '../../../components';
 import routes from '../../../lib/routes';
 import { capitalize } from '../../../lib/utils';
@@ -65,11 +66,11 @@ export default function SuggestionsItem({
           )}
         </article>
       </Paper>
-      {/* <Vote */}
-      {/*   className={cx(styles.vote, responsive && styles.responsive)} */}
-      {/*   id={data.id} */}
-      {/*   responsive={responsive} */}
-      {/* /> */}
+      <Vote
+        className={cx(styles.vote, responsive && styles.responsive)}
+        id={data.id}
+        responsive={responsive}
+      />
     </>
   );
 }
