@@ -5,11 +5,13 @@ import storage from 'redux-persist/lib/storage';
 import authApi from '../auth/api';
 import authReducer from '../auth/slice';
 import suggestionsApi from '../suggestions/api';
+import votesApi from '../votes/api';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [suggestionsApi.reducerPath]: suggestionsApi.reducer,
+  [votesApi.reducerPath]: votesApi.reducer,
 });
 
 const persistConfig = {
@@ -26,11 +28,11 @@ export const store = configureStore({
   }).concat(
     authApi.middleware,
     suggestionsApi.middleware,
+    votesApi.middleware,
   ),
   reducer: persistedReducer,
 });
 
 export const persistor = persistStore(store);
 
-// Use `import type { RootState } ...` to supress eslint no-cycle error
 export type RootState = ReturnType<typeof combinedReducers>;

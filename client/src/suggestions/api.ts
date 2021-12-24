@@ -7,8 +7,8 @@ const suggestionsApi = createApi({
   baseQuery,
   tagTypes: ['Suggestions'],
   endpoints: (build) => ({
-    getSuggestions: build.query<SuggestionResponse[], string>({
-      query: (querystring) => {
+    getSuggestions: build.query<SuggestionResponse[], any>({
+      query: (querystring: string) => {
         let url = '/suggestions';
         if (querystring) {
           url += `?${querystring}`;
