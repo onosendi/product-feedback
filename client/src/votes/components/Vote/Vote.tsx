@@ -1,6 +1,12 @@
 import cx from 'clsx';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'src/auth/hooks';
+import type { RootState } from 'src/lib/store';
+import { selectSuggestionById } from 'src/suggestions/selectors';
 import { useCreateVoteMutation, useDeleteVoteMutation } from 'src/votes/api';
 import { Button } from '../../../components';
+import routes from '../../../lib/routes';
 import styles from './Vote.module.scss';
 
 interface VoteProps {
@@ -14,15 +20,22 @@ export default function Vote({
   id,
   responsive = true,
 }: VoteProps) {
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useAuth();
+
   const [createVote] = useCreateVoteMutation();
   const [deleteVote] = useDeleteVoteMutation();
-  const hasVoted = true;
+
+  const suggestion = useSelector((state: RootState) => selectSuggestionById(state, id));
+  const hasVoted = suggestion?.hasVoted;
+  const votes = suggestion?.votes;
 
   const onClick = () => {
-    // if (!user.id) {
-    //   router.push(routes.auth.login);
-    //   return;
-    // }
+    if (!isAuthenticated) {
+      navigate(routes.auth.login);
+      return;
+    }
 
     const func = hasVoted ? deleteVote : createVote;
     func(id);
@@ -41,7 +54,7 @@ export default function Vote({
       selected={hasVoted}
       variant="5"
     >
-      0
+      {votes}
     </Button>
   );
 }
