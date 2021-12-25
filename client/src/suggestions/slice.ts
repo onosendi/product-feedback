@@ -8,10 +8,6 @@ export const suggestionsAdapter = createEntityAdapter({
   selectId: (suggestion: SuggestionResponse) => suggestion.id,
 });
 
-export const {
-  selectById: selectSuggestionById,
-} = suggestionsAdapter.getSelectors((state: RootState) => state.suggestions);
-
 const initialState = suggestionsAdapter.getInitialState();
 
 const suggestionsSlice = createSlice({
@@ -49,5 +45,9 @@ const suggestionsSlice = createSlice({
     );
   },
 });
+
+export const {
+  selectById: selectSuggestionById,
+} = suggestionsAdapter.getSelectors((state: RootState) => state.suggestions);
 
 export default suggestionsSlice.reducer;
