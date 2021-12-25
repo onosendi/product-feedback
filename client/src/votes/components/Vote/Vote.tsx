@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
 import type { RootState } from 'src/lib/store';
-import { selectSuggestionById } from 'src/suggestions/selectors';
+import { selectSuggestionById } from 'src/suggestions/slice';
 import { useCreateVoteMutation, useDeleteVoteMutation } from 'src/votes/api';
 import { Button } from '../../../components';
 import routes from '../../../lib/routes';

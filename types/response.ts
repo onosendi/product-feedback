@@ -28,3 +28,11 @@ export interface SuggestionResponse {
   userId: string;
   votes: number;
 }
+
+
+//
+// Votes
+//
+export interface ModifyVoteResponse {
+  suggestionId: string;
+}

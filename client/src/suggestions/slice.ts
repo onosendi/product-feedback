@@ -1,10 +1,16 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import type { SuggestionResponse } from '@t/response';
+import type { RootState } from '../lib/store';
+import votesApi from '../votes/api';
 import suggestionsApi from './api';
 
 export const suggestionsAdapter = createEntityAdapter({
   selectId: (suggestion: SuggestionResponse) => suggestion.id,
 });
+
+export const {
+  selectById: selectSuggestionById,
+} = suggestionsAdapter.getSelectors((state: RootState) => state.suggestions);
 
 const initialState = suggestionsAdapter.getInitialState();
 
@@ -17,6 +23,28 @@ const suggestionsSlice = createSlice({
       suggestionsApi.endpoints.getSuggestions.matchFulfilled,
       (state, { payload }) => {
         suggestionsAdapter.setMany(state, payload);
+      },
+    );
+    builder.addMatcher(
+      votesApi.endpoints.createVote.matchFulfilled,
+      (state, { payload }) => {
+        const { suggestionId } = payload;
+        const suggestion = state.entities[suggestionId];
+        if (suggestion) {
+          suggestion.hasVoted = true;
+          suggestion.votes += 1;
+        }
+      },
+    );
+    builder.addMatcher(
+      votesApi.endpoints.deleteVote.matchFulfilled,
+      (state, { payload }) => {
+        const { suggestionId } = payload;
+        const suggestion = state.entities[suggestionId];
+        if (suggestion) {
+          suggestion.hasVoted = false;
+          suggestion.votes -= 1;
+        }
       },
     );
   },
