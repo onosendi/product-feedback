@@ -1,5 +1,5 @@
 import type { DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
-import type { FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
@@ -7,6 +7,26 @@ import { getSuggestions } from './queries';
 import { createSuggestion, listSuggestions } from './schemas';
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
+  // User must have admin to specify a suggestion's status
+  fastify.decorate(
+    'statusNeedsAdmin',
+    async (
+      request: FastifyRequest<{
+        Body: { status: DBSuggestionStatus; },
+      }>,
+      reply: FastifyReply,
+    ) => {
+      const { role } = request.authUser;
+
+      if (request.body.status && role !== 'admin') {
+        const error = new Error('Insufficient privileges: can\'t set status');
+        reply
+          .status(status.HTTP_403_FORBIDDEN)
+          .send(error);
+      }
+    },
+  );
+
   // List suggestions
   fastify.route<{
     Querystring: {
@@ -57,18 +77,12 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'POST',
     url: '/',
     schema: createSuggestion,
-    preValidation: [fastify.authenticate],
+    preValidation: [
+      fastify.authenticate,
+      fastify.statusNeedsAdmin,
+    ],
     handler: async (request, reply) => {
-      const { id: userId, role } = request.authUser;
-
-      // Only administrators are allowed to set a suggestion's status
-      if (request.body.status && role !== 'admin') {
-        reply
-          .status(status.HTTP_403_FORBIDDEN)
-          .send(status.HTTP_403_FORBIDDEN);
-        return;
-      }
-
+      const { id: userId } = request.authUser;
       const {
         category,
         description,

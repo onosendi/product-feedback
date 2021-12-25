@@ -6,6 +6,7 @@ declare module 'fastify' {
   interface FastifyInstance {
     authenticate: (request: FastifyRequest, reply: FastifyReply) => void;
     knex: Knex;
+    statusNeedsAdmin: (request: FastifyRequest, reply: FastifyReply) => void;
   }
 
   interface FastifyRequest {
