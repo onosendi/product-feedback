@@ -11,6 +11,7 @@ const suggestionsApi = baseApi.injectEndpoints({
         }
         return url;
       },
+      providesTags: ['Suggestions'],
     }),
   }),
 });

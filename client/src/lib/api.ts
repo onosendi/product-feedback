@@ -16,6 +16,9 @@ const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery,
   endpoints: () => ({}),
+  tagTypes: [
+    'Suggestions',
+  ],
 });
 
 export default baseApi;
