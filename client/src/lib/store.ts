@@ -5,11 +5,13 @@ import storage from 'redux-persist/lib/storage';
 import authApi from '../auth/api';
 import authReducer from '../auth/slice';
 import suggestionsApi from '../suggestions/api';
+import suggestionsReducer from '../suggestions/slice';
 import votesApi from '../votes/api';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
+  suggestions: suggestionsReducer,
   [suggestionsApi.reducerPath]: suggestionsApi.reducer,
   [votesApi.reducerPath]: votesApi.reducer,
 });
