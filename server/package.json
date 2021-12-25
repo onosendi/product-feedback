@@ -19,7 +19,7 @@
     "fastify-plugin": "^3.0.0",
     "knex": "^0.95.11",
     "pg": "^8.7.1",
-    "slugify": "^1.6.0",
+    "slugify": "^1.6.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+// TODO look into UUID format for strings: https://ajv.js.org/json-schema.html#keywords-for-strings
 import type { FastifySchema } from 'fastify';
 
 export const createVoteSchema: FastifySchema = {

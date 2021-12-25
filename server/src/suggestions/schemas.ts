@@ -22,3 +22,44 @@ export const listSuggestions: FastifySchema = {
     },
   },
 };
+
+export const createSuggestion: FastifySchema = {
+  body: {
+    type: 'object',
+    required: [
+      'category',
+      'description',
+      'title',
+    ],
+    properties: {
+      category: {
+        type: 'string',
+        enum: [
+          'feature',
+          'ui',
+          'ux',
+          'enhancement',
+          'bug',
+        ],
+      },
+      description: {
+        type: 'string',
+        maxLength: 300,
+      },
+      status: {
+        type: 'string',
+        enum: [
+          'suggestion',
+          'planned',
+          'in-progress',
+          'live',
+        ],
+      },
+      title: {
+        type: 'string',
+        minLength: 5,
+        maxLength: 75,
+      },
+    },
+  },
+};
