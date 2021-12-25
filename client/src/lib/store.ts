@@ -2,18 +2,14 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 import { persistReducer } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
-import authApi from '../auth/api';
 import authReducer from '../auth/slice';
-import suggestionsApi from '../suggestions/api';
 import suggestionsReducer from '../suggestions/slice';
-import votesApi from '../votes/api';
+import baseApi from './api';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
-  [authApi.reducerPath]: authApi.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
   suggestions: suggestionsReducer,
-  [suggestionsApi.reducerPath]: suggestionsApi.reducer,
-  [votesApi.reducerPath]: votesApi.reducer,
 });
 
 const persistConfig = {
@@ -27,11 +23,7 @@ const persistedReducer = persistReducer(persistConfig, combinedReducers);
 export const store = configureStore({
   middleware: getDefaultMiddleware({
     serializableCheck: false,
-  }).concat(
-    authApi.middleware,
-    suggestionsApi.middleware,
-    votesApi.middleware,
-  ),
+  }).concat(baseApi.middleware),
   reducer: persistedReducer,
 });
 

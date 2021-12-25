@@ -1,10 +1,7 @@
-import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import type { AuthResponse } from '@t/response';
-import baseQuery from '../lib/baseQuery';
+import baseApi from '../lib/api';
 
-const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery,
+const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation<AuthResponse, any>({
       query: (credentials: {

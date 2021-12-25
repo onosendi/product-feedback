@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { DBUserRole } from '@t/database';
 import type { RootState } from '../lib/store';
-import suggestionsApi from './api';
+import authApi from './api';
 
 interface AuthState {
   role: DBUserRole | null;
@@ -25,7 +25,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      suggestionsApi.endpoints.login.matchFulfilled,
+      authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => ({
         ...payload,
         isAuthenticated: true,

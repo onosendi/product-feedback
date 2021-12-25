@@ -1,11 +1,7 @@
-import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import type { SuggestionResponse } from '@t/response';
-import baseQuery from '../lib/baseQuery';
+import baseApi from '../lib/api';
 
-const suggestionsApi = createApi({
-  reducerPath: 'suggestionsApi',
-  baseQuery,
-  tagTypes: ['Suggestions'],
+const suggestionsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getSuggestions: build.query<SuggestionResponse[], any>({
       query: (querystring: string) => {
@@ -15,7 +11,6 @@ const suggestionsApi = createApi({
         }
         return url;
       },
-      providesTags: ['Suggestions'],
     }),
   }),
 });

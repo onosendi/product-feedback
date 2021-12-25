@@ -1,9 +1,6 @@
-import { createApi } from '@reduxjs/toolkit/dist/query/react';
-import baseQuery from '../lib/baseQuery';
+import baseApi from '../lib/api';
 
-const votesApi = createApi({
-  reducerPath: 'votesApi',
-  baseQuery,
+const votesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createVote: build.mutation<void, any>({
       query: (suggestionId: string) => ({
