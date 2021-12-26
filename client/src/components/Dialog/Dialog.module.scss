@@ -1,0 +1,45 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.wrapper {
+  @include mixins.z-index(modal);
+
+  left: 0;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.open {
+  animation: open 0.25s ease forwards;
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog {
+  background-color: var(--clr-neutral-100);
+  max-width: 50rem;
+  width: 100%;
+}
+
+.body {
+  color: var(--clr-primary-slategray);
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2.4rem;
+
+  & > button:first-child {
+    margin-left: 1rem;
+    order: 2;
+  }
+}

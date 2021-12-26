@@ -11,8 +11,8 @@ interface InputLabelProps {
   helperText?: string | null;
   htmlFor: string;
   label: string;
-  labelTextClassName: string | null;
-  labelWrapperClassName: string | null;
+  labelTextClassName?: string | null;
+  labelWrapperClassName?: string | null;
   showCharsLeft?: boolean | null;
   showLabel?: boolean | null;
 }

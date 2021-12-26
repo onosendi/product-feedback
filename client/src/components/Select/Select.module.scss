@@ -1,0 +1,27 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.wrapper {
+  position: relative;
+}
+
+.button {
+  @include mixins.transition(border-color);
+
+  --select-button-padding: 2.4rem;
+
+  background-color: var(--clr-primary-ghostwhite);
+  border: 0.1rem solid var(--textfield-border-color, transparent);
+  border-radius: 0.5rem;
+  color: var(--clr-primary-darkslateblue);
+  justify-content: flex-start;
+  min-height: 4.6rem;
+  padding-left: var(--select-button-padding);
+  padding-right: var(--select-button-padding);
+  position: relative;
+  width: 100%;
+
+  &.selected,
+  &:focus {
+    --textfield-border-color: var(--clr-primary-royalblue);
+  }
+}

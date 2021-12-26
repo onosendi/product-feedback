@@ -17,7 +17,8 @@ interface TextFieldProps {
   maxLength?: number | undefined;
   multiline?: boolean | null;
   name: string;
-  onChange: ChangeEventHandler;
+  onChange?: ChangeEventHandler;
+  rows?: number | undefined;
   showCharsLeft?: boolean | null;
   showLabel?: boolean | null;
   type?: HTMLInputTypeAttribute;
@@ -36,11 +37,11 @@ export default function TextField({
   maxLength = undefined,
   multiline = false,
   name,
-  onChange,
+  onChange = () => {},
+  rows = undefined,
   showCharsLeft = true,
   showLabel = true,
   type = 'text',
-  ...rest
 }: TextFieldProps) {
   const shouldShowCharsLeft = showCharsLeft && maxLength;
 
@@ -67,7 +68,6 @@ export default function TextField({
     maxLength,
     name,
     onChange: handleChange,
-    ...rest,
   };
 
   const commonClasses = cx('type-body2', styles.control, error && styles.error);
@@ -75,7 +75,11 @@ export default function TextField({
   const renderControl = () => {
     if (multiline) {
       return (
-        <textarea className={cx(commonClasses, styles.textarea)} {...commonProps} />
+        <textarea
+          className={cx(commonClasses, styles.textarea)}
+          rows={rows}
+          {...commonProps}
+        />
       );
     }
     return (

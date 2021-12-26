@@ -48,7 +48,7 @@ export default function ListSuggestions() {
             </SortFilter>
             <Button
               className={cx(styles.addFeedbackButton)}
-              href={routes.feedback.create}
+              href={routes.suggestions.create}
               prependPlus
               variant="1"
             >

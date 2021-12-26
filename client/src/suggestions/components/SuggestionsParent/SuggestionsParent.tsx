@@ -26,7 +26,7 @@ export default function SuggestionsParent() {
           There is no feedback yet.
         </h3>
         <p className={cx('type-body1', styles.noFeedbackBody)}>Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.</p>
-        <Button href={routes.feedback.create} prependPlus variant="1">
+        <Button href={routes.suggestions.create} prependPlus variant="1">
           Add Feedback
         </Button>
       </Paper>
