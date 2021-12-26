@@ -1,22 +1,28 @@
 import cx from 'clsx';
-import type { ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
-interface SelectListItemProps {
+interface SelectItemProps {
   children: ReactNode;
   className?: string | null;
+  onClick?: MouseEventHandler;
+  selected?: boolean;
   value: string;
 }
 
-export default function SelectListItem({
+export default function SelectItem({
   children,
-  className,
+  className = null,
+  onClick = () => {},
+  selected = false,
   value,
-}: SelectListItemProps) {
+}: SelectItemProps) {
   return (
     <button
       className={cx(className)}
-      value={value}
+      data-selected={selected}
+      onClick={onClick}
       type="button"
+      value={value}
     >
       {children}
     </button>

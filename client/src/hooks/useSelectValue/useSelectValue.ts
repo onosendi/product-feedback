@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 import { Children, isValidElement, useState } from 'react';
 
 export default function useSelectValue(
   children: ReactNode,
   defaultValue?: string | null,
-) {
+): [string, Dispatch<string>] {
   const [value, setValue] = useState(() => {
     const child = Children.toArray(children).find((c) => (
       isValidElement(c) && c.props.value === defaultValue));

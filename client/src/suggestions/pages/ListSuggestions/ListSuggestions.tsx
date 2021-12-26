@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import { AuthBar } from '../../../auth/components';
-import { Button, Container, SelectListItem } from '../../../components';
+import { Button, Container, SelectItem } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
 import {
@@ -41,10 +41,10 @@ export default function ListSuggestions() {
           >
             {/* <SuggestionsCounter className={cx(styles.suggestionsCounter)} /> */}
             <SortFilter>
-              <SelectListItem value="votes-desc">Most Upvotes</SelectListItem>
-              <SelectListItem value="votes-asc">Least Upvotes</SelectListItem>
-              <SelectListItem value="comment_count-desc">Most Comments</SelectListItem>
-              <SelectListItem value="comment_count-asc">Least Comments</SelectListItem>
+              <SelectItem value="votes-desc">Most Upvotes</SelectItem>
+              <SelectItem value="votes-asc">Least Upvotes</SelectItem>
+              <SelectItem value="comment_count-desc">Most Comments</SelectItem>
+              <SelectItem value="comment_count-asc">Least Comments</SelectItem>
             </SortFilter>
             <Button
               className={cx(styles.addFeedbackButton)}

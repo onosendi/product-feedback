@@ -10,10 +10,11 @@ interface SelectListProps {
   focusTrapOptions?: FocusTrapOptions;
   listComponent?: ElementType | string;
   listItemComponent?: ElementType | string;
-  // TODO
-  onAnimationEnd?: any;
-  // TODO
-  onSelect?: any;
+  onAnimationEnd?: VoidFunction;
+  onSelect?: (obj: {
+    value: string;
+    children: string;
+  }) => void,
   selectedValue?: string | null;
 }
 

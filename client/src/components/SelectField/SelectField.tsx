@@ -7,9 +7,9 @@ import {
   useOutsideClick,
   useSelectValue,
 } from '../../hooks';
-import styles from './Select.module.scss';
+import styles from './SelectField.module.scss';
 
-interface SelectProps {
+interface SelectFieldProps {
   children: ReactNode;
   className?: string | null;
   defaultValue?: string | null;
@@ -21,7 +21,7 @@ interface SelectProps {
   name: string;
 }
 
-export default function Select({
+export default function SelectField({
   children,
   className = null,
   defaultValue = null,
@@ -31,7 +31,7 @@ export default function Select({
   id,
   label,
   name,
-}: SelectProps) {
+}: SelectFieldProps) {
   const {
     close,
     mounted,
@@ -41,11 +41,11 @@ export default function Select({
     toggleRef,
   } = useAnimatedToggle();
 
-  const [selected, setSelected] = useSelectValue(children, defaultValue);
+  const [display, setDisplay] = useSelectValue(children, defaultValue);
 
-  const onSelect = (value: string) => {
-    setSelected(value);
+  const onSelect = (obj: { value: string; children: string; }) => {
     close();
+    setDisplay(obj.children);
   };
 
   useOutsideClick(close, toggleRef, mounted);
@@ -71,14 +71,14 @@ export default function Select({
           ref={toggleRef}
           type="button"
         >
-          {selected.children}
+          {display}
           <SelectCaret open={mounted && !out} />
         </button>
         <input
           id={id}
           name={name}
           type="hidden"
-          defaultValue={selected.value}
+          defaultValue={display.toLowerCase()}
         />
       </InputLabel>
       {mounted && (
@@ -93,7 +93,7 @@ export default function Select({
           }}
           onAnimationEnd={onAnimationEnd}
           onSelect={onSelect}
-          selectedValue={selected.value}
+          selectedValue={display}
         >
           {children}
         </SelectList>

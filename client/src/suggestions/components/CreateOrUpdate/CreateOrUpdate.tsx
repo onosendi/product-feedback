@@ -7,7 +7,7 @@ import {
   Button,
   Dialog,
   Paper,
-  Select,
+  SelectField,
   SelectItem,
   TextField,
 } from '../../../components';
@@ -70,7 +70,9 @@ export default function CreateOrUpdate() {
               name="category"
               render={({ input, meta }) => (
                 <>
-                  <Select
+                  <SelectField
+                    // TODO
+                    defaultValue="ux"
                     description="Choose a category for your feedback"
                     id="category"
                     label="Category"
@@ -81,9 +83,11 @@ export default function CreateOrUpdate() {
                     <SelectItem value="ux">UX</SelectItem>
                     <SelectItem value="enhancement">Enhancement</SelectItem>
                     <SelectItem value="bug">Bug</SelectItem>
-                  </Select>
+                  </SelectField>
                   {role === 'admin' && (
-                    <Select
+                    <SelectField
+                      // TODO
+                      defaultValue="live"
                       description="Change feature state"
                       id="status"
                       label={isNew ? 'Status' : 'Update Status'}
@@ -93,7 +97,7 @@ export default function CreateOrUpdate() {
                       <SelectItem value="planned">Planned</SelectItem>
                       <SelectItem value="in-progress">In-Progress</SelectItem>
                       <SelectItem value="live">Live</SelectItem>
-                    </Select>
+                    </SelectField>
                   )}
                 </>
               )}
