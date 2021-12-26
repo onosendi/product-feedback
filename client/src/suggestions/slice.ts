@@ -23,8 +23,8 @@ const suggestionsSlice = createSlice({
     );
     builder.addMatcher(
       votesApi.endpoints.createVote.matchFulfilled,
-      (state, { payload }) => {
-        const { suggestionId } = payload;
+      (state, action) => {
+        const { originalArgs: suggestionId } = action.meta.arg;
         const suggestion = state.entities[suggestionId];
         if (suggestion) {
           suggestion.hasVoted = true;
@@ -34,8 +34,8 @@ const suggestionsSlice = createSlice({
     );
     builder.addMatcher(
       votesApi.endpoints.deleteVote.matchFulfilled,
-      (state, { payload }) => {
-        const { suggestionId } = payload;
+      (state, action) => {
+        const { originalArgs: suggestionId } = action.meta.arg;
         const suggestion = state.entities[suggestionId];
         if (suggestion) {
           suggestion.hasVoted = false;

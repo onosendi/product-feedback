@@ -1,4 +1,3 @@
-import type { ModifyVoteResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
@@ -27,11 +26,9 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
           suggestion_id: suggestionId,
         });
 
-      const response: ModifyVoteResponse = { suggestionId };
-
       reply
         .status(status.HTTP_201_CREATED)
-        .send(response);
+        .send(status.HTTP_201_CREATED);
     },
   });
 
@@ -57,11 +54,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
         })
         .delete();
 
-      const response: ModifyVoteResponse = { suggestionId };
-
-      reply
-        .status(status.HTTP_200_OK)
-        .send(response);
+      reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
 };
