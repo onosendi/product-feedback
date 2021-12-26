@@ -13,7 +13,7 @@ export const createVoteSchema: FastifySchema = {
     },
   },
   response: {
-    [status.HTTP_200_OK]: {
+    [status.HTTP_201_CREATED]: {
       type: 'object',
       properties: {
         suggestionId: {
