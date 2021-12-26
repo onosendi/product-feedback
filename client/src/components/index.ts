@@ -3,6 +3,7 @@ export { default as Backdrop } from './Backdrop';
 export { default as Button } from './Button';
 export { default as Container } from './Container';
 export { default as Dialog } from './Dialog';
+export { default as GoBack } from './GoBack';
 export { default as InputLabel } from './InputLabel';
 export { default as Link } from './Link';
 export { default as Paper } from './Paper';

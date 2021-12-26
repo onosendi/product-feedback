@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { Helmet } from 'react-helmet-async';
-import AuthBar from '../../../auth/components/AuthBar';
+import { AuthBar } from '../../../auth/components';
 import { Button, Container, SelectListItem } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';

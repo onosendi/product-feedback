@@ -18,7 +18,7 @@ interface SelectProps {
   helperText?: string | null;
   id: string;
   label: string;
-  name?: string | undefined;
+  name: string;
 }
 
 export default function Select({
@@ -30,7 +30,7 @@ export default function Select({
   helperText = null,
   id,
   label,
-  name = undefined,
+  name,
 }: SelectProps) {
   const {
     close,

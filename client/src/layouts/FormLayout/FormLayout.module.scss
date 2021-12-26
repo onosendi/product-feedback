@@ -1,0 +1,25 @@
+@use '../../assets/scss/abstracts/mixins';
+
+.container {
+  margin-bottom: 6rem;
+  max-width: 54rem;
+}
+
+.goBackAndUserBarWrapper {
+  align-items: center;
+  display: flex;
+  margin-top: 2.4rem;
+
+  @include mixins.respond-to(md) {
+    margin-top: 4.6rem;
+  }
+}
+
+.userBar {
+  min-height: unset;
+}
+
+.userBarWrapper {
+  padding: unset;
+  margin-left: auto;
+}

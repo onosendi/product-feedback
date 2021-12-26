@@ -15,7 +15,7 @@ const suggestionRoutes = [
   />,
   <Route
     element={(
-      <AuthRoute>
+      <AuthRoute requiresAuthentication>
         <CreateSuggestion />
       </AuthRoute>
     )}
@@ -24,12 +24,12 @@ const suggestionRoutes = [
   />,
   <Route
     element={(
-      <AuthRoute>
+      <AuthRoute requiresAuthentication>
         <EditSuggestion />
       </AuthRoute>
     )}
-    key="suggestions-create"
-    path={`${routes.suggestions.edit}/:suggestionId}`}
+    key="suggestions-edit"
+    path="/suggestions/:slug/edit"
   />,
 ];
 

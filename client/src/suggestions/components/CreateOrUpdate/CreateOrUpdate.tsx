@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import { useState } from 'react';
+import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
 import {
@@ -15,13 +16,16 @@ import styles from './CreateOrUpdate.module.scss';
 export default function CreateOrUpdate() {
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
-  const { role } = useAuth();
 
+  const { role } = useAuth();
   const isNew = true;
 
   const cancel = () => {
     navigate(-1);
   };
+
+  // @ts-ignore
+  const onSubmit = async (values) => {};
 
   const deleteFeedback = async () => {};
 
@@ -46,69 +50,88 @@ export default function CreateOrUpdate() {
           // TODO
           : 'Editing \'TODO\''}
       </h1>
-      <form
-        className={cx(styles.form)}
-        noValidate
-      >
-        <TextField
-          description="Add a short, descriptive headline"
-          id="title"
-          label="Feedback Title"
-          maxLength={75}
-          name="title"
-        />
-        <Select
-          description="Choose a category for your feedback"
-          id="category"
-          label="Category"
-          name="category"
-        >
-          <SelectItem value="feature">Feature</SelectItem>
-          <SelectItem value="ui">UI</SelectItem>
-          <SelectItem value="ux">UX</SelectItem>
-          <SelectItem value="enhancement">Enhancement</SelectItem>
-          <SelectItem value="bug">Bug</SelectItem>
-        </Select>
-        {role === 'admin' && (
-          <Select
-            description="Change feature state"
-            id="status"
-            label={isNew ? 'Status' : 'Update Status'}
-            name="status"
-          >
-            <SelectItem value="suggestion">Suggestion</SelectItem>
-            <SelectItem value="planned">Planned</SelectItem>
-            <SelectItem value="in-progress">In-Progress</SelectItem>
-            <SelectItem value="live">Live</SelectItem>
-          </Select>
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, submitting, values }) => (
+          <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
+            <Field
+              name="title"
+              render={({ input, meta }) => (
+                <TextField
+                  description="Add a short, descriptive headline"
+                  id="title"
+                  label="Feedback Title"
+                  maxLength={75}
+                  {...input}
+                />
+              )}
+            />
+            <Field
+              name="category"
+              render={({ input, meta }) => (
+                <>
+                  <Select
+                    description="Choose a category for your feedback"
+                    id="category"
+                    label="Category"
+                    {...input}
+                  >
+                    <SelectItem value="feature">Feature</SelectItem>
+                    <SelectItem value="ui">UI</SelectItem>
+                    <SelectItem value="ux">UX</SelectItem>
+                    <SelectItem value="enhancement">Enhancement</SelectItem>
+                    <SelectItem value="bug">Bug</SelectItem>
+                  </Select>
+                  {role === 'admin' && (
+                    <Select
+                      description="Change feature state"
+                      id="status"
+                      label={isNew ? 'Status' : 'Update Status'}
+                      name="status"
+                    >
+                      <SelectItem value="suggestion">Suggestion</SelectItem>
+                      <SelectItem value="planned">Planned</SelectItem>
+                      <SelectItem value="in-progress">In-Progress</SelectItem>
+                      <SelectItem value="live">Live</SelectItem>
+                    </Select>
+                  )}
+                </>
+              )}
+            />
+            <Field
+              name="description"
+              render={({ input, meta }) => (
+                <TextField
+                  description="Include any specific comments on what should be improved, added, etc."
+                  id="description"
+                  label="Feedback Detail"
+                  maxLength={300}
+                  multiline
+                  rows={5}
+                  {...input}
+                />
+              )}
+            />
+            <div className={cx(styles.buttonWrapper)}>
+              <Button className={cx(styles.add)} type="submit" variant="1">
+                {isNew ? 'Add Feedback' : 'Save Changes'}
+              </Button>
+              <Button className={cx(styles.cancel)} onClick={cancel} variant="3">
+                Cancel
+              </Button>
+              {!isNew && (
+                <Button
+                  className={cx(styles.delete)}
+                  onClick={toggleDeleteDialog}
+                  variant="4"
+                >
+                  Delete
+                </Button>
+              )}
+            </div>
+          </form>
         )}
-        <TextField
-          description="Include any specific comments on what should be improved, added, etc."
-          id="description"
-          label="Feedback Detail"
-          maxLength={300}
-          multiline
-          name="description"
-          rows={5}
-        />
-        <div className={cx(styles.buttonWrapper)}>
-          <Button className={cx(styles.add)} type="submit" variant="1">
-            {isNew ? 'Add Feedback' : 'Save Changes'}
-          </Button>
-          <Button className={cx(styles.cancel)} onClick={cancel} variant="3">
-            Cancel
-          </Button>
-          {!isNew && (
-            <Button
-              className={cx(styles.delete)}
-              onClick={toggleDeleteDialog}
-              variant="4"
-            >
-              Delete
-            </Button>
-          )}
-        </div>
-      </form>
+      />
     </Paper>
   );
 }
