@@ -1,7 +1,7 @@
 import type { FastifySchema } from 'fastify';
 import status from '../lib/httpStatusCodes';
 
-export const listSuggestions: FastifySchema = {
+export const listSuggestionsSchema: FastifySchema = {
   response: {
     [status.HTTP_200_OK]: {
       type: 'array',
@@ -23,7 +23,7 @@ export const listSuggestions: FastifySchema = {
   },
 };
 
-export const createSuggestion: FastifySchema = {
+export const createSuggestionSchema: FastifySchema = {
   body: {
     type: 'object',
     required: [

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
 import { getSuggestions } from './queries';
-import { createSuggestion, listSuggestions } from './schemas';
+import { createSuggestionSchema, listSuggestionsSchema } from './schemas';
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // User must have admin to specify a suggestion's status
@@ -37,7 +37,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   }>({
     method: 'GET',
     url: '/',
-    schema: listSuggestions,
+    schema: listSuggestionsSchema,
     handler: async (request, reply) => {
       const userId = request.authUser.id;
 
@@ -76,7 +76,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   }>({
     method: 'POST',
     url: '/',
-    schema: createSuggestion,
+    schema: createSuggestionSchema,
     preValidation: [
       fastify.authenticate,
       fastify.statusNeedsAdmin,
