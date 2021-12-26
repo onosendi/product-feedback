@@ -23,7 +23,7 @@ export const listSuggestionsSchema: FastifySchema = {
   },
 };
 
-export const createSuggestionSchema: FastifySchema = {
+const createAndEditBodySchema = {
   body: {
     type: 'object',
     required: [
@@ -59,6 +59,24 @@ export const createSuggestionSchema: FastifySchema = {
         type: 'string',
         minLength: 5,
         maxLength: 75,
+      },
+    },
+  },
+};
+
+export const createSuggestionSchema: FastifySchema = {
+  ...createAndEditBodySchema,
+};
+
+export const editSuggestionSchema: FastifySchema = {
+  ...createAndEditBodySchema,
+  params: {
+    type: 'object',
+    required: ['suggestionId'],
+    properties: {
+      suggestionId: {
+        type: 'string',
+        format: 'uuid',
       },
     },
   },

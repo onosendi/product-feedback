@@ -1,3 +1,4 @@
+// TODO: routes need to make sure suggestion ID exists
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
@@ -7,15 +8,15 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
   // Create vote
   fastify.route<{
     Params: {
-      id: string;
+      suggestionId: string;
     }
   }>({
     method: 'POST',
-    url: '/:id',
+    url: '/:suggestionId',
     schema: createVoteSchema,
     preValidation: [fastify.authenticate],
     handler: async (request, reply) => {
-      const { id: suggestionId } = request.params;
+      const { suggestionId } = request.params;
       const userId = request.authUser.id;
 
       await fastify
@@ -35,15 +36,15 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
   // Delete vote
   fastify.route<{
     Params: {
-      id: string;
+      suggestionId: string;
     }
   }>({
     method: 'DELETE',
-    url: '/:id',
+    url: '/:suggestionId',
     schema: deleteVoteSchema,
     preValidation: [fastify.authenticate],
     handler: async (request, reply) => {
-      const { id: suggestionId } = request.params;
+      const { suggestionId } = request.params;
       const userId = request.authUser.id;
 
       await fastify

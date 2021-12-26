@@ -4,7 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
 import { getSuggestions } from './queries';
-import { createSuggestionSchema, listSuggestionsSchema } from './schemas';
+import {
+  createSuggestionSchema,
+  editSuggestionSchema,
+  listSuggestionsSchema,
+} from './schemas';
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // User must have admin to specify a suggestion's status
@@ -22,6 +26,32 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
         const error = new Error('Insufficient privileges: can\'t set status');
         reply
           .status(status.HTTP_403_FORBIDDEN)
+          .send(error);
+      }
+    },
+  );
+
+  // Suggestion ID must be valid
+  fastify.decorate(
+    'suggestionDetailNeedsValidId',
+    async (
+      request: FastifyRequest<{
+        Params: { suggestionId: string; },
+      }>,
+      reply: FastifyReply,
+    ) => {
+      const { suggestionId } = request.params;
+
+      const suggestion = await fastify
+        .knex('suggestion')
+        .select('id')
+        .where({ id: suggestionId })
+        .first();
+
+      if (!suggestion) {
+        const error = new Error('Invalid suggestion ID');
+        reply
+          .status(status.HTTP_400_BAD_REQUEST)
           .send(error);
       }
     },
@@ -117,6 +147,44 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       reply
         .status(status.HTTP_201_CREATED)
         .send(status.HTTP_201_CREATED);
+    },
+  });
+
+  // Edit suggestion
+  fastify.route<{
+    Body: {
+      category: DBSuggestionCategories;
+      description: string;
+      status?: DBSuggestionStatus;
+      title: string;
+    },
+    Params: {
+      suggestionId: string;
+    },
+  }>({
+    method: 'PATCH',
+    url: '/:suggestionId',
+    schema: editSuggestionSchema,
+    preHandler: [
+      fastify.suggestionDetailNeedsValidId,
+    ],
+    preValidation: [
+      fastify.authenticate,
+      fastify.statusNeedsAdmin,
+    ],
+    handler: async (request, reply) => {
+      const { suggestionId } = request.params;
+      console.log(suggestionId);
+
+      // const { id: userId } = request.authUser;
+      // const {
+      //   category,
+      //   description,
+      //   status: suggestionStatus = 'suggestion',
+      //   title,
+      // } = request.body;
+
+      reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
 };

@@ -1,11 +1,11 @@
 import type { FastifySchema } from 'fastify';
 
-export const createVoteSchema: FastifySchema = {
+const createAndDeletaParamsSchema = {
   params: {
     type: 'object',
-    required: ['id'],
+    required: ['suggestionId'],
     properties: {
-      id: {
+      suggestionId: {
         type: 'string',
         format: 'uuid',
       },
@@ -13,15 +13,10 @@ export const createVoteSchema: FastifySchema = {
   },
 };
 
+export const createVoteSchema: FastifySchema = {
+  ...createAndDeletaParamsSchema,
+};
+
 export const deleteVoteSchema: FastifySchema = {
-  params: {
-    type: 'object',
-    required: ['id'],
-    properties: {
-      id: {
-        type: 'string',
-        format: 'uuid',
-      },
-    },
-  },
+  ...createAndDeletaParamsSchema,
 };
