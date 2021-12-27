@@ -31,32 +31,6 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     },
   );
 
-  // Suggestion ID must be valid
-  fastify.decorate(
-    'suggestionDetailNeedsValidId',
-    async (
-      request: FastifyRequest<{
-        Params: { suggestionId: string; },
-      }>,
-      reply: FastifyReply,
-    ) => {
-      const { suggestionId } = request.params;
-
-      const suggestion = await fastify
-        .knex('suggestion')
-        .select('id')
-        .where({ id: suggestionId })
-        .first();
-
-      if (!suggestion) {
-        const error = new Error('Invalid suggestion ID');
-        reply
-          .status(status.HTTP_400_BAD_REQUEST)
-          .send(error);
-      }
-    },
-  );
-
   // List suggestions
   fastify.route<{
     Querystring: {
@@ -165,13 +139,11 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'PATCH',
     url: '/:suggestionId',
     schema: editSuggestionSchema,
-    preHandler: [
-      fastify.suggestionDetailNeedsValidId,
-    ],
     preValidation: [
       fastify.authenticate,
       fastify.statusNeedsAdmin,
     ],
+    preHandler: [fastify.validateDetailId],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
       console.log(suggestionId);

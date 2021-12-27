@@ -6,6 +6,7 @@ import { getUserById } from '../users/queries';
 
 const authenticateDecoratorFunc: FastifyPluginAsync = async (fastify) => {
   fastify.decorate(
+    // TODO: change name to `needsAuthentication`.
     'authenticate',
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {

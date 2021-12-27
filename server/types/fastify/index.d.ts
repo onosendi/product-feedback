@@ -7,7 +7,7 @@ declare module 'fastify' {
     authenticate: (request: FastifyRequest, reply: FastifyReply) => void;
     knex: Knex;
     statusNeedsAdmin: (request: FastifyRequest, reply: FastifyReply) => void;
-    suggestionDetailNeedsValidId: (
+    validateDetailId: (
       request: FastifyRequest,
       reply: FastifyReply,
     ) => void;
