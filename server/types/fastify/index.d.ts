@@ -4,9 +4,9 @@ import type { Knex } from 'knex';
 
 declare module 'fastify' {
   interface FastifyInstance {
+    needsOwner: (request: FastifyRequest, reply: FastifyReply) => void;
     knex: Knex;
     needsAuthentication: (request: FastifyRequest, reply: FastifyReply) => void;
-    needsToBeOwner: (request: FastifyRequest, reply: FastifyReply) => void;
     statusNeedsAdmin: (request: FastifyRequest, reply: FastifyReply) => void;
   }
 

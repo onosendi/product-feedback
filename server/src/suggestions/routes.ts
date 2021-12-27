@@ -43,31 +43,6 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     },
   );
 
-  // User needs to be the owner or an administrator in order to modify
-  // a suggestion.
-  fastify.decorate(
-    'needsToBeOwner',
-    (
-      request: FastifyRequest<{
-        Body: { status: DBSuggestionStatus; },
-      }>,
-      reply: FastifyReply,
-      done: HookHandlerDoneFunction,
-    ) => {
-      const { id: userId, role } = request.authUser;
-      const { detail } = request;
-
-      if (userId !== detail?.userId && role !== 'admin') {
-        const error = new Error('Must be the author to modify this suggestion');
-        reply
-          .status(status.HTTP_403_FORBIDDEN)
-          .send(error);
-      }
-
-      done();
-    },
-  );
-
   // List suggestions
   fastify.route<{
     Querystring: {
@@ -177,7 +152,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     preValidation: [fastify.needsAuthentication],
     preHandler: [
       fastify.statusNeedsAdmin,
-      fastify.needsToBeOwner,
+      fastify.needsOwner,
     ],
     handler: async (request, reply) => {
       const { detail } = request;
@@ -229,14 +204,16 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:suggestionId',
     schema: deleteSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [fastify.needsToBeOwner],
+    preHandler: [
+      fastify.needsOwner,
+    ],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
 
-      await fastify
-        .knex('suggestion')
-        .where({ id: suggestionId })
-        .delete();
+      // await fastify
+      //   .knex('suggestion')
+      //   .where({ id: suggestionId })
+      //   .delete();
 
       reply.status(status.HTTP_204_NO_CONTENT);
     },
