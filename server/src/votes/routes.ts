@@ -2,9 +2,12 @@
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
+import { suggestionDetail } from '../suggestions/plugins';
 import { createVoteSchema, deleteVoteSchema } from './schemas';
 
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.register(suggestionDetail);
+
   // Create vote
   fastify.route<{
     Params: {

@@ -8,3 +8,8 @@ const knexDecoratorFunc: FastifyPluginAsync = async (fastify) => {
   }
 };
 export const knexDecorator = fp(knexDecoratorFunc);
+
+const decorateRequestDetailFunc: FastifyPluginAsync = async (fastify) => {
+  fastify.decorateRequest('detail', null);
+};
+export const decorateRequestDetail = fp(decorateRequestDetailFunc);
