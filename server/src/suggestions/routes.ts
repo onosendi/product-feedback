@@ -22,7 +22,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
 
   // User must have admin to specify a suggestion's status
   fastify.decorate(
-    'statusNeedsAdmin',
+    'needsAdminToModifyStatus',
     (
       request: FastifyRequest<{
         Body: { status: DBSuggestionStatus; },
@@ -94,7 +94,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/',
     schema: createSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [fastify.statusNeedsAdmin],
+    preHandler: [fastify.needsAdminToModifyStatus],
     handler: async (request, reply) => {
       const { id: userId } = request.authUser;
       const {
@@ -151,7 +151,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     schema: editSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
     preHandler: [
-      fastify.statusNeedsAdmin,
+      fastify.needsAdminToModifyStatus,
       fastify.needsOwner,
     ],
     handler: async (request, reply) => {
