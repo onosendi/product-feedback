@@ -82,7 +82,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/',
     schema: createSuggestionSchema,
     preValidation: [
-      fastify.authenticate,
+      fastify.needsAuthentication,
       fastify.statusNeedsAdmin,
     ],
     handler: async (request, reply) => {
@@ -139,11 +139,11 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'PATCH',
     url: '/:suggestionId',
     schema: editSuggestionSchema,
-    preValidation: [
-      fastify.authenticate,
+    preValidation: [fastify.needsAuthentication],
+    preHandler: [
       fastify.statusNeedsAdmin,
+      fastify.validateDetailId,
     ],
-    preHandler: [fastify.validateDetailId],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
       console.log(suggestionId);

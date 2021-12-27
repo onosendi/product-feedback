@@ -4,10 +4,9 @@ import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 import { getUserById } from '../users/queries';
 
-const authenticateDecoratorFunc: FastifyPluginAsync = async (fastify) => {
+const needsAuthenticationFunc: FastifyPluginAsync = async (fastify) => {
   fastify.decorate(
-    // TODO: change name to `needsAuthentication`.
-    'authenticate',
+    'needsAuthentication',
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         await request.jwtVerify();
@@ -17,11 +16,13 @@ const authenticateDecoratorFunc: FastifyPluginAsync = async (fastify) => {
     },
   );
 };
-export const authenticateDecorator = fp(authenticateDecoratorFunc);
+export const needsAuthentication = fp(needsAuthenticationFunc);
 
-const authUser: FastifyPluginAsync = async (fastify) => {
+const decorateRequestWithAuthUserFunc: FastifyPluginAsync = async (fastify) => {
+  fastify.decorateRequest('authUser', null);
+
   fastify.addHook(
-    'onRequest',
+    'preHandler',
     async (request: FastifyRequest, reply: FastifyReply) => {
       request.authUser = {} as DBUser;
       const authorization = request?.headers?.authorization;
@@ -50,4 +51,4 @@ const authUser: FastifyPluginAsync = async (fastify) => {
     },
   );
 };
-export const userHook = fp(authUser);
+export const decorateRequestWithAuthUser = fp(decorateRequestWithAuthUserFunc);

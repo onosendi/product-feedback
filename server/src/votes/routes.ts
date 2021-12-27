@@ -14,7 +14,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'POST',
     url: '/:suggestionId',
     schema: createVoteSchema,
-    preValidation: [fastify.authenticate],
+    preValidation: [fastify.needsAuthentication],
     preHandler: [fastify.validateDetailId],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
@@ -43,7 +43,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'DELETE',
     url: '/:suggestionId',
     schema: deleteVoteSchema,
-    preValidation: [fastify.authenticate],
+    preValidation: [fastify.needsAuthentication],
     preHandler: [fastify.validateDetailId],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;

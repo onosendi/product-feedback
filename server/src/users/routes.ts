@@ -82,7 +82,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.route({
     method: 'GET',
     url: '/test',
-    preValidation: [fastify.authenticate],
+    preValidation: [fastify.needsAuthentication],
     handler: async (request, reply) => {
       const { authUser } = request;
       reply
