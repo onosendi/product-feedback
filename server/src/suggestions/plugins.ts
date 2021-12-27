@@ -2,7 +2,7 @@ import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 
-const suggestionDetailFunc: FastifyPluginAsync = async (fastify) => {
+export const suggestionDetail: FastifyPluginAsync = fp(async (fastify) => {
   fastify.addHook(
     'preHandler',
     async (
@@ -30,5 +30,4 @@ const suggestionDetailFunc: FastifyPluginAsync = async (fastify) => {
       }
     },
   );
-};
-export const suggestionDetail = fp(suggestionDetailFunc);
+});

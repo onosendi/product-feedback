@@ -1,15 +1,13 @@
 import type { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
-import knex from '../lib/knex';
+import KnexInstance from '../lib/knex';
 
-const knexDecoratorFunc: FastifyPluginAsync = async (fastify) => {
+export const knex: FastifyPluginAsync = fp(async (fastify) => {
   if (!fastify.knex) {
-    fastify.decorate('knex', knex);
+    fastify.decorate('knex', KnexInstance);
   }
-};
-export const knexDecorator = fp(knexDecoratorFunc);
+});
 
-const decorateRequestDetailFunc: FastifyPluginAsync = async (fastify) => {
+export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorateRequest('detail', null);
-};
-export const decorateRequestDetail = fp(decorateRequestDetailFunc);
+});

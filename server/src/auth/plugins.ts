@@ -4,7 +4,7 @@ import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 import { getUserById } from '../users/queries';
 
-const needsAuthenticationFunc: FastifyPluginAsync = async (fastify) => {
+export const needsAuthentication: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'needsAuthentication',
     async (request: FastifyRequest, reply: FastifyReply) => {
@@ -15,10 +15,9 @@ const needsAuthenticationFunc: FastifyPluginAsync = async (fastify) => {
       }
     },
   );
-};
-export const needsAuthentication = fp(needsAuthenticationFunc);
+});
 
-const decorateRequestWithAuthUserFunc: FastifyPluginAsync = async (fastify) => {
+export const authUser: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorateRequest('authUser', null);
 
   fastify.addHook(
@@ -50,5 +49,4 @@ const decorateRequestWithAuthUserFunc: FastifyPluginAsync = async (fastify) => {
       }
     },
   );
-};
-export const decorateRequestWithAuthUser = fp(decorateRequestWithAuthUserFunc);
+});
