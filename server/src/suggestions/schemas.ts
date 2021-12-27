@@ -81,3 +81,5 @@ export const editSuggestionSchema: FastifySchema = {
     },
   },
 };
+
+export const deleteSuggestionSchema: FastifySchema = {};

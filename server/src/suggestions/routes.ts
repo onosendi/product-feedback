@@ -6,6 +6,7 @@ import makeSlug from '../lib/makeSlug';
 import { getSuggestions } from './queries';
 import {
   createSuggestionSchema,
+  deleteSuggestionSchema,
   editSuggestionSchema,
   listSuggestionsSchema,
 } from './schemas';
@@ -129,29 +130,93 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   });
 
   // Edit suggestion
+  // fastify.route<{
+  //   Body: {
+  //     category: DBSuggestionCategories;
+  //     description: string;
+  //     status?: DBSuggestionStatus;
+  //     title: string;
+  //   },
+  //   Params: {
+  //     suggestionId: string;
+  //   },
+  // }>({
+  //   method: 'PATCH',
+  //   url: '/:suggestionId',
+  //   schema: editSuggestionSchema,
+  //   preValidation: [fastify.needsAuthentication],
+  //   preHandler: [fastify.statusNeedsAdmin],
+  //   handler: async (request, reply) => {
+  //     const { id: userId, role } = request.authUser;
+  //     const { suggestionId } = request.params;
+
+  //     const suggestion: DBSuggestion = await fastify
+  //       .knex('suggestion')
+  //       .select('slug', 'status', 'title', 'user_id')
+  //       .where({ id: suggestionId })
+  //       .first();
+
+  //     if (userId !== suggestion.userId && role !== 'admin') {
+  //       const error = new Error('Must be the author to modify this suggestion');
+  //       reply
+  //         .status(status.HTTP_403_FORBIDDEN)
+  //         .send(error);
+  //       return;
+  //     }
+
+  //     const {
+  //       category,
+  //       description,
+  //       status: suggestionStatus = suggestion.status,
+  //       title,
+  //     } = request.body;
+
+  //     const slug = title === suggestion.title
+  //       ? suggestion.slug
+  //       : makeSlug(title);
+
+  //     await fastify.knex.transaction(async (trx) => {
+  //       const { id: categoryId } = await fastify
+  //         .knex('suggestion_category')
+  //         .select('id')
+  //         .where({ category })
+  //         .first()
+  //         .transacting(trx);
+
+  //       await fastify
+  //         .knex('suggestion')
+  //         .update({
+  //           category_id: categoryId,
+  //           description,
+  //           slug,
+  //           status: suggestionStatus,
+  //           title,
+  //         })
+  //         .where({ id: suggestionId })
+  //         .transacting(trx);
+  //     });
+
+  //     reply.status(status.HTTP_204_NO_CONTENT);
+  //   },
+  // });
+
+  // Delete suggestion
   fastify.route<{
-    Body: {
-      category: DBSuggestionCategories;
-      description: string;
-      status?: DBSuggestionStatus;
-      title: string;
-    },
     Params: {
       suggestionId: string;
     },
   }>({
-    method: 'PATCH',
+    method: 'DELETE',
     url: '/:suggestionId',
-    schema: editSuggestionSchema,
+    schema: deleteSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [fastify.statusNeedsAdmin],
     handler: async (request, reply) => {
       const { id: userId, role } = request.authUser;
       const { suggestionId } = request.params;
 
       const suggestion: DBSuggestion = await fastify
         .knex('suggestion')
-        .select('slug', 'status', 'title', 'user_id')
+        .select('user_id')
         .where({ id: suggestionId })
         .first();
 
@@ -163,37 +228,10 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
         return;
       }
 
-      const {
-        category,
-        description,
-        status: suggestionStatus = suggestion.status,
-        title,
-      } = request.body;
-
-      const slug = title === suggestion.title
-        ? suggestion.slug
-        : makeSlug(title);
-
-      await fastify.knex.transaction(async (trx) => {
-        const { id: categoryId } = await fastify
-          .knex('suggestion_category')
-          .select('id')
-          .where({ category })
-          .first()
-          .transacting(trx);
-
-        await fastify
-          .knex('suggestion')
-          .update({
-            category_id: categoryId,
-            description,
-            slug,
-            status: suggestionStatus,
-            title,
-          })
-          .where({ id: suggestionId })
-          .transacting(trx);
-      });
+      await fastify
+        .knex('suggestion')
+        .where({ id: suggestionId })
+        .delete();
 
       reply.status(status.HTTP_204_NO_CONTENT);
     },
