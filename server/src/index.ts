@@ -11,8 +11,9 @@ import votes from './votes';
 const fastify: FastifyInstance = Fastify({
   ajv: {
     customOptions: {
-      allErrors: true,
       $data: true,
+      allErrors: true,
+      removeAdditional: 'all',
     },
   },
   logger: process.env.NODE_ENV === 'development',

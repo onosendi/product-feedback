@@ -146,7 +146,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     ],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
-      console.log(suggestionId);
+      console.log(request.body);
 
       // const { id: userId } = request.authUser;
       // const {
