@@ -1,4 +1,4 @@
-import type { DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
+import type { DBSuggestion, DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
@@ -9,6 +9,12 @@ import {
   editSuggestionSchema,
   listSuggestionsSchema,
 } from './schemas';
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    statusNeedsAdmin: (request: FastifyRequest, reply: FastifyReply) => void;
+  }
+}
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // User must have admin to specify a suggestion's status
@@ -23,7 +29,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       const { role } = request.authUser;
 
       if (request.body.status && role !== 'admin') {
-        const error = new Error('Insufficient privileges: can\'t set status');
+        const error = new Error('Only administrators can change the status');
         reply
           .status(status.HTTP_403_FORBIDDEN)
           .send(error);
@@ -81,9 +87,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'POST',
     url: '/',
     schema: createSuggestionSchema,
-    preValidation: [
-      fastify.needsAuthentication,
-    ],
+    preValidation: [fastify.needsAuthentication],
     preHandler: [fastify.statusNeedsAdmin],
     handler: async (request, reply) => {
       const { id: userId } = request.authUser;
@@ -142,16 +146,54 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     preValidation: [fastify.needsAuthentication],
     preHandler: [fastify.statusNeedsAdmin],
     handler: async (request, reply) => {
+      const { id: userId, role } = request.authUser;
       const { suggestionId } = request.params;
-      console.log(request.body);
 
-      // const { id: userId } = request.authUser;
-      // const {
-      //   category,
-      //   description,
-      //   status: suggestionStatus = 'suggestion',
-      //   title,
-      // } = request.body;
+      const suggestion: DBSuggestion = await fastify
+        .knex('suggestion')
+        .select('slug', 'status', 'title', 'user_id')
+        .where({ id: suggestionId })
+        .first();
+
+      if (userId !== suggestion.userId && role !== 'admin') {
+        const error = new Error('Must be the author to modify this suggestion');
+        reply
+          .status(status.HTTP_403_FORBIDDEN)
+          .send(error);
+        return;
+      }
+
+      const {
+        category,
+        description,
+        status: suggestionStatus = suggestion.status,
+        title,
+      } = request.body;
+
+      const slug = title === suggestion.title
+        ? suggestion.slug
+        : makeSlug(title);
+
+      await fastify.knex.transaction(async (trx) => {
+        const { id: categoryId } = await fastify
+          .knex('suggestion_category')
+          .select('id')
+          .where({ category })
+          .first()
+          .transacting(trx);
+
+        await fastify
+          .knex('suggestion')
+          .update({
+            category_id: categoryId,
+            description,
+            slug,
+            status: suggestionStatus,
+            title,
+          })
+          .where({ id: suggestionId })
+          .transacting(trx);
+      });
 
       reply.status(status.HTTP_204_NO_CONTENT);
     },
