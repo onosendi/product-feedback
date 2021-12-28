@@ -16,6 +16,7 @@
     "faker": "^5.5.3",
     "fastify": "^3.22.0",
     "fastify-jwt": "^4.1.0",
+    "fastify-knexjs": "^1.4.0",
     "fastify-plugin": "^3.0.0",
     "knex": "^0.95.11",
     "pg": "^8.7.1",

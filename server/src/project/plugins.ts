@@ -1,13 +1,6 @@
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
-import KnexInstance from '../lib/knex';
 import status from '../lib/httpStatusCodes';
-
-export const knex: FastifyPluginAsync = fp(async (fastify) => {
-  if (!fastify.knex) {
-    fastify.decorate('knex', KnexInstance);
-  }
-});
 
 export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorateRequest('detail', null);

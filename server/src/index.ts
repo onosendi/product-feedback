@@ -1,12 +1,16 @@
+import dotenv from 'dotenv';
 import type { FastifyInstance } from 'fastify';
 import Fastify from 'fastify';
-import FastifyJWT from 'fastify-jwt';
-import config from '../config';
+import fastifyJwt from 'fastify-jwt';
+import fastifyKnex from 'fastify-knexjs';
 import auth from './auth';
+import getKnexConfig from './lib/knexConfig';
 import project from './project';
 import suggestions from './suggestions';
 import users from './users';
 import votes from './votes';
+
+dotenv.config();
 
 const fastify: FastifyInstance = Fastify({
   ajv: {
@@ -19,9 +23,11 @@ const fastify: FastifyInstance = Fastify({
   logger: process.env.NODE_ENV === 'development',
 });
 
-fastify.register(FastifyJWT, {
-  secret: config.APP_SECRET,
+fastify.register(fastifyJwt, {
+  secret: process.env.APP_SECRET as string,
 });
+
+fastify.register(fastifyKnex, getKnexConfig());
 
 fastify.register(project);
 fastify.register(auth);
@@ -32,8 +38,8 @@ fastify.register(votes);
 async function start() {
   try {
     await fastify.listen({
-      host: config.APP_HOST,
-      port: config.APP_PORT,
+      host: process.env.APP_HOST as string || 'localhost',
+      port: Number(process.env.APP_PORTS) || 8000,
     });
   } catch (err) {
     fastify.log.error(err);

@@ -1,5 +1,4 @@
 import type { DBSuggestion, DBUser } from '@t/database';
-import 'fastify';
 import type { Knex } from 'knex';
 
 declare module 'fastify' {
