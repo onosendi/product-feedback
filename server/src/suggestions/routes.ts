@@ -23,13 +23,13 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // User must have admin to specify a suggestion's status
   fastify.decorate(
     'needsAdminToModifyStatus',
-    (
+    function (
       request: FastifyRequest<{
         Body: { status: DBSuggestionStatus; },
       }>,
       reply: FastifyReply,
       done: HookHandlerDoneFunction,
-    ) => {
+    ) {
       const { role } = request.authUser;
 
       if (request.body.status && role !== 'admin') {

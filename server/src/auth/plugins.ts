@@ -7,7 +7,7 @@ import { getUserById } from '../users/queries';
 export const needsAuthentication: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'needsAuthentication',
-    async (request: FastifyRequest, reply: FastifyReply) => {
+    async function (request: FastifyRequest, reply: FastifyReply) {
       try {
         await request.jwtVerify();
       } catch (error) {

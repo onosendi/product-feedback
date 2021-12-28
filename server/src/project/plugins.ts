@@ -16,10 +16,7 @@ export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
 export const needsOwner: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'needsOwner',
-    async (
-      request: FastifyRequest,
-      reply: FastifyReply,
-    ) => {
+    async function (request: FastifyRequest, reply: FastifyReply) {
       const { id: userId, role } = request.authUser;
       const { detail } = request;
 

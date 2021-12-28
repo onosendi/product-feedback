@@ -19,9 +19,11 @@
     "jest"
   ],
   "rules": {
+    "func-names" : "off",
     "import/prefer-default-export": "off",
     "no-console": [1, { "allow": ["warn", "error"]}],
     "max-len": "off",
+    "prefer-arrow-callback": "off",
     "@typescript-eslint/consistent-type-imports": [2, { "prefer": "type-imports" }]
   }
 }
