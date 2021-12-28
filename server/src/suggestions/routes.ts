@@ -15,6 +15,7 @@ import {
   deleteSuggestionSchema,
   editSuggestionSchema,
   listSuggestionsSchema,
+  suggestionDetailSchema,
 } from './schemas';
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
@@ -78,6 +79,36 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       reply
         .status(status.HTTP_200_OK)
         .send(await suggestions);
+    },
+  });
+
+  // Suggestion detail
+  fastify.route<{
+    Params: {
+      slug: string;
+    },
+  }>({
+    method: 'GET',
+    url: '/:slug',
+    schema: suggestionDetailSchema,
+    handler: async (request, reply) => {
+      const { id: userId } = request.authUser;
+      const { slug } = request.params;
+
+      const suggestion = await getSuggestions(fastify.knex, userId)
+        .where({ slug })
+        .first();
+
+      if (!suggestion) {
+        const error = new Error('Record does not exist');
+        reply
+          .status(status.HTTP_400_BAD_REQUEST)
+          .send(error);
+      }
+
+      reply
+        .status(status.HTTP_200_OK)
+        .send(suggestion);
     },
   });
 

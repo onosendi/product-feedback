@@ -23,6 +23,9 @@ export const listSuggestionsSchema: FastifySchema = {
   },
 };
 
+// TODO
+export const suggestionDetailSchema: FastifySchema = {};
+
 const createAndEditBodySchema = {
   body: {
     type: 'object',
@@ -82,4 +85,5 @@ export const editSuggestionSchema: FastifySchema = {
   },
 };
 
+// TODO
 export const deleteSuggestionSchema: FastifySchema = {};
