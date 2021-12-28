@@ -6,7 +6,7 @@ import { suggestionDetail } from '../suggestions/plugins';
 import { createVoteSchema, deleteVoteSchema } from './schemas';
 
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.register(suggestionDetail);
+  await fastify.register(suggestionDetail);
 
   // Create vote
   fastify.route<{

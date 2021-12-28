@@ -18,7 +18,7 @@ import {
 } from './schemas';
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.register(suggestionDetail);
+  await fastify.register(suggestionDetail);
 
   // User must have admin to specify a suggestion's status
   fastify.decorate(
@@ -204,16 +204,14 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:suggestionId',
     schema: deleteSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [
-      fastify.needsOwner,
-    ],
+    preHandler: [fastify.needsOwner],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
 
-      // await fastify
-      //   .knex('suggestion')
-      //   .where({ id: suggestionId })
-      //   .delete();
+      await fastify
+        .knex('suggestion')
+        .where({ id: suggestionId })
+        .delete();
 
       reply.status(status.HTTP_204_NO_CONTENT);
     },

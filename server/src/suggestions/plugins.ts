@@ -3,6 +3,10 @@ import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 
 export const suggestionDetail: FastifyPluginAsync = fp(async (fastify) => {
+  if (!fastify.hasRequestDecorator('detail')) {
+    fastify.decorateRequest('detail', null);
+  }
+
   fastify.addHook(
     'preHandler',
     async (

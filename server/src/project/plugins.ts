@@ -2,10 +2,6 @@ import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 
-export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.decorateRequest('detail', null);
-});
-
 export const needsOwner: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'needsOwner',
@@ -14,7 +10,7 @@ export const needsOwner: FastifyPluginAsync = fp(async (fastify) => {
       const { detail } = request;
 
       if (!detail) {
-        throw new Error('Detail object found');
+        throw new Error('No detail object found on Request');
       }
 
       if (userId !== detail?.userId && role !== 'admin') {
