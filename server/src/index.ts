@@ -39,7 +39,7 @@ async function start() {
   try {
     await fastify.listen({
       host: process.env.APP_HOST as string || 'localhost',
-      port: Number(process.env.APP_PORTS) || 8000,
+      port: Number(process.env.APP_PORT) || 8000,
     });
   } catch (err) {
     fastify.log.error(err);
