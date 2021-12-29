@@ -1,13 +1,11 @@
 // TODO: routes need to make sure suggestion ID exists
 import type { FastifyPluginAsync } from 'fastify';
+import { decorateRequestWithDetail } from 'src/project/preHandlers';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
-import { suggestionDetail } from '../suggestions/plugins';
 import { createVoteSchema, deleteVoteSchema } from './schemas';
 
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
-  await fastify.register(suggestionDetail);
-
   // Create vote
   fastify.route<{
     Params: {
@@ -18,6 +16,13 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:suggestionId',
     schema: createVoteSchema,
     preValidation: [fastify.needsAuthentication],
+    preHandler: [
+      decorateRequestWithDetail(fastify, {
+        paramKey: 'suggestionId',
+        select: ['id'],
+        table: 'suggestion',
+      }),
+    ],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
       const userId = request.authUser.id;
@@ -46,6 +51,13 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:suggestionId',
     schema: deleteVoteSchema,
     preValidation: [fastify.needsAuthentication],
+    preHandler: [
+      decorateRequestWithDetail(fastify, {
+        paramKey: 'suggestionId',
+        select: ['id'],
+        table: 'suggestion',
+      }),
+    ],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
       const userId = request.authUser.id;

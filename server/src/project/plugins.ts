@@ -2,6 +2,10 @@ import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
 
+export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
+  fastify.decorateRequest('detail', null);
+});
+
 export const needsOwner: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'needsOwner',

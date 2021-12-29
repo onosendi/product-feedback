@@ -8,7 +8,7 @@ import type {
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
-import { suggestionDetail } from './plugins';
+import { decorateRequestWithDetail } from '../project/preHandlers';
 import { getSuggestions } from './queries';
 import {
   createSuggestionSchema,
@@ -19,8 +19,6 @@ import {
 } from './schemas';
 
 const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
-  await fastify.register(suggestionDetail);
-
   // User must have admin to specify a suggestion's status
   fastify.decorate(
     'needsAdminToModifyStatus',
@@ -235,7 +233,14 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:suggestionId',
     schema: deleteSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [fastify.needsOwner],
+    preHandler: [
+      decorateRequestWithDetail(fastify, {
+        paramKey: 'suggestionId',
+        select: ['id'],
+        table: 'suggestion',
+      }),
+      fastify.needsOwner,
+    ],
     handler: async (request, reply) => {
       const { suggestionId } = request.params;
 
