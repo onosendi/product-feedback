@@ -3,6 +3,8 @@ import type { Knex } from 'knex';
 
 declare module 'fastify' {
   interface FastifyInstance {
+    // TODO
+    decorateRequestDetail: any;
     needsOwner: (request: FastifyRequest, reply: FastifyReply) => void;
     knex: Knex;
     needsAuthentication: (request: FastifyRequest, reply: FastifyReply) => void;

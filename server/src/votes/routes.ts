@@ -1,6 +1,5 @@
 // TODO: routes need to make sure suggestion ID exists
 import type { FastifyPluginAsync } from 'fastify';
-import { decorateRequestWithDetail } from 'src/project/preHandlers';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import { createVoteSchema, deleteVoteSchema } from './schemas';
@@ -17,8 +16,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     schema: createVoteSchema,
     preValidation: [fastify.needsAuthentication],
     preHandler: [
-      decorateRequestWithDetail(fastify, {
-        paramKey: 'suggestionId',
+      fastify.decorateRequestDetail({
         select: ['id'],
         table: 'suggestion',
       }),
@@ -52,8 +50,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     schema: deleteVoteSchema,
     preValidation: [fastify.needsAuthentication],
     preHandler: [
-      decorateRequestWithDetail(fastify, {
-        paramKey: 'suggestionId',
+      fastify.decorateRequestDetail({
         select: ['id'],
         table: 'suggestion',
       }),

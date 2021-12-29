@@ -8,7 +8,6 @@ import type {
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
-import { decorateRequestWithDetail } from '../project/preHandlers';
 import { getSuggestions } from './queries';
 import {
   createSuggestionSchema,
@@ -89,6 +88,13 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     url: '/:slug',
     schema: suggestionDetailSchema,
+    preHandler: [
+      fastify.decorateRequestDetail({
+        select: ['id'],
+        table: 'suggestion',
+        tableColumn: 'slug',
+      }),
+    ],
     handler: async (request, reply) => {
       const { id: userId } = request.authUser;
       const { slug } = request.params;
@@ -96,13 +102,6 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       const suggestion = await getSuggestions(fastify.knex, userId)
         .where({ slug })
         .first();
-
-      if (!suggestion) {
-        const error = new Error('Record does not exist');
-        reply
-          .status(status.HTTP_400_BAD_REQUEST)
-          .send(error);
-      }
 
       reply
         .status(status.HTTP_200_OK)
@@ -181,6 +180,10 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     preValidation: [fastify.needsAuthentication],
     preHandler: [
       fastify.needsAdminToModifyStatus,
+      fastify.decorateRequestDetail({
+        select: ['status', 'title', 'slug'],
+        table: 'suggestion',
+      }),
       fastify.needsOwner,
     ],
     handler: async (request, reply) => {
@@ -234,8 +237,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     schema: deleteSuggestionSchema,
     preValidation: [fastify.needsAuthentication],
     preHandler: [
-      decorateRequestWithDetail(fastify, {
-        paramKey: 'suggestionId',
+      fastify.decorateRequestDetail({
         select: ['id'],
         table: 'suggestion',
       }),
