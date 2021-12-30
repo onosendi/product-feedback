@@ -156,6 +156,8 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
           .transacting(trx);
       });
 
+      // TODO: create vote when user creates a suggestion
+
       reply
         .status(status.HTTP_201_CREATED)
         .send(status.HTTP_201_CREATED);
