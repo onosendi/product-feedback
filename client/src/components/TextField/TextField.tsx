@@ -5,6 +5,7 @@ import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
 interface TextFieldProps {
+  autoFocus?: boolean;
   defaultValue?: string | undefined;
   description?: string | null;
   error?: boolean | null;

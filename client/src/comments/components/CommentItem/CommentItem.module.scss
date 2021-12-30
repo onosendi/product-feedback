@@ -1,0 +1,87 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.footer {
+  min-height: 4rem;
+  position: relative;
+
+  & > * {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.namesWrapper {
+  font-size: 1.3rem;
+  left: 5.6rem;
+
+  @include mixins.respond-to(md) {
+    font-size: 1.4rem;
+    left: 7.2rem;
+  }
+}
+
+.name {
+  color: var(--clr-primary-darkslateblue);
+  letter-spacing: 0.018rem;
+  line-height: normal;
+}
+
+.username {
+  color: var(--clr-primary-slategray);
+  line-height: normal;
+
+  &::before {
+    content: '@';
+  }
+}
+
+.reply {
+  color: var(--clr-primary-royalblue);
+  right: 0;
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.content {
+  color: var(--clr-primary-slategray);
+  margin-top: 1.6rem;
+
+  @include mixins.respond-to(md) {
+    padding-left: 7.2rem;
+  }
+
+  & > span {
+    color: var(--clr-primary-blueviolet);
+    font-weight: 700;
+  }
+}
+
+.commentForm {
+  display: grid;
+  grid-gap: 1.6rem;
+  margin-top: 2.4rem;
+
+  @include mixins.respond-to(md) {
+    margin-left: 7.2rem;
+  }
+
+  &Comment {
+    @include mixins.respond-to(md) {
+      grid-template-columns: 46.1rem auto;
+    }
+  }
+
+  &Reply {
+    @include mixins.respond-to(md) {
+      grid-template-columns: 41.6rem auto;
+    }
+  }
+}
+
+.replyButton {
+  align-self: start;
+}

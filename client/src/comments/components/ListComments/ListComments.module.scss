@@ -1,24 +1,6 @@
 @use '../../../assets/scss/abstracts/mixins';
 @use '../../../assets/scss/abstracts/palette';
 
-.container {
-  max-width: 73rem;
-}
-
-.goBackAndEditFeedbackWrapper {
-  align-items: center;
-  display: flex;
-  margin-bottom: 2.4rem;
-
-  & > *:first-child {
-    margin-right: auto;
-  }
-}
-
-.detailWrapper {
-  position: relative;
-}
-
 .commentPaper {
   margin-top: 2.4rem;
   padding: 2.4rem 2.4rem 0;

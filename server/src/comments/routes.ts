@@ -8,21 +8,20 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
   // List comments
   fastify.route<{
     Params: {
-      slug: string;
+      suggestionId: string;
     },
   }>({
     method: 'GET',
-    url: '/:slug',
+    url: '/:suggestionId',
     schema: listCommentsSchema,
     preHandler: [
       fastify.decorateRequestDetail({
         select: ['id'],
         table: 'suggestion',
-        tableColumn: 'slug',
       }),
     ],
     handler: async (request, reply) => {
-      const { id: suggestionId } = request.detail as DBSuggestion;
+      const { suggestionId } = request.params;
 
       const comments = await getComments(fastify.knex, suggestionId);
 

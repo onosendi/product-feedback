@@ -4,3 +4,7 @@ export function capitalize(string: string) {
     (letter) => letter.toUpperCase(),
   );
 }
+
+export function getFullName(firstName: string, lastName: string) {
+  return [firstName, lastName].filter((name) => name).join(' ');
+}

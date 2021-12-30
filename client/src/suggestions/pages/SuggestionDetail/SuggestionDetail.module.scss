@@ -1,3 +1,21 @@
 .authBar {
   max-width: 73rem;
 }
+
+.container {
+  max-width: 73rem;
+}
+
+.goBackAndEditFeedbackWrapper {
+  align-items: center;
+  display: flex;
+  margin-bottom: 2.4rem;
+
+  & > *:first-child {
+    margin-right: auto;
+  }
+}
+
+.detailWrapper {
+  position: relative;
+}

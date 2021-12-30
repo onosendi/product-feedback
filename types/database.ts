@@ -30,3 +30,15 @@ export interface DBSuggestionCategory {
   category: DBSuggestionCategories;
   display: DBSuggestionCategoryDisplay;
 }
+
+export interface DBComment {
+  content: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+  picture: string;
+  replies: DBComment[];
+  suggestionCommentParentId: string;
+  suggestionId: string;
+  username: string;
+}
