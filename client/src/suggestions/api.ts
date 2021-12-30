@@ -13,9 +13,15 @@ const suggestionsApi = baseApi.injectEndpoints({
       },
       providesTags: ['Suggestions'],
     }),
+    getSuggestionDetail: build.query<SuggestionResponse, any>({
+      query: (slug: string) => `/suggestions/${slug}`,
+    }),
   }),
 });
 
-export const { useGetSuggestionsQuery } = suggestionsApi;
+export const {
+  useGetSuggestionsQuery,
+  useGetSuggestionDetailQuery,
+} = suggestionsApi;
 
 export default suggestionsApi;

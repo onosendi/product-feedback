@@ -1,0 +1,75 @@
+@use '../../../assets/scss/abstracts/mixins';
+@use '../../../assets/scss/abstracts/palette';
+
+.container {
+  max-width: 73rem;
+}
+
+.goBackAndEditFeedbackWrapper {
+  align-items: center;
+  display: flex;
+  margin-bottom: 2.4rem;
+
+  & > *:first-child {
+    margin-right: auto;
+  }
+}
+
+.detailWrapper {
+  position: relative;
+}
+
+.commentPaper {
+  margin-top: 2.4rem;
+  padding: 2.4rem 2.4rem 0;
+
+  @include mixins.respond-to(md) {
+    padding: 2.4rem 3.2rem 0;
+  }
+}
+
+.commentCount {
+  color: var(--clr-primary-darkslateblue);
+  font-size: 1.8rem;
+  letter-spacing: -0.025rem;
+}
+
+.commentList {
+  margin-top: 2.4rem;
+
+  & li {
+    padding-bottom: 2.4rem;
+
+    @include mixins.respond-to(md) {
+      padding-bottom: 3.3rem;
+    }
+  }
+
+  & li li:last-child {
+    padding-bottom: unset;
+  }
+
+  & > li > ul {
+    --comment-reply-item-left-border-color: #{palette.$slategray};
+
+    border-left: 0.1rem solid hsl(var(--comment-reply-item-left-border-color) / 10%);
+    margin-top: 2.4rem;
+    padding-left: 2.3rem;
+
+    @include mixins.respond-to(md) {
+      margin-left: 1.9rem;
+      margin-top: 3.2rem;
+    }
+  }
+
+  & > li + li {
+    --comment-list-item-bottom-border-color: #{palette.$lightslategray};
+
+    border-top: 0.1rem solid hsl(var(--comment-list-item-bottom-border-color) / 25%);
+    padding-top: 2.4rem;
+
+    @include mixins.respond-to(md) {
+      padding-top: 3.2rem;
+    }
+  }
+}

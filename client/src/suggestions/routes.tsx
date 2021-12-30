@@ -6,12 +6,18 @@ import routes from '../lib/routes';
 const CreateSuggestion = lazy(() => import('./pages/CreateSuggestion'));
 const EditSuggestion = lazy(() => import('./pages/EditSuggestion'));
 const ListSuggestions = lazy(() => import('./pages/ListSuggestions'));
+const SuggestionDetail = lazy(() => import('./pages/SuggestionDetail'));
 
 const suggestionRoutes = [
   <Route
     element={<ListSuggestions />}
     key="suggestions-list"
     path={routes.suggestions.list}
+  />,
+  <Route
+    element={<SuggestionDetail />}
+    key="suggestion-detail"
+    path="/suggestions/:slug"
   />,
   <Route
     element={(

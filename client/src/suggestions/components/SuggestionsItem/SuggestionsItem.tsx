@@ -10,14 +10,12 @@ interface SuggestionsItemProps {
   data: SuggestionResponse;
   forRoadmap?: boolean;
   link?: boolean;
-  showComments?: boolean;
 }
 
 export default function SuggestionsItem({
   data,
   forRoadmap = false,
   link = true,
-  showComments = true,
 }: SuggestionsItemProps) {
   const responsive = !forRoadmap;
 
@@ -30,6 +28,7 @@ export default function SuggestionsItem({
           forRoadmap && styles.status,
           forRoadmap && styles[`status${data.status}`],
         )}
+        // TODO
         component={link ? 'a' : 'div'}
         href={routes.suggestions.detail(data.slug)}
       >
@@ -51,19 +50,17 @@ export default function SuggestionsItem({
             </p>
           )}
           <span className={cx('type-body3', styles.category)}>{data.category}</span>
-          {showComments && (
-            <span
-              className={cx(
-                'type-jost-bold',
-                styles.comments,
-                responsive && styles.responsive,
-                data.commentCount === 0 && styles.noComments,
-              )}
-            >
-              <span className={cx(styles.commentsIcon, responsive && styles.responsive)} />
-              {data.commentCount}
-            </span>
-          )}
+          <span
+            className={cx(
+              'type-jost-bold',
+              styles.comments,
+              responsive && styles.responsive,
+              data.commentCount === 0 && styles.noComments,
+            )}
+          >
+            <span className={cx(styles.commentsIcon, responsive && styles.responsive)} />
+            {data.commentCount}
+          </span>
         </article>
       </Paper>
       <Vote

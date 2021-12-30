@@ -22,6 +22,12 @@ const suggestionsSlice = createSlice({
       },
     );
     builder.addMatcher(
+      suggestionsApi.endpoints.getSuggestionDetail.matchFulfilled,
+      (state, { payload }) => {
+        suggestionsAdapter.addOne(state, payload);
+      },
+    );
+    builder.addMatcher(
       votesApi.endpoints.createVote.matchFulfilled,
       (state, action) => {
         const { originalArgs: suggestionId } = action.meta.arg;

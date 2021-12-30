@@ -23,8 +23,24 @@ export const listSuggestionsSchema: FastifySchema = {
   },
 };
 
-// TODO
-export const suggestionDetailSchema: FastifySchema = {};
+export const suggestionDetailSchema: FastifySchema = {
+  response: {
+    [status.HTTP_200_OK]: {
+      type: 'object',
+      properties: {
+        category: { type: 'string' },
+        commentCount: { type: 'number' },
+        description: { type: 'string' },
+        hasVoted: { type: 'boolean' },
+        id: { type: 'string' },
+        slug: { type: 'string' },
+        title: { type: 'string' },
+        userId: { type: 'string' },
+        votes: { type: 'number' },
+      },
+    },
+  },
+};
 
 const createAndEditBodySchema = {
   body: {
