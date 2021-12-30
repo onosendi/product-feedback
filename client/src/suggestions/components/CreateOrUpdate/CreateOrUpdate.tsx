@@ -1,8 +1,10 @@
+import type { APICreateOrUpdateSuggestion } from '@t/api';
 import cx from 'clsx';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
+import { useCreateSuggestionMutation } from 'src/suggestions/api';
 import {
   Button,
   Dialog,
@@ -16,7 +18,9 @@ import styles from './CreateOrUpdate.module.scss';
 export default function CreateOrUpdate() {
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
+  const formRef = useRef<HTMLFormElement>(null);
 
+  const [createSuggestion] = useCreateSuggestionMutation();
   const { role } = useAuth();
   const isNew = true;
 
@@ -25,9 +29,22 @@ export default function CreateOrUpdate() {
     navigate(-1);
   };
 
-  // @ts-ignore
-  const onSubmit = async (values) => {};
+  const onSubmit = async (values: APICreateOrUpdateSuggestion) => {
+    const body = {
+      ...values,
+      category: formRef.current?.category?.value,
+      status: formRef.current?.status?.value,
+    };
 
+    try {
+      // TODO: handle errors
+      await createSuggestion(body).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // TODO
   const deleteFeedback = async () => {};
 
   const toggleDeleteDialog = () => {
@@ -54,7 +71,12 @@ export default function CreateOrUpdate() {
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, submitting, values }) => (
-          <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
+          <form
+            className={cx(styles.form)}
+            noValidate
+            onSubmit={handleSubmit}
+            ref={formRef}
+          >
             <Field
               name="title"
               render={({ input, meta }) => (
@@ -67,42 +89,35 @@ export default function CreateOrUpdate() {
                 />
               )}
             />
-            <Field
+            <SelectField
+              // TODO
+              defaultValue="ux"
+              description="Choose a category for your feedback"
+              id="category"
+              label="Category"
               name="category"
-              render={({ input, meta }) => (
-                <>
-                  <SelectField
-                    // TODO
-                    defaultValue="ux"
-                    description="Choose a category for your feedback"
-                    id="category"
-                    label="Category"
-                    {...input}
-                  >
-                    <SelectItem value="feature">Feature</SelectItem>
-                    <SelectItem value="ui">UI</SelectItem>
-                    <SelectItem value="ux">UX</SelectItem>
-                    <SelectItem value="enhancement">Enhancement</SelectItem>
-                    <SelectItem value="bug">Bug</SelectItem>
-                  </SelectField>
-                  {role === 'admin' && (
-                    <SelectField
-                      // TODO
-                      defaultValue="live"
-                      description="Change feature state"
-                      id="status"
-                      label={isNew ? 'Status' : 'Update Status'}
-                      name="status"
-                    >
-                      <SelectItem value="suggestion">Suggestion</SelectItem>
-                      <SelectItem value="planned">Planned</SelectItem>
-                      <SelectItem value="in-progress">In-Progress</SelectItem>
-                      <SelectItem value="live">Live</SelectItem>
-                    </SelectField>
-                  )}
-                </>
-              )}
-            />
+            >
+              <SelectItem value="feature">Feature</SelectItem>
+              <SelectItem value="ui">UI</SelectItem>
+              <SelectItem value="ux">UX</SelectItem>
+              <SelectItem value="enhancement">Enhancement</SelectItem>
+              <SelectItem value="bug">Bug</SelectItem>
+            </SelectField>
+            {role === 'admin' && (
+              <SelectField
+                // TODO
+                defaultValue="live"
+                description="Change feature state"
+                id="status"
+                label={isNew ? 'Status' : 'Update Status'}
+                name="status"
+              >
+                <SelectItem value="suggestion">Suggestion</SelectItem>
+                <SelectItem value="planned">Planned</SelectItem>
+                <SelectItem value="in-progress">In-Progress</SelectItem>
+                <SelectItem value="live">Live</SelectItem>
+              </SelectField>
+            )}
             <Field
               name="description"
               render={({ input, meta }) => (

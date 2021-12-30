@@ -1,3 +1,4 @@
+import type { APILogin } from '@t/api';
 import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
@@ -12,8 +13,8 @@ import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
-import { useNavigateAuthorized } from '../../hooks';
 import { useLoginMutation } from '../../api';
+import { useNavigateAuthorized } from '../../hooks';
 import styles from './Login.module.scss';
 
 export default function Login() {
@@ -22,10 +23,7 @@ export default function Login() {
   const [errors, setErrors] = useState(false);
   const [login] = useLoginMutation();
 
-  const onSubmit = async (values: {
-    username: string;
-    password: string;
-  }) => {
+  const onSubmit = async (values: APILogin) => {
     setErrors(false);
     const { username = '', password = '' } = values;
 

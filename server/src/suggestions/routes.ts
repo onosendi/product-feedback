@@ -1,3 +1,4 @@
+import type { APICreateOrUpdateSuggestion } from '@t/api';
 import type { DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
 import type {
   FastifyPluginAsync,
@@ -110,14 +111,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   });
 
   // Create suggestion
-  fastify.route<{
-    Body: {
-      category: DBSuggestionCategories;
-      description: string;
-      status?: DBSuggestionStatus;
-      title: string;
-    },
-  }>({
+  fastify.route<{ Body: APICreateOrUpdateSuggestion }>({
     method: 'POST',
     url: '/',
     schema: createSuggestionSchema,
@@ -154,9 +148,8 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
             category_id: categoryId,
           })
           .transacting(trx);
+        // TODO: create vote when user creates a suggestion
       });
-
-      // TODO: create vote when user creates a suggestion
 
       reply
         .status(status.HTTP_201_CREATED)
@@ -166,12 +159,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
 
   // Edit suggestion
   fastify.route<{
-    Body: {
-      category: DBSuggestionCategories;
-      description: string;
-      status?: DBSuggestionStatus;
-      title: string;
-    },
+    Body: APICreateOrUpdateSuggestion,
     Params: {
       suggestionId: string;
     },
