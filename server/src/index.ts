@@ -4,6 +4,7 @@ import Fastify from 'fastify';
 import fastifyJwt from 'fastify-jwt';
 import fastifyKnex from 'fastify-knexjs';
 import auth from './auth';
+import comments from './comments';
 import getKnexConfig from './lib/knexConfig';
 import project from './project';
 import suggestions from './suggestions';
@@ -34,6 +35,7 @@ fastify.register(auth);
 fastify.register(users);
 fastify.register(suggestions);
 fastify.register(votes);
+fastify.register(comments);
 
 async function start() {
   try {
