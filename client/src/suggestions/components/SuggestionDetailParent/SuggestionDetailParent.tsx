@@ -2,6 +2,7 @@ import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { useParams } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
+import { CreateComment } from 'src/comments/components';
 import { Button, Container, GoBack } from 'src/components';
 import routes from 'src/lib/routes';
 import { useGetSuggestionDetailQuery } from 'src/suggestions/api';
@@ -12,11 +13,11 @@ export default function SuggestionDetailParent() {
   const { slug } = useParams();
   const { role, userId } = useAuth();
   const {
-    data: detail = {} as SuggestionResponse,
+    data: suggestion = {} as SuggestionResponse,
     isFetching,
   } = useGetSuggestionDetailQuery(slug);
 
-  if (!Object.entries(detail).length && !isFetching) {
+  if (!Object.entries(suggestion).length && !isFetching) {
     // TODO
     return <p>Not found</p>;
   }
@@ -26,8 +27,8 @@ export default function SuggestionDetailParent() {
       <Container className={cx(styles.container)}>
         <div className={cx(styles.goBackAndEditFeedbackWrapper)}>
           <GoBack shade="dark" />
-          {(!isFetching && (detail.id === userId || role === 'admin')) && (
-            <Button href={routes.suggestions.edit(detail.slug)} variant="2">
+          {(!isFetching && (suggestion.id === userId || role === 'admin')) && (
+            <Button href={routes.suggestions.edit(suggestion.slug)} variant="2">
               Edit Feedback
             </Button>
           )}
@@ -37,9 +38,10 @@ export default function SuggestionDetailParent() {
             // TODO: Loading spinner
             ? <p>Loading</p>
             : (
-              <SuggestionsItem data={detail} link={false} />
+              <SuggestionsItem data={suggestion} link={false} />
             )}
         </div>
+        {!isFetching && <CreateComment suggestionId={suggestion.id} />}
       </Container>
     </>
   );

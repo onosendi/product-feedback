@@ -8,6 +8,9 @@ interface PaperProps {
   className?: string | null;
   component?: ElementType | string;
   href?: string;
+  noValidate?: boolean;
+  // TODO
+  onSubmit?: any;
 }
 
 const Paper = forwardRef<HTMLElement, PaperProps>(({
@@ -15,10 +18,14 @@ const Paper = forwardRef<HTMLElement, PaperProps>(({
   className = null,
   component: Component = 'div',
   href = null,
+  noValidate,
+  onSubmit,
 }, forwardedRef) => (
   <Component
     className={cx(styles.paper, className)}
     href={href}
+    noValidate={noValidate}
+    onSubmit={onSubmit}
     ref={forwardedRef}
   >
     {children}

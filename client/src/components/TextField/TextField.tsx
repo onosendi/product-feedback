@@ -18,6 +18,7 @@ interface TextFieldProps {
   multiline?: boolean | null;
   name: string;
   onChange?: ChangeEventHandler;
+  placeholder?: string;
   rows?: number | undefined;
   showCharsLeft?: boolean | null;
   showLabel?: boolean | null;
@@ -38,6 +39,7 @@ export default function TextField({
   multiline = false,
   name,
   onChange = () => {},
+  placeholder = undefined,
   rows = undefined,
   showCharsLeft = true,
   showLabel = true,
@@ -68,6 +70,7 @@ export default function TextField({
     maxLength,
     name,
     onChange: handleChange,
+    placeholder,
   };
 
   const commonClasses = cx('type-body2', styles.control, error && styles.error);
