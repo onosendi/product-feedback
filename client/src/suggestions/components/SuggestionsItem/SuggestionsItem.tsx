@@ -1,4 +1,5 @@
 import type { SuggestionResponse } from '@t/response';
+import { Link } from 'react-router-dom';
 import cx from 'clsx';
 import { Vote } from 'src/votes/components';
 import { Paper } from '../../../components';
@@ -29,8 +30,8 @@ export default function SuggestionsItem({
           forRoadmap && styles[`status${data.status}`],
         )}
         // TODO
-        component={link ? 'a' : 'div'}
-        href={routes.suggestions.detail(data.slug)}
+        component={link ? Link : 'div'}
+        to={routes.suggestions.detail(data.slug)}
       >
         <article>
           <h2 className={cx('type-3', styles.heading, responsive && styles.responsive)}>

@@ -5,25 +5,24 @@ import styles from './Paper.module.scss';
 
 interface PaperProps {
   children: ReactNode;
-  className?: string | null;
+  className?: string;
   component?: ElementType | string;
-  href?: string;
   noValidate?: boolean;
-  // TODO
-  onSubmit?: any;
+  onSubmit?: (event: SubmitEvent) => void;
+  to?: string;
 }
 
 const Paper = forwardRef<HTMLElement, PaperProps>(({
   children,
-  className = null,
+  className,
   component: Component = 'div',
-  href = null,
   noValidate,
   onSubmit,
+  to,
 }, forwardedRef) => (
   <Component
     className={cx(styles.paper, className)}
-    href={href}
+    to={to}
     noValidate={noValidate}
     onSubmit={onSubmit}
     ref={forwardedRef}
