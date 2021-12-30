@@ -1,7 +1,6 @@
-// TODO: routes need to make sure suggestion ID exists
 import type { FastifyPluginAsync } from 'fastify';
-import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
+import { createVote } from './queries';
 import { createVoteSchema, deleteVoteSchema } from './schemas';
 
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
@@ -25,13 +24,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
       const { suggestionId } = request.params;
       const userId = request.authUser.id;
 
-      await fastify
-        .knex('suggestion_vote')
-        .insert({
-          id: uuidv4(),
-          user_id: userId,
-          suggestion_id: suggestionId,
-        });
+      await createVote(fastify.knex, userId, suggestionId);
 
       reply
         .status(status.HTTP_201_CREATED)

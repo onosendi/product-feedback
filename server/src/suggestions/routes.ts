@@ -9,6 +9,7 @@ import type {
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
+import { createVote } from '../votes/queries';
 import { getSuggestions } from './queries';
 import {
   createSuggestionSchema,
@@ -148,7 +149,9 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
             category_id: categoryId,
           })
           .transacting(trx);
-        // TODO: create vote when user creates a suggestion
+
+        await createVote(fastify.knex, userId, suggestionId)
+          .transacting(trx);
       });
 
       reply

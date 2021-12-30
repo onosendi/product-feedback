@@ -59,38 +59,6 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         .send(response);
     },
   });
-
-  // // Verify user exists
-  // fastify.route<{
-  //   Params: { username: string },
-  // }>({
-  //   method: 'GET',
-  //   url: '/:username',
-  //   handler: async (request, reply) => {
-  //     const { username } = request.params;
-
-  //     const user = await fastify.knex('user').where({ username }).first();
-  //     if (user) {
-  //       reply.status(status.HTTP_200_OK).send(status.HTTP_200_OK);
-  //       return;
-  //     }
-
-  //     reply.status(status.HTTP_404_NOT_FOUND).send(status.HTTP_404_NOT_FOUND);
-  //   },
-  // });
-
-  // Test
-  fastify.route({
-    method: 'GET',
-    url: '/test',
-    preValidation: [fastify.needsAuthentication],
-    handler: async (request, reply) => {
-      const { authUser } = request;
-      reply
-        .status(status.HTTP_200_OK)
-        .send(authUser);
-    },
-  });
 };
 
 export default usersRoutes;
