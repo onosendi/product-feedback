@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { useGetCommentsQuery } from 'src/comments/api';
-import { Paper } from 'src/components';
+import { DelayChildren, Paper } from 'src/components';
 import CommentItem from '../CommentItem';
 import styles from './ListComments.module.scss';
 
@@ -18,7 +18,11 @@ export default function ListComments({
 
   if (isFetching) {
     // TODO
-    return <p>Loading</p>;
+    return (
+      <DelayChildren>
+        <p>Loading...</p>
+      </DelayChildren>
+    );
   }
 
   if (!Object.entries(comments).length && !isFetching) {
@@ -28,6 +32,7 @@ export default function ListComments({
   return (
     <Paper className={cx(styles.commentPaper)}>
       <p className={cx('type-jost-bold', styles.commentCount)}>
+        {/* TODO: comment/reply count */}
         {`${comments.length} Comments`}
       </p>
       <ul className={cx(styles.commentList)}>

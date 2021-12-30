@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { SuggestionsChild } from '..';
-import { Button, Paper } from '../../../components';
+import { Button, DelayChildren, Paper } from '../../../components';
 import { useQuerystring } from '../../../hooks';
 import routes from '../../../lib/routes';
 import { useGetSuggestionsQuery } from '../../api';
@@ -14,9 +14,13 @@ export default function SuggestionsParent() {
     isFetching,
   } = useGetSuggestionsQuery(querystring);
 
-  // TODO: Loading spinner
   if (isFetching) {
-    return <p>Loading</p>;
+    // TODO: Loading spinner
+    return (
+      <DelayChildren>
+        <p>Loading...</p>
+      </DelayChildren>
+    );
   }
 
   if (!suggestions.length && !isFetching) {

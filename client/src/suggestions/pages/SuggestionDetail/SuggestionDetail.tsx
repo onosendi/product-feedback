@@ -5,7 +5,12 @@ import { useParams } from 'react-router-dom';
 import { AuthBar } from 'src/auth/components';
 import { useAuth } from 'src/auth/hooks';
 import { CreateComment, ListComments } from 'src/comments/components';
-import { Button, Container, GoBack } from 'src/components';
+import {
+  Button,
+  Container,
+  DelayChildren,
+  GoBack,
+} from 'src/components';
 import { APP_NAME } from 'src/lib/constants';
 import routes from 'src/lib/routes';
 import { useGetSuggestionDetailQuery } from 'src/suggestions/api';
@@ -23,7 +28,6 @@ export default function SuggestionDetail() {
   const suggestionExists = !!Object.entries(suggestion).length;
 
   if (!suggestionExists && !isFetching) {
-    // TODO
     return <p>Not found</p>;
   }
 
@@ -45,10 +49,12 @@ export default function SuggestionDetail() {
         <div className={cx(styles.detailWrapper)}>
           {isFetching
             // TODO: Loading spinner
-            ? <p>Loading</p>
-            : (
-              <SuggestionsItem data={suggestion} link={false} />
-            )}
+            ? (
+              <DelayChildren>
+                <p>Loading...</p>
+              </DelayChildren>
+            )
+            : <SuggestionsItem data={suggestion} link={false} />}
         </div>
         {(!isFetching && suggestionExists) && (
           <>
