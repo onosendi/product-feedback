@@ -6,6 +6,7 @@ import authApi from './api';
 interface AuthState {
   role: DBUserRole | null;
   token: string | null;
+  userId: string | null;
   username: string | null;
   isAuthenticated: boolean;
 }
@@ -13,6 +14,7 @@ interface AuthState {
 const initialState: AuthState = {
   role: null,
   token: null,
+  userId: null,
   username: null,
   isAuthenticated: false,
 };
@@ -38,5 +40,6 @@ export function selectAuth(state: RootState) {
   return state.auth;
 }
 
+// TODO: logging out should invalidate suggestions
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

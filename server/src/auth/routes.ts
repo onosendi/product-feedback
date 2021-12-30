@@ -40,6 +40,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
       const response: AuthResponse = {
         role: user.role,
         token,
+        userId: user.id,
         username,
       };
       reply

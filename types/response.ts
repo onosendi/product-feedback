@@ -10,6 +10,7 @@ import {
 export interface AuthResponse {
   role: DBUserRole;
   token: string;
+  userId: string;
   username: string;
 }
 
