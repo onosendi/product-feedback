@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Container, Link } from '../../../components';
 import routes from '../../../lib/routes';
 import { useAuth } from '../../hooks';
@@ -16,6 +17,7 @@ export default function AuthBar({
   wrapperClassName = null,
 }: AuthBarProps) {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { isAuthenticated, ...auth } = useAuth();
 
   const handleLogout = () => {
@@ -36,7 +38,14 @@ export default function AuthBar({
         ? <Link onClick={handleLogout}>Logout</Link>
         : (
           <p className={cx('type-body2', styles.loginOrRegister)}>
-            <Link href={routes.auth.login}>Login</Link>
+            <Link
+              navigateOptions={{
+                state: { path: location.pathname + location.search },
+              }}
+              href={routes.auth.login}
+            >
+              Login
+            </Link>
             {' or '}
             <Link href={routes.user.register}>Register</Link>
           </p>

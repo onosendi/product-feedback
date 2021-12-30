@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
 import type { RootState } from 'src/lib/store';
 import { selectSuggestionById } from 'src/suggestions/slice';
@@ -21,6 +21,7 @@ export default function Vote({
   responsive = true,
 }: VoteProps) {
   const navigate = useNavigate();
+  const { pathname, search } = useLocation();
 
   const { isAuthenticated } = useAuth();
 
@@ -33,7 +34,9 @@ export default function Vote({
 
   const onClick = () => {
     if (!isAuthenticated) {
-      navigate(routes.auth.login);
+      navigate(routes.auth.login, {
+        state: { path: pathname + search },
+      });
       return;
     }
 

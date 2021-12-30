@@ -39,6 +39,7 @@ export default function ListSuggestions() {
             className={cx(styles.sortBarContainer)}
             wrapperClassName={cx(styles.sortBarWrapper)}
           >
+            {/* // TODO */}
             {/* <SuggestionsCounter className={cx(styles.suggestionsCounter)} /> */}
             <SortFilter>
               <SelectItem value="votes-desc">Most Upvotes</SelectItem>

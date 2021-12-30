@@ -3,7 +3,7 @@ import cx from 'clsx';
 import type { FocusEvent } from 'react';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
 import { Button, TextField } from 'src/components';
 import { getFullName } from 'src/lib/utils';
@@ -22,6 +22,7 @@ export default function CommentItem({
 }: CommentItemProps) {
   const [showReply, setShowReply] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { isAuthenticated } = useAuth();
 
   const {
@@ -45,8 +46,9 @@ export default function CommentItem({
 
   const toggleReply = () => {
     if (!isAuthenticated) {
-      navigate(routes.auth.login);
-      return;
+      navigate(routes.auth.login, {
+        state: { path: pathname },
+      });
     }
     setShowReply(!showReply);
   };
