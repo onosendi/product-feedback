@@ -1,18 +1,15 @@
+import type { APILogin } from '@t/api';
 import type { DBUser } from '@t/database';
 import type { AuthResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { checkPassword } from '../lib/passwordHasher';
+import { updateLastLogin } from '../users/queries';
 import { loginSchema } from './schemas';
 
 const authRoutes: FastifyPluginAsync = async (fastify) => {
   // Authenticate
-  fastify.route<{
-    Body: {
-      username: string;
-      password: string;
-    },
-  }>({
+  fastify.route<{ Body: APILogin }>({
     method: 'POST',
     url: '/login',
     schema: loginSchema,
@@ -31,10 +28,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         return;
       }
 
-      await fastify
-        .knex('user')
-        .where({ id: user.id })
-        .update({ last_login: new Date() });
+      await updateLastLogin(fastify.knex, user.id);
 
       const token = fastify.jwt.sign({ userId: user.id });
       const response: AuthResponse = {

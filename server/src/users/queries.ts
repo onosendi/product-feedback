@@ -1,6 +1,6 @@
 import type { Knex } from 'knex';
 
-export function getUserById(knex: Knex, id: string) {
+export function getUserById(knex: Knex, userId: string) {
   return knex('user')
     .select(
       'created_at',
@@ -12,6 +12,12 @@ export function getUserById(knex: Knex, id: string) {
       'role',
       'username',
     )
-    .where({ id })
+    .where({ id: userId })
     .first();
+}
+
+export function updateLastLogin(knex: Knex, userId: string) {
+  return knex('user')
+    .where({ id: userId })
+    .update({ last_login: new Date() });
 }

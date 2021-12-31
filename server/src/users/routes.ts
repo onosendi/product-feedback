@@ -3,6 +3,7 @@ import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import { createPassword } from '../lib/passwordHasher';
+import { updateLastLogin } from './queries';
 import { registerSchema } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
@@ -42,10 +43,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         })
         .returning('role');
 
-      await fastify
-        .knex('user')
-        .where({ id: userId })
-        .update({ last_login: new Date() });
+      await updateLastLogin(fastify.knex, userId);
 
       const token = fastify.jwt.sign({ userId });
       const response: AuthResponse = {
