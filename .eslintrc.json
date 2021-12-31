@@ -32,7 +32,6 @@
       }
     }],
     "max-len": "off",
-    "no-console": [1, { "allow": ["warn", "error"]}],
-    "import/prefer-default-export": "off"
+    "no-console": [1, { "allow": ["warn", "error"]}]
   }
 }

@@ -8,8 +8,8 @@ import { logout } from '../../slice';
 import styles from './AuthBar.module.scss';
 
 interface AuthBarProps {
-  className?: string | null,
-  wrapperClassName?: string | null,
+  className?: string | null;
+  wrapperClassName?: string | null;
 }
 
 export default function AuthBar({
@@ -35,6 +35,7 @@ export default function AuthBar({
         <Link href={routes.user.edit}>{auth.username}</Link>
       )}
       {isAuthenticated
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
         ? <Link onClick={handleLogout}>Logout</Link>
         : (
           <p className={cx('type-body2', styles.loginOrRegister)}>

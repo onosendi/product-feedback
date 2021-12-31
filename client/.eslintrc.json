@@ -16,9 +16,10 @@
     "react"
   ],
   "rules": {
+    "import/prefer-default-export": "off",
     "react/display-name": "off",
-    "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off"
   }

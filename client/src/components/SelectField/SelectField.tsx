@@ -43,7 +43,7 @@ export default function SelectField({
 
   const [display, setDisplay] = useSelectValue(children, defaultValue);
 
-  const onSelect = (obj: { value: string; children: string; }) => {
+  const onSelect = (obj: { value: string, children: string }) => {
     close();
     setDisplay(obj.children);
   };

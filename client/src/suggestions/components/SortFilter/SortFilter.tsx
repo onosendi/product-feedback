@@ -35,7 +35,7 @@ export default function SortFilter({
     toggleRef,
   } = useAnimatedToggle();
 
-  const onSelect = (obj: { value: string; children: string; }) => {
+  const onSelect = (obj: { value: string, children: string }) => {
     close();
     setDisplay(obj.children);
 

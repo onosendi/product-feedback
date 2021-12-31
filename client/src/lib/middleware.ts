@@ -1,9 +1,7 @@
-import type { Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
+import type { Middleware } from '@reduxjs/toolkit';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 
-export const rtkQueryErrorHandler: Middleware = (
-  api: MiddlewareAPI,
-) => (next) => (action) => {
+export const rtkQueryErrorHandler: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     // TODO: toast 500 errors?
     console.error(action.payload);

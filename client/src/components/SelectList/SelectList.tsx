@@ -12,9 +12,9 @@ interface SelectListProps {
   listItemComponent?: ElementType | string;
   onAnimationEnd?: VoidFunction;
   onSelect?: (obj: {
-    value: string;
-    children: string;
-  }) => void,
+    value: string,
+    children: string,
+  }) => void;
   selectedValue?: string | null;
 }
 

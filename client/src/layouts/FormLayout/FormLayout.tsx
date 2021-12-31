@@ -5,7 +5,7 @@ import { Container, GoBack } from '../../components';
 import styles from './FormLayout.module.scss';
 
 interface DialogLayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export default function DialogLayout({
