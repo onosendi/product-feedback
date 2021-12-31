@@ -3,7 +3,6 @@ import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
-import { hasValidationErrors } from 'src/lib/utils';
 import {
   Button,
   Link,
@@ -14,6 +13,8 @@ import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
+import { hasValidationErrors } from '../../../lib/utils';
+import { isFilled } from '../../../lib/validators';
 import { useLoginMutation } from '../../api';
 import { useNavigateAuthorized } from '../../hooks';
 import styles from './Login.module.scss';
@@ -30,7 +31,7 @@ export default function Login() {
       await login(values).unwrap();
     } catch (error) {
       const err = error as any;
-      if ([status.HTTP_401_UNAUTHORIZED, status.HTTP_400_BAD_REQUEST].includes(err?.status)) {
+      if (err?.status === status.HTTP_401_UNAUTHORIZED) {
         setErrors(true);
       }
     }
@@ -54,6 +55,7 @@ export default function Login() {
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
+                    validate={isFilled}
                     render={({ input, meta }) => (
                       <TextField
                         hasError={meta.touched && meta.error}
@@ -66,6 +68,7 @@ export default function Login() {
                   />
                   <Field
                     name="password"
+                    validate={isFilled}
                     render={({ input, meta }) => (
                       <TextField
                         hasError={meta.touched && meta.error}
