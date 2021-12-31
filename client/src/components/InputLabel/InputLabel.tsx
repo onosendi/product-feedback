@@ -7,7 +7,7 @@ interface InputLabelProps {
   children: ReactNode;
   className?: string | null;
   description?: string | null;
-  error?: boolean | null;
+  hasError?: boolean;
   helperText?: string | null;
   htmlFor: string;
   label: string;
@@ -22,7 +22,7 @@ export default function InputLabel({
   children,
   className = null,
   description = null,
-  error = false,
+  hasError = false,
   helperText = null,
   htmlFor,
   label,
@@ -53,7 +53,7 @@ export default function InputLabel({
       {renderLabel()}
       {children}
       {!!helperText && (
-        <span className={cx('type-jost', error && styles.error, styles.helper)}>
+        <span className={cx('type-jost', hasError && styles.error, styles.helper)}>
           {helperText}
         </span>
       )}

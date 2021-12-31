@@ -44,8 +44,6 @@ export default function Register() {
                     name="username"
                     render={({ input, meta }) => (
                       <TextField
-                        error={meta.error && meta.touched}
-                        helperText={(meta.error && meta.touched) && meta.error}
                         id="username"
                         label="Username"
                         maxLength={50}

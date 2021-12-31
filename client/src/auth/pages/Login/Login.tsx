@@ -3,6 +3,7 @@ import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
+import { hasValidationErrors } from 'src/lib/utils';
 import {
   Button,
   Link,
@@ -25,12 +26,11 @@ export default function Login() {
 
   const onSubmit = async (values: APILogin) => {
     setErrors(false);
-    const { username = '', password = '' } = values;
-
     try {
-      await login({ username, password }).unwrap();
-    } catch (error: any) {
-      if (error?.status === status.HTTP_401_UNAUTHORIZED) {
+      await login(values).unwrap();
+    } catch (error) {
+      const err = error as any;
+      if ([status.HTTP_401_UNAUTHORIZED, status.HTTP_400_BAD_REQUEST].includes(err?.status)) {
         setErrors(true);
       }
     }
@@ -50,12 +50,14 @@ export default function Login() {
             )}
             <Form
               onSubmit={onSubmit}
-              render={({ handleSubmit, submitting, values }) => (
+              render={({ handleSubmit, submitting, form }) => (
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
-                    render={({ input }) => (
+                    render={({ input, meta }) => (
                       <TextField
+                        hasError={meta.touched && meta.error}
+                        helperText={(meta.touched && meta.error) && meta.error}
                         id="username"
                         label="Username"
                         {...input}
@@ -64,8 +66,10 @@ export default function Login() {
                   />
                   <Field
                     name="password"
-                    render={({ input }) => (
+                    render={({ input, meta }) => (
                       <TextField
+                        hasError={meta.touched && meta.error}
+                        helperText={(meta.touched && meta.error) && meta.error}
                         id="password"
                         label="Password"
                         type="password"
@@ -74,7 +78,7 @@ export default function Login() {
                     )}
                   />
                   <Button
-                    disabled={submitting}
+                    disabled={submitting || hasValidationErrors(form)}
                     fullWidth
                     type="submit"
                     variant="1"

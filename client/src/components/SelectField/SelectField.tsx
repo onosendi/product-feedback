@@ -14,7 +14,7 @@ interface SelectFieldProps {
   className?: string | null;
   defaultValue?: string | null;
   description?: string | null;
-  error?: boolean;
+  hasError?: boolean;
   helperText?: string | null;
   id: string;
   label: string;
@@ -26,7 +26,7 @@ export default function SelectField({
   className = null,
   defaultValue = null,
   description = null,
-  error = false,
+  hasError = false,
   helperText = null,
   id,
   label,
@@ -55,7 +55,7 @@ export default function SelectField({
     <div className={cx(styles.wrapper)}>
       <InputLabel
         description={description}
-        error={error}
+        hasError={hasError}
         helperText={helperText}
         htmlFor={id}
         label={label}

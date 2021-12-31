@@ -8,7 +8,7 @@ interface TextFieldProps {
   autoFocus?: boolean;
   defaultValue?: string | undefined;
   description?: string | null;
-  error?: boolean | null;
+  hasError?: boolean;
   helperText?: string | null;
   id: string;
   label: string;
@@ -18,7 +18,9 @@ interface TextFieldProps {
   maxLength?: number | undefined;
   multiline?: boolean | null;
   name: string;
+  onBlur?: VoidFunction;
   onChange?: ChangeEventHandler;
+  onFocus?: VoidFunction;
   placeholder?: string;
   rows?: number | undefined;
   showCharsLeft?: boolean | null;
@@ -29,7 +31,7 @@ interface TextFieldProps {
 export default function TextField({
   defaultValue = undefined,
   description = null,
-  error = false,
+  hasError = false,
   helperText = null,
   id,
   label,
@@ -39,7 +41,9 @@ export default function TextField({
   maxLength = undefined,
   multiline = false,
   name,
+  onBlur = () => {},
   onChange = () => {},
+  onFocus = () => {},
   placeholder = undefined,
   rows = undefined,
   showCharsLeft = true,
@@ -70,11 +74,13 @@ export default function TextField({
     id,
     maxLength,
     name,
+    onBlur,
     onChange: handleChange,
+    onFocus,
     placeholder,
   };
 
-  const commonClasses = cx('type-body2', styles.control, error && styles.error);
+  const commonClasses = cx('type-body2', styles.control, hasError && styles.error);
 
   const renderControl = () => {
     if (multiline) {
@@ -100,7 +106,7 @@ export default function TextField({
       charsLeft={charsLeft}
       className={labelClassName}
       description={description}
-      error={error}
+      hasError={hasError}
       helperText={helperText}
       htmlFor={id}
       label={label}
