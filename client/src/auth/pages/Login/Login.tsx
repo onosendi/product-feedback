@@ -13,7 +13,7 @@ import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import status from '../../../lib/httpStatusCodes';
 import routes from '../../../lib/routes';
-import { hasValidationErrors } from '../../../lib/utils';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
 import { isFilled } from '../../../lib/validators';
 import { useLoginMutation } from '../../api';
 import { useNavigateAuthorized } from '../../hooks';
@@ -58,8 +58,8 @@ export default function Login() {
                     validate={isFilled}
                     render={({ input, meta }) => (
                       <TextField
-                        hasError={meta.touched && meta.error}
-                        helperText={(meta.touched && meta.error) && meta.error}
+                        hasError={getHasError(meta)}
+                        helperText={getHelperText(meta)}
                         id="username"
                         label="Username"
                         {...input}
@@ -71,8 +71,8 @@ export default function Login() {
                     validate={isFilled}
                     render={({ input, meta }) => (
                       <TextField
-                        hasError={meta.touched && meta.error}
-                        helperText={(meta.touched && meta.error) && meta.error}
+                        hasError={getHasError(meta)}
+                        helperText={getHelperText(meta)}
                         id="password"
                         label="Password"
                         type="password"

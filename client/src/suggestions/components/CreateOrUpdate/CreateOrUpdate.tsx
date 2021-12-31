@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/auth/hooks';
+import { getHasError, getHelperText, hasValidationErrors } from 'src/lib/utils';
 import { useCreateSuggestionMutation } from 'src/suggestions/api';
 import {
   Button,
@@ -13,6 +14,7 @@ import {
   SelectItem,
   TextField,
 } from '../../../components';
+import { composeValidators, isFilled, isLength } from '../../../lib/validators';
 import styles from './CreateOrUpdate.module.scss';
 
 export default function CreateOrUpdate() {
@@ -70,7 +72,7 @@ export default function CreateOrUpdate() {
       </h1>
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, submitting, values }) => (
+        render={({ handleSubmit, submitting, form }) => (
           <form
             className={cx(styles.form)}
             noValidate
@@ -79,9 +81,15 @@ export default function CreateOrUpdate() {
           >
             <Field
               name="title"
+              validate={composeValidators(
+                [isFilled],
+                [isLength, { min: 5 }],
+              )}
               render={({ input, meta }) => (
                 <TextField
                   description="Add a short, descriptive headline"
+                  hasError={getHasError(meta)}
+                  helperText={getHelperText(meta)}
                   id="title"
                   label="Feedback Title"
                   maxLength={75}
@@ -120,9 +128,12 @@ export default function CreateOrUpdate() {
             )}
             <Field
               name="description"
+              validate={isFilled}
               render={({ input, meta }) => (
                 <TextField
                   description="Include any specific comments on what should be improved, added, etc."
+                  hasError={getHasError(meta)}
+                  helperText={getHelperText(meta)}
                   id="description"
                   label="Feedback Detail"
                   maxLength={300}
@@ -133,7 +144,12 @@ export default function CreateOrUpdate() {
               )}
             />
             <div className={cx(styles.buttonWrapper)}>
-              <Button className={cx(styles.add)} type="submit" variant="1">
+              <Button
+                className={cx(styles.add)}
+                disabled={submitting || hasValidationErrors(form)}
+                type="submit"
+                variant="1"
+              >
                 {isNew ? 'Add Feedback' : 'Save Changes'}
               </Button>
               <Button className={cx(styles.cancel)} onClick={cancel} variant="3">
