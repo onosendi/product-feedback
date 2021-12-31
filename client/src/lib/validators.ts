@@ -4,7 +4,10 @@ import type { IsLengthOptions } from 'validator/lib/isLength';
 import _isLength from 'validator/lib/isLength';
 
 export function composeValidators(
-  ...validators: [((value: string, options?: any) => string | undefined), object?][]
+  ...validators: [
+    ((value: string, options?: any) => string | undefined),
+    object?,
+  ][]
 ) {
   return (value: string) => validators.reduce(
     (error: string | undefined, [validator, options]) => (
