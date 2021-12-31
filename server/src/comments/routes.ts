@@ -1,4 +1,3 @@
-import type { DBSuggestion } from '@t/database';
 import type { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { getComments } from './queries';
@@ -7,9 +6,7 @@ import { listCommentsSchema } from './schemas';
 const commentRoutes: FastifyPluginAsync = async (fastify) => {
   // List comments
   fastify.route<{
-    Params: {
-      suggestionId: string;
-    },
+    Params: { suggestionId: string },
   }>({
     method: 'GET',
     url: '/:suggestionId',

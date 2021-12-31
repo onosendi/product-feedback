@@ -29,9 +29,9 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
         try {
           const [, token] = authorization.split(' ');
           const decoded = fastify.jwt.decode(token) as {
-            iat: string;
-            token: string;
-            userId: string;
+            iat: string,
+            token: string,
+            userId: string,
           };
           const { userId } = decoded;
           const user = await getUserById(fastify.knex, userId);

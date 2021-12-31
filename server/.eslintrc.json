@@ -25,6 +25,24 @@
     "no-console": [1, { "allow": ["warn", "error"]}],
     "max-len": "off",
     "prefer-arrow-callback": "off",
-    "@typescript-eslint/consistent-type-imports": [2, { "prefer": "type-imports" }]
+    "@typescript-eslint/consistent-type-imports": [2, { "prefer": "type-imports" }],
+    "@typescript-eslint/member-delimiter-style": [2, {
+      "multiline": {
+        "delimiter": "comma",
+        "requireLast": true
+      },
+      "singleline": {
+        "delimiter": "comma",
+        "requireLast": false
+      },
+      "overrides": {
+        "interface": {
+          "multiline": {
+            "delimiter": "semi",
+            "requireLast": true
+          }
+        }
+      }
+    }]
   }
 }

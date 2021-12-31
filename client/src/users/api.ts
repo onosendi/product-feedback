@@ -1,5 +1,5 @@
 import type { APIRegister } from '@t/api';
-import type { AuthResponse } from '@t/response';
+import type { AuthResponse, ErrorResponse } from '@t/response';
 import baseApi from '../lib/api';
 
 const usersApi = baseApi.injectEndpoints({
@@ -11,6 +11,9 @@ const usersApi = baseApi.injectEndpoints({
         body,
       }),
       invalidatesTags: ['Suggestions'],
+    }),
+    validateUsername: build.query<ErrorResponse | boolean, any>({
+      query: (username: string) => `/users/validate/${username}`,
     }),
   }),
 });

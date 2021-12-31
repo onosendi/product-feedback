@@ -25,7 +25,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     'needsAdminToModifyStatus',
     function (
       request: FastifyRequest<{
-        Body: { status: DBSuggestionStatus; },
+        Body: { status: DBSuggestionStatus },
       }>,
       reply: FastifyReply,
       done: HookHandlerDoneFunction,
@@ -46,9 +46,9 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // List suggestions
   fastify.route<{
     Querystring: {
-      category: DBSuggestionCategories;
-      order: 'asc' | 'desc';
-      sort: 'votes' | 'comments';
+      category: DBSuggestionCategories,
+      order: 'asc' | 'desc',
+      sort: 'votes' | 'comments',
     },
   }>({
     method: 'GET',
@@ -83,9 +83,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
 
   // Suggestion detail
   fastify.route<{
-    Params: {
-      slug: string;
-    },
+    Params: { slug: string },
   }>({
     method: 'GET',
     url: '/:slug',
@@ -163,9 +161,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // Edit suggestion
   fastify.route<{
     Body: APICreateOrUpdateSuggestion,
-    Params: {
-      suggestionId: string;
-    },
+    Params: { suggestionId: string },
   }>({
     method: 'PATCH',
     url: '/:suggestionId',
@@ -221,9 +217,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
 
   // Delete suggestion
   fastify.route<{
-    Params: {
-      suggestionId: string;
-    },
+    Params: { suggestionId: string },
   }>({
     method: 'DELETE',
     url: '/:suggestionId',

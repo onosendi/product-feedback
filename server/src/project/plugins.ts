@@ -29,10 +29,10 @@ export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'decorateRequestDetail',
     function (obj: {
-      paramKey: string;
-      select?: string[];
-      table: string;
-      tableColumn?: string;
+      paramKey: string,
+      select?: string[],
+      table: string,
+      tableColumn?: string,
     }) {
       return async (
         request: FastifyRequest<{

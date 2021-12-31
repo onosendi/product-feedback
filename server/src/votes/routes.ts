@@ -6,9 +6,7 @@ import { createVoteSchema, deleteVoteSchema } from './schemas';
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
   // Create vote
   fastify.route<{
-    Params: {
-      suggestionId: string;
-    }
+    Params: { suggestionId: string },
   }>({
     method: 'POST',
     url: '/:suggestionId',
@@ -34,9 +32,7 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
 
   // Delete vote
   fastify.route<{
-    Params: {
-      suggestionId: string;
-    }
+    Params: { suggestionId: string },
   }>({
     method: 'DELETE',
     url: '/:suggestionId',

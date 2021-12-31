@@ -6,7 +6,6 @@
     "typeRoots": [
       "types"
     ],
-    "baseUrl": ".",
     "paths": { "@t/*": ["../types/*"], }
   },
   "exclude": [
@@ -19,10 +18,6 @@
   "include": [
     "src",
     "database",
-    "../types",
-
-    // Include for linting.
-    "tests/*.ts",
-    "config.ts"
+    "knexfile.ts",
   ]
 }
