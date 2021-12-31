@@ -1,8 +1,8 @@
 // TODO: Registration validation
+import type { APIRegister } from '@t/api';
 import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
-import { useDispatch } from 'react-redux';
 import { useNavigateAuthorized } from '../../../auth/hooks';
 import {
   Button,
@@ -15,12 +15,6 @@ import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
 import styles from './Register.module.scss';
 
-interface OnSubmitValues {
-  username: string,
-  password: string,
-  passwordConfirm: string,
-}
-
 const required = (value: any) => {
   console.log(value);
   return value ? undefined : 'Required';
@@ -29,9 +23,7 @@ const required = (value: any) => {
 export default function Register() {
   useNavigateAuthorized();
 
-  const dispatch = useDispatch();
-
-  const onSubmit = async (values: OnSubmitValues) => {
+  const onSubmit = async (values: APIRegister) => {
     const { username = '', password = '', passwordConfirm = '' } = values;
   };
 

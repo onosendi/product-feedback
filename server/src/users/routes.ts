@@ -1,3 +1,4 @@
+import type { APIRegister } from '@t/api';
 import type { AuthResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,13 +9,7 @@ import { registerSchema } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
   // Create user.
-  fastify.route<{
-    Body: {
-      username: string;
-      password: string;
-      passwordConfirm: string;
-    },
-  }>({
+  fastify.route<{ Body: APIRegister }>({
     method: 'POST',
     url: '/',
     schema: registerSchema,

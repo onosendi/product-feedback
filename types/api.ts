@@ -5,6 +5,12 @@ export interface APILogin {
   password: string;
 }
 
+export interface APIRegister {
+  username: string,
+  password: string,
+  passwordConfirm: string,
+}
+
 export interface APICreateOrUpdateSuggestion {
   category: DBSuggestionCategories;
   description: string;
