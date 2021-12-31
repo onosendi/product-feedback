@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import type { SuggestionResponse } from '@t/response';
 import type { RootState } from '../lib/store';
 import votesApi from '../votes/api';

@@ -1,53 +1,21 @@
 {
-  "root": true,
   "env": {
-    "browser": true,
-    "es2021": true
+    "browser": true
   },
-  "extends": [
-    "airbnb",
-    "airbnb-typescript"
-  ],
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12,
-    "project": "./tsconfig.json",
-    "sourceType": "module"
+    "project": "./tsconfig.json"
   },
   "plugins": [
-    "react",
-    "@typescript-eslint"
+    "react"
   ],
   "rules": {
-    "import/prefer-default-export": "off",
-    "max-len": "off",
-    "no-console": [1, { "allow": ["warn", "error"]}],
     "react/display-name": "off",
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
-    "react/require-default-props": "off",
-    "@typescript-eslint/consistent-type-imports": [2, { "prefer": "type-imports" }],
-    "@typescript-eslint/member-delimiter-style": [2, {
-      "multiline": {
-        "delimiter": "comma",
-        "requireLast": true
-      },
-      "singleline": {
-        "delimiter": "comma",
-        "requireLast": false
-      },
-      "overrides": {
-        "interface": {
-          "multiline": {
-            "delimiter": "semi",
-            "requireLast": true
-          }
-        }
-      }
-    }]
+    "react/require-default-props": "off"
   }
 }
