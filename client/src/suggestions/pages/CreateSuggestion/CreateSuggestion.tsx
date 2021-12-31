@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import { APP_NAME } from 'src/lib/constants';
-import { CreateOrUpdate } from 'src/suggestions/components';
 import { FormLayout } from '../../../layouts';
+import { APP_NAME } from '../../../lib/constants';
+import { CreateOrUpdate } from '../../components';
 
 export default function CreateSuggestion() {
   return (

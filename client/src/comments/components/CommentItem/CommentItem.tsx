@@ -4,11 +4,11 @@ import type { FocusEvent } from 'react';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from 'src/auth/hooks';
-import { Button, TextField } from 'src/components';
-import { getFullName } from 'src/lib/utils';
-import { Picture } from 'src/users/components';
+import { useAuth } from '../../../auth/hooks';
+import { Button, TextField } from '../../../components';
 import routes from '../../../lib/routes';
+import { getFullName } from '../../../lib/utils';
+import { Picture } from '../../../users/components';
 import styles from './CommentItem.module.scss';
 
 interface CommentItemProps {

@@ -1,7 +1,7 @@
 import type { DBSuggestionCategoryDisplay } from '@t/database';
 import cx from 'clsx';
-import { useQuerystring } from 'src/hooks';
 import { Button, Paper } from '../../../components';
+import { useQuerystring } from '../../../hooks';
 import styles from './FilterCategories.module.scss';
 
 type FilterSuggestionsCategories = DBSuggestionCategoryDisplay | 'All';

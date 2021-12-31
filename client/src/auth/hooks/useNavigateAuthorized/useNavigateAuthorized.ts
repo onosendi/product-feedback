@@ -5,7 +5,7 @@ import useAuth from '../useAuth';
 
 export default function useNavigateAuthorized() {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const { state } = useLocation() as any;
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
-import { Button, Paper, TextField } from 'src/components';
+import { Button, Paper, TextField } from '../../../components';
 import styles from './CreateComment.module.scss';
 
 interface CreateCommentProps {
@@ -11,7 +11,7 @@ export default function CreateComment({
   suggestionId,
 }: CreateCommentProps) {
   const onSubmit = (values: {
-    content: string;
+    content: string,
   }) => {
     console.log(values);
   };
@@ -19,7 +19,7 @@ export default function CreateComment({
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, values }) => (
+      render={({ handleSubmit, submitting }) => (
         <Paper
           className={cx(styles.form)}
           component="form"
@@ -28,7 +28,7 @@ export default function CreateComment({
         >
           <Field
             name="content"
-            render={({ input, meta }) => (
+            render={({ input }) => (
               <TextField
                 id="add-comment"
                 label="Add Comment"

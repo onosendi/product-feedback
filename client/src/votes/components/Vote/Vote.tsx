@@ -1,12 +1,12 @@
 import cx from 'clsx';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from 'src/auth/hooks';
-import type { RootState } from 'src/lib/store';
-import { selectSuggestionById } from 'src/suggestions/slice';
-import { useCreateVoteMutation, useDeleteVoteMutation } from 'src/votes/api';
+import { useAuth } from '../../../auth/hooks';
 import { Button } from '../../../components';
 import routes from '../../../lib/routes';
+import type { RootState } from '../../../lib/store';
+import { selectSuggestionById } from '../../../suggestions/slice';
+import { useCreateVoteMutation, useDeleteVoteMutation } from '../../api';
 import styles from './Vote.module.scss';
 
 interface VoteProps {

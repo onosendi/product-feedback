@@ -3,9 +3,7 @@ import cx from 'clsx';
 import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'src/auth/hooks';
-import { getHasError, getHelperText, hasValidationErrors } from 'src/lib/utils';
-import { useCreateSuggestionMutation } from 'src/suggestions/api';
+import { useAuth } from '../../../auth/hooks';
 import {
   Button,
   Dialog,
@@ -14,7 +12,9 @@ import {
   SelectItem,
   TextField,
 } from '../../../components';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
 import { composeValidators, isFilled, isLength } from '../../../lib/validators';
+import { useCreateSuggestionMutation } from '../../api';
 import styles from './CreateOrUpdate.module.scss';
 
 export default function CreateOrUpdate() {

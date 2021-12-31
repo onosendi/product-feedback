@@ -2,19 +2,19 @@ import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { AuthBar } from 'src/auth/components';
-import { useAuth } from 'src/auth/hooks';
-import { CreateComment, ListComments } from 'src/comments/components';
+import { AuthBar } from '../../../auth/components';
+import { useAuth } from '../../../auth/hooks';
+import { CreateComment, ListComments } from '../../../comments/components';
 import {
   Button,
   Container,
   DelayChildren,
   GoBack,
-} from 'src/components';
-import { APP_NAME } from 'src/lib/constants';
-import routes from 'src/lib/routes';
-import { useGetSuggestionDetailQuery } from 'src/suggestions/api';
-import { SuggestionsItem } from 'src/suggestions/components';
+} from '../../../components';
+import { APP_NAME } from '../../../lib/constants';
+import routes from '../../../lib/routes';
+import { useGetSuggestionDetailQuery } from '../../api';
+import { SuggestionsItem } from '../../components';
 import styles from './SuggestionDetail.module.scss';
 
 export default function SuggestionDetail() {

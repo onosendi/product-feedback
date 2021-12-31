@@ -1,6 +1,6 @@
 import cx from 'clsx';
-import { useGetCommentsQuery } from 'src/comments/api';
-import { DelayChildren, Paper } from 'src/components';
+import { DelayChildren, Paper } from '../../../components';
+import { useGetCommentsQuery } from '../../api';
 import CommentItem from '../CommentItem';
 import styles from './ListComments.module.scss';
 

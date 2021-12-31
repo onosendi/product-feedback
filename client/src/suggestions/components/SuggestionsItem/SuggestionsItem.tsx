@@ -1,10 +1,10 @@
 import type { SuggestionResponse } from '@t/response';
-import { Link } from 'react-router-dom';
 import cx from 'clsx';
-import { Vote } from 'src/votes/components';
+import { Link } from 'react-router-dom';
 import { Paper } from '../../../components';
 import routes from '../../../lib/routes';
 import { capitalize } from '../../../lib/utils';
+import { Vote } from '../../../votes/components';
 import styles from './SuggestionsItem.module.scss';
 
 interface SuggestionsItemProps {

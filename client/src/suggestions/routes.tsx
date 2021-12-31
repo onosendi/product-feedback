@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
-import { AuthRoute } from 'src/auth/components';
+import { AuthRoute } from '../auth/components';
 import routes from '../lib/routes';
 
 const CreateSuggestion = lazy(() => import('./pages/CreateSuggestion'));
