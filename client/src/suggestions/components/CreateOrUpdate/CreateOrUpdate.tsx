@@ -38,12 +38,7 @@ export default function CreateOrUpdate() {
       status: formRef.current?.status?.value,
     };
 
-    try {
-      // TODO: handle errors
-      await createSuggestion(body).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
+    await createSuggestion(body);
   };
 
   // TODO

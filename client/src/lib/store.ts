@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from '../auth/slice';
 import suggestionsReducer from '../suggestions/slice';
 import baseApi from './api';
+import { rtkQueryErrorHandler } from './middleware';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
@@ -23,7 +24,10 @@ const persistedReducer = persistReducer(persistConfig, combinedReducers);
 export const store = configureStore({
   middleware: getDefaultMiddleware({
     serializableCheck: false,
-  }).concat(baseApi.middleware),
+  }).concat(
+    baseApi.middleware,
+    rtkQueryErrorHandler,
+  ),
   reducer: persistedReducer,
 });
 
