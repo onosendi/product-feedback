@@ -1,4 +1,3 @@
-// TODO: Registration validation
 import type { APIRegister } from '@t/api';
 import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
@@ -13,18 +12,18 @@ import {
 import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
+import { composeValidators, isFilled, isLength } from '../../../lib/validators';
+import { useRegisterMutation } from '../../api';
 import styles from './Register.module.scss';
-
-const required = (value: any) => {
-  console.log(value);
-  return value ? undefined : 'Required';
-};
 
 export default function Register() {
   useNavigateAuthorized();
 
+  const [register] = useRegisterMutation();
+
   const onSubmit = async (values: APIRegister) => {
-    const { username = '', password = '', passwordConfirm = '' } = values;
+    await register(values);
   };
 
   return (
@@ -38,12 +37,23 @@ export default function Register() {
             <h1 className={cx('type-1', styles.heading)}>Register</h1>
             <Form
               onSubmit={onSubmit}
-              render={({ handleSubmit, submitting, values }) => (
+              validate={(values) => ({
+                ...(values.password !== values.passwordConfirm && {
+                  passwordConfirm: 'Passwords do not match',
+                }),
+              })}
+              render={({ form, handleSubmit, submitting }) => (
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
+                    validate={composeValidators(
+                      [isFilled],
+                      [isLength, { min: 3 }],
+                    )}
                     render={({ input, meta }) => (
                       <TextField
+                        hasError={getHasError(meta)}
+                        helperText={getHelperText(meta)}
                         id="username"
                         label="Username"
                         maxLength={50}
@@ -51,12 +61,17 @@ export default function Register() {
                         {...input}
                       />
                     )}
-                    validate={required}
                   />
                   <Field
                     name="password"
-                    render={({ input }) => (
+                    validate={composeValidators(
+                      [isFilled],
+                      [isLength, { min: 6 }],
+                    )}
+                    render={({ input, meta }) => (
                       <TextField
+                        hasError={getHasError(meta)}
+                        helperText={getHelperText(meta)}
                         id="password"
                         label="Password"
                         type="password"
@@ -66,8 +81,14 @@ export default function Register() {
                   />
                   <Field
                     name="passwordConfirm"
-                    render={({ input }) => (
+                    validate={composeValidators(
+                      [isFilled],
+                    )}
+                    someOtherField="foo"
+                    render={({ input, meta }) => (
                       <TextField
+                        hasError={getHasError(meta)}
+                        helperText={getHelperText(meta)}
                         id="passwordConfirm"
                         label="Confirm Password"
                         type="password"
@@ -75,7 +96,14 @@ export default function Register() {
                       />
                     )}
                   />
-                  <Button fullWidth type="submit" variant="1">Register</Button>
+                  <Button
+                    disabled={submitting || hasValidationErrors(form)}
+                    fullWidth
+                    type="submit"
+                    variant="1"
+                  >
+                    Register
+                  </Button>
                 </form>
               )}
             />

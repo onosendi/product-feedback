@@ -1,25 +1,25 @@
 import type { FormApi } from 'final-form';
 import type { FieldMetaState } from 'react-final-form';
 
-export function capitalize(string: string) {
+export function capitalize(string: string): string {
   return string.replace(
     /(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
     (letter) => letter.toUpperCase(),
   );
 }
 
-export function getFullName(firstName: string, lastName: string) {
+export function getFullName(firstName: string, lastName: string): string {
   return [firstName, lastName].filter((name) => name).join(' ');
 }
 
-export function hasValidationErrors(form: FormApi<any>) {
+export function hasValidationErrors(form: FormApi<any>): boolean {
   return form.getState().hasValidationErrors;
 }
 
-export function getHelperText(meta: FieldMetaState<any>) {
+export function getHelperText(meta: FieldMetaState<any>): undefined | string {
   return (meta.touched && meta.error) && meta.error;
 }
 
-export function getHasError(meta: FieldMetaState<any>) {
-  return meta.touched && meta.error;
+export function getHasError(meta: FieldMetaState<any>): boolean {
+  return !!(meta.touched && meta.error);
 }

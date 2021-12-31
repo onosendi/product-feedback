@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import { createPassword } from '../lib/passwordHasher';
 import { updateLastLogin } from './queries';
-import { registerSchema } from './schemas';
+import { registerSchema, userDetailSchema } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
   // Create user.
@@ -50,6 +50,29 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
       reply
         .status(status.HTTP_201_CREATED)
         .send(response);
+    },
+  });
+
+  // User detail.
+  fastify.route<{
+    Params: {
+      username: string;
+    },
+  }>({
+    method: 'GET',
+    url: '/check/:username',
+    schema: userDetailSchema,
+    preHandler: [
+      fastify.decorateRequestDetail({
+        select: ['id'],
+        table: 'user',
+        tableColumn: 'username',
+      }),
+    ],
+    handler: (request, reply) => {
+      reply
+        .status(status.HTTP_200_OK)
+        .send(true);
     },
   });
 };

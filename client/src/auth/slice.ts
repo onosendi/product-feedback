@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import type { DBUserRole } from '@t/database';
 import type { RootState } from '../lib/store';
+import usersApi from '../users/api';
 import authApi from './api';
 
 interface AuthState {
@@ -27,7 +28,10 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      authApi.endpoints.login.matchFulfilled,
+      isAnyOf(
+        authApi.endpoints.login.matchFulfilled,
+        usersApi.endpoints.register.matchFulfilled,
+      ),
       (state, { payload }) => ({
         ...payload,
         isAuthenticated: true,

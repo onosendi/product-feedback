@@ -8,8 +8,8 @@ export const registerSchema: FastifySchema = {
     required: ['password', 'passwordConfirm', 'username'],
     properties: {
       password: {
-        minLength: 6,
         type: 'string',
+        minLength: 6,
       },
       passwordConfirm: {
         const: {
@@ -17,7 +17,11 @@ export const registerSchema: FastifySchema = {
         },
         type: 'string',
       },
-      username: { type: 'string' },
+      username: {
+        type: 'string',
+        minLength: 3,
+        maxLength: 50,
+      },
     },
   },
   response: {
@@ -28,6 +32,23 @@ export const registerSchema: FastifySchema = {
         token: { type: 'string' },
         username: { type: 'string' },
       },
+    },
+  },
+};
+
+export const userDetailSchema: FastifySchema = {
+  params: {
+    type: 'object',
+    required: ['username'],
+    properties: {
+      username: {
+        type: 'string',
+      },
+    },
+  },
+  response: {
+    [status.HTTP_200_OK]: {
+      type: 'boolean',
     },
   },
 };

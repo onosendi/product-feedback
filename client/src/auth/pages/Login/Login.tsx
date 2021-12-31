@@ -51,7 +51,7 @@ export default function Login() {
             )}
             <Form
               onSubmit={onSubmit}
-              render={({ handleSubmit, submitting, form }) => (
+              render={({ form, handleSubmit, submitting }) => (
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
