@@ -6,14 +6,14 @@ export interface APILogin {
 }
 
 export interface APIRegister {
-  username: string,
-  password: string,
-  passwordConfirm: string,
+  username: string;
+  password: string;
+  passwordConfirm: string;
 }
 
 export interface APICreateOrUpdateSuggestion {
   category: DBSuggestionCategories;
   description: string;
-  status?: DBSuggestionStatus,
+  status?: DBSuggestionStatus;
   title: string;
 }

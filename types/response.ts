@@ -5,6 +5,15 @@ import {
 } from './database';
 
 //
+// Error
+//
+export interface ErrorResponse {
+  error: string;
+  message: string;
+  statusCode: number;
+}
+
+//
 // Auth
 //
 export interface AuthResponse {
