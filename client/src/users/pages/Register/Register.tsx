@@ -84,7 +84,6 @@ export default function Register() {
                     validate={composeValidators(
                       [isFilled],
                     )}
-                    someOtherField="foo"
                     render={({ input, meta }) => (
                       <TextField
                         hasError={getHasError(meta)}
