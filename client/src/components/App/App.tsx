@@ -12,7 +12,9 @@ const routerRoutes = [
 ];
 
 // TODO
-const Fallback = () => null;
+function Fallback() {
+  return null;
+}
 
 export default function App() {
   return (

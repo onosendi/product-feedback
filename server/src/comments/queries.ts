@@ -37,7 +37,9 @@ export function getComments(knex: Knex, suggestionId: string) {
         .join('user as u', 'u.id', '=', 'sc.user_id')
         .groupBy('suggestion_comment_parent_id')
         .as('r'),
-      'r.suggestion_comment_parent_id', '=', 'sc.id',
+      'r.suggestion_comment_parent_id',
+      '=',
+      'sc.id',
     )
     .orderBy('sc.created_at')
     .whereNull('sc.suggestion_comment_parent_id')

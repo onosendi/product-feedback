@@ -20,14 +20,18 @@ export function getSuggestions(knex: Knex, userId: string) {
         .select('suggestion_id', knex.raw('count(id) as votes'))
         .groupBy('suggestion_id')
         .as('v'),
-      'v.suggestion_id', '=', 's.id',
+      'v.suggestion_id',
+      '=',
+      's.id',
     )
     .leftJoin(
       knex('suggestion_comment')
         .select('suggestion_id', knex.raw('count(id) as comment_count'))
         .groupBy('suggestion_id')
         .as('c'),
-      'c.suggestion_id', '=', 's.id',
+      'c.suggestion_id',
+      '=',
+      's.id',
     )
     .leftJoin(
       knex('suggestion_vote')
@@ -35,6 +39,8 @@ export function getSuggestions(knex: Knex, userId: string) {
         .where({ user_id: userId ?? null })
         .groupBy('suggestion_id')
         .as('hv'),
-      'hv.suggestion_id', '=', 's.id',
+      'hv.suggestion_id',
+      '=',
+      's.id',
     );
 }

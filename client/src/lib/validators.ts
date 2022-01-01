@@ -21,8 +21,8 @@ export function isFilled(value: string = '', options?: IsEmptyOptions) {
   return _isEmpty(value.trim(), options) ? 'Required' : undefined;
 }
 
-export function isLength(value: string = '', options: IsLengthOptions) {
-  const message = options.min
+export function isLength(value: string = '', options?: IsLengthOptions) {
+  const message = options?.min
     ? `Must be at least ${options?.min} characters`
     : `Can't be more than ${options?.max} characters`;
   return _isLength(value.trim(), options) ? undefined : message;

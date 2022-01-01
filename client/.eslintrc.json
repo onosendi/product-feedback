@@ -16,6 +16,7 @@
     "react"
   ],
   "rules": {
+    "no-restricted-exports": "off",
     "import/prefer-default-export": "off",
     "react/display-name": "off",
     "react/jsx-props-no-spreading": "off",

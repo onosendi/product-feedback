@@ -1,4 +1,3 @@
-import type { FormApi } from 'final-form';
 import type { FieldMetaState } from 'react-final-form';
 
 export function capitalize(string: string): string {
@@ -12,7 +11,8 @@ export function getFullName(firstName: string, lastName: string): string {
   return [firstName, lastName].filter((name) => name).join(' ');
 }
 
-export function hasValidationErrors(form: FormApi<any>): boolean {
+// TODO
+export function hasValidationErrors(form: any): boolean {
   return form.getState().hasValidationErrors;
 }
 
