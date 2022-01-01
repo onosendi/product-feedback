@@ -2,6 +2,7 @@ import type { APIRegister } from '@t/api';
 import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
+import { useDispatch } from 'react-redux';
 import { useNavigateAuthorized } from '../../../auth/hooks';
 import {
   Button,
@@ -13,18 +14,38 @@ import { AuthLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { composeValidators, isFilled, isLength } from '../../../lib/validators';
-import { useRegisterMutation } from '../../api';
+import {
+  composeValidators,
+  isFilled,
+  isLength,
+  simpleMemoize,
+} from '../../../lib/validators';
+import usersApi, { useRegisterMutation } from '../../api';
 import styles from './Register.module.scss';
 
 export default function Register() {
   useNavigateAuthorized();
 
+  const dispatch = useDispatch();
   const [register] = useRegisterMutation();
 
   const onSubmit = async (values: APIRegister) => {
     await register(values);
   };
+
+  // TODO: debounce this
+  const validateUsername = simpleMemoize(async (username: string) => {
+    if (username.length >= 3) {
+      // TODO
+      const response: any = await dispatch(
+        usersApi.endpoints.validateUsername.initiate(username),
+      );
+      if (response?.data === true) {
+        return 'Username already exists';
+      }
+    }
+    return undefined;
+  });
 
   return (
     <>
@@ -49,6 +70,7 @@ export default function Register() {
                     validate={composeValidators(
                       [isFilled],
                       [isLength, { min: 3 }],
+                      [validateUsername],
                     )}
                     render={({ input, meta }) => (
                       <TextField

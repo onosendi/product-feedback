@@ -3,6 +3,20 @@ import _isEmpty from 'validator/lib/isEmpty';
 import type { IsLengthOptions } from 'validator/lib/isLength';
 import _isLength from 'validator/lib/isLength';
 
+// TODO
+export function simpleMemoize(fn: any) {
+  let lastValue: string;
+  let lastResult: any;
+  return (value: string) => {
+    if (value !== lastValue) {
+      lastValue = value;
+      lastResult = fn(value);
+    }
+    return lastResult;
+  };
+}
+
+// TODO: fix this to work with `validateUsername`.
 export function composeValidators(
   ...validators: [
     ((value: string, options?: any) => string | undefined),
