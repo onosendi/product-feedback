@@ -14,7 +14,7 @@ import {
 } from '../../../components';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
 import { composeValidators, isFilled, isLength } from '../../../lib/validators';
-import { useCreateSuggestionMutation } from '../../api';
+import { useCreateSuggestionMutation, useDeleteSuggestionMutation } from '../../api';
 import styles from './CreateOrUpdate.module.scss';
 
 export default function CreateOrUpdate() {
@@ -23,6 +23,7 @@ export default function CreateOrUpdate() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [createSuggestion] = useCreateSuggestionMutation();
+  const [deleteSuggestion] = useDeleteSuggestionMutation();
   const { role } = useAuth();
   const isNew = true;
 
@@ -42,7 +43,7 @@ export default function CreateOrUpdate() {
   };
 
   // TODO
-  const deleteFeedback = async () => {};
+  const handleDeleteSuggestsion = async () => {};
 
   const toggleDeleteDialog = () => {
     setShowDialog(!showDialog);
@@ -53,7 +54,7 @@ export default function CreateOrUpdate() {
       {showDialog && (
         <Dialog
           onClose={toggleDeleteDialog}
-          onProceed={deleteFeedback}
+          onProceed={handleDeleteSuggestsion}
         >
           Are you sure you want to delete this feedback?
         </Dialog>

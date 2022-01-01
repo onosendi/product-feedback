@@ -10,7 +10,7 @@ const usersApi = baseApi.injectEndpoints({
         url: '/users',
         body,
       }),
-      invalidatesTags: ['Suggestions'],
+      invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
     }),
     validateUsername: build.query<ErrorResponse | boolean, any>({
       query: (username: string) => `/users/validate/${username}`,

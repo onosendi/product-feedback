@@ -12,10 +12,18 @@ const suggestionsApi = baseApi.injectEndpoints({
         }
         return url;
       },
-      providesTags: ['Suggestions'],
+      providesTags: (result) => (
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Suggestions' as const, id })),
+            { type: 'Suggestions', id: 'LIST' },
+          ]
+          : [{ type: 'Suggestions', id: 'LIST' }]
+      ),
     }),
     getSuggestionDetail: build.query<SuggestionResponse, any>({
       query: (slug: string) => `/suggestions/${slug}`,
+      providesTags: (result, error, id) => [{ type: 'Suggestions', id }],
     }),
     createSuggestion: build.mutation<void, any>({
       query: (body: APICreateOrUpdateSuggestion) => ({
@@ -23,7 +31,14 @@ const suggestionsApi = baseApi.injectEndpoints({
         url: '/suggestions',
         body,
       }),
-      invalidatesTags: ['Suggestions'],
+      invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
+    }),
+    deleteSuggestion: build.mutation<void, any>({
+      query: (suggestionId: string) => ({
+        method: 'delete',
+        url: `/suggestions/${suggestionId}`,
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'Suggestions', id }],
     }),
   }),
 });
@@ -32,6 +47,7 @@ export const {
   useGetSuggestionsQuery,
   useGetSuggestionDetailQuery,
   useCreateSuggestionMutation,
+  useDeleteSuggestionMutation,
 } = suggestionsApi;
 
 export default suggestionsApi;
