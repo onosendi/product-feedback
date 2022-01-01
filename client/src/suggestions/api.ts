@@ -23,7 +23,7 @@ const suggestionsApi = baseApi.injectEndpoints({
     }),
     getSuggestionDetail: build.query<SuggestionResponse, any>({
       query: (slug: string) => `/suggestions/${slug}`,
-      providesTags: (result, error, id) => [{ type: 'Suggestions', id }],
+      providesTags: (result) => [{ type: 'Suggestions', id: result?.id }],
     }),
     createSuggestion: build.mutation<void, any>({
       query: (body: APICreateOrUpdateSuggestion) => ({
