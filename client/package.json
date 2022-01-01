@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "clsx": "^1.1.1",
     "dotenv": "^10.0.0",
-    "final-form": "^4.20.6",
+    "final-form": "^4.20.4",
     "focus-trap": "^6.7.1",
     "focus-trap-react": "^8.9.0",
     "react": "^17.0.2",
