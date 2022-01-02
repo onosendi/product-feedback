@@ -1,5 +1,6 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
 import type { DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
+import type { EditSuggestionResponse, SuggestionResponse } from '@t/response';
 import type {
   FastifyPluginAsync,
   FastifyReply,
@@ -75,9 +76,11 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
         : 'votes';
       suggestions.orderBy(sort, order);
 
+      const response: SuggestionResponse[] = await suggestions;
+
       reply
         .status(status.HTTP_200_OK)
-        .send(await suggestions);
+        .send(response);
     },
   });
 
@@ -99,7 +102,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       const { id: userId } = request.authUser;
       const { slug } = request.params;
 
-      const suggestion = await getSuggestions(fastify.knex, userId)
+      const suggestion: SuggestionResponse = await getSuggestions(fastify.knex, userId)
         .where({ slug })
         .first();
 
@@ -208,10 +211,18 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
             title,
           })
           .where({ id: suggestionId })
+          .returning('slug')
           .transacting(trx);
       });
 
-      reply.status(status.HTTP_204_NO_CONTENT);
+      const response: EditSuggestionResponse = {
+        slug,
+        slugChanged: !(slug === detail?.slug),
+      };
+
+      reply
+        .status(status.HTTP_200_OK)
+        .send(response);
     },
   });
 

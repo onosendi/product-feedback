@@ -1,5 +1,5 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
-import type { SuggestionResponse } from '@t/response';
+import type { EditSuggestionResponse, SuggestionResponse } from '@t/response';
 import baseApi from '../lib/api';
 
 const suggestionsApi = baseApi.injectEndpoints({
@@ -27,28 +27,34 @@ const suggestionsApi = baseApi.injectEndpoints({
     }),
     createSuggestion: build.mutation<void, any>({
       query: (body: APICreateOrUpdateSuggestion) => ({
-        method: 'post',
+        method: 'POST',
         url: '/suggestions',
         body,
       }),
       invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
     }),
-    editSuggestion: build.mutation<void, any>({
+    editSuggestion: build.mutation<EditSuggestionResponse, any>({
       query: (obj: {
         body: APICreateOrUpdateSuggestion,
         suggestionId: string,
       }) => ({
-        method: 'patch',
+        method: 'PATCH',
         url: `/suggestions/${obj.suggestionId}`,
         body: obj.body,
       }),
+      // Only invalidate if the slug didn't change.
+      invalidatesTags: (result, error, obj) => (
+        result?.slugChanged
+          ? []
+          : [{ type: 'Suggestions', id: obj.suggestionId }]
+      ),
     }),
     deleteSuggestion: build.mutation<void, any>({
       query: (suggestionId: string) => ({
-        method: 'delete',
+        method: 'DELETE',
         url: `/suggestions/${suggestionId}`,
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Suggestions', id }],
+      invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
     }),
   }),
 });

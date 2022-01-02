@@ -17,6 +17,7 @@ import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/ut
 import { composeValidators, isFilled, isLength } from '../../../lib/validators';
 import { useCreateSuggestionMutation, useDeleteSuggestionMutation, useEditSuggestionMutation } from '../../api';
 import styles from './CreateOrUpdate.module.scss';
+import routes from '../../../lib/routes';
 
 interface CreateOrUpdateProps {
   suggestion?: SuggestionResponse | undefined;
@@ -48,14 +49,24 @@ export default function CreateOrUpdate({
     };
 
     if (isNew) {
-      createSuggestion(body);
+      // TODO: toast
+      await createSuggestion(body);
+      navigate(routes.suggestions.list);
     } else {
-      editSuggestion({ body, suggestionId: suggestion.id });
+      // TODO
+      const response: any = await editSuggestion({ body, suggestionId: suggestion.id });
+      const slug = response?.data?.slug;
+      if (slug) {
+        // TODO: toast
+        navigate(routes.suggestions.detail(slug));
+      }
     }
   };
 
-  // TODO
-  const handleDeleteSuggestsion = async () => {};
+  const handleDeleteSuggestsion = async () => {
+    await deleteSuggestion(suggestion?.id);
+    navigate(routes.suggestions.list);
+  };
 
   const toggleDeleteDialog = () => {
     setShowDialog(!showDialog);
@@ -88,6 +99,7 @@ export default function CreateOrUpdate({
           >
             <Field
               name="title"
+              initialValue={suggestion?.title}
               validate={composeValidators(
                 [isFilled],
                 [isLength, { min: 5 }],
@@ -134,6 +146,7 @@ export default function CreateOrUpdate({
             )}
             <Field
               name="description"
+              initialValue={suggestion?.description}
               validate={isFilled}
               render={({ input, meta }) => (
                 <TextField
