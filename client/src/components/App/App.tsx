@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { Error404 } from '..';
 import authRoutes from '../../auth/routes';
 import routes from '../../lib/routes';
 import suggestionsRoutes from '../../suggestions/routes';
@@ -22,7 +23,7 @@ export default function App() {
       <Routes>
         <Route element={<Navigate to={routes.suggestions.list} />} path="/" />
         {routerRoutes}
-        {/* TODO: 404 route goes here */}
+        <Route element={<Error404 />} path="*" />
       </Routes>
     </Suspense>
   );
