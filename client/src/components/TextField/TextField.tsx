@@ -1,80 +1,61 @@
+import type { TypeOrUndefined } from '@t/props';
 import cx from 'clsx';
-import { ChangeEvent, ChangeEventHandler, HTMLInputTypeAttribute, useEffect } from 'react';
-import { useState } from 'react';
+import type { ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
 interface TextFieldProps {
   autoFocus?: boolean;
-  defaultValue?: string | undefined;
-  description?: string | null;
+  defaultValue?: TypeOrUndefined;
+  description?: TypeOrUndefined;
   hasError?: boolean;
-  helperText?: string | null;
+  helperText?: TypeOrUndefined;
   id: string;
   label: string;
-  labelClassName?: string | null;
-  labelTextClassName?: string | null;
-  labelWrapperClassName?: string | null;
-  maxLength?: number | undefined;
-  multiline?: boolean | null;
+  labelClassName?: TypeOrUndefined;
+  labelTextClassName?: TypeOrUndefined;
+  labelWrapperClassName?: TypeOrUndefined;
+  maxLength?: TypeOrUndefined<number>;
+  multiline?: TypeOrUndefined<boolean>;
   name: string;
   onBlur?: VoidFunction;
   onChange?: ChangeEventHandler;
   onFocus?: VoidFunction;
   placeholder?: string;
-  rows?: number | undefined;
-  showCharsLeft?: boolean | null;
-  showLabel?: boolean | null;
+  rows?: TypeOrUndefined<number>;
+  showCharsLeft?: TypeOrUndefined<boolean>;
+  showLabel?: TypeOrUndefined<boolean>;
   type?: HTMLInputTypeAttribute;
 }
 
 export default function TextField({
-  defaultValue = undefined,
-  description = null,
+  defaultValue,
+  description,
   hasError = false,
-  helperText = null,
+  helperText,
   id,
   label,
-  labelClassName = null,
-  labelTextClassName = null,
-  labelWrapperClassName = null,
-  maxLength = undefined,
+  labelClassName,
+  labelTextClassName,
+  labelWrapperClassName,
+  maxLength,
   multiline = false,
   name,
   onBlur = () => {},
   onChange = () => {},
   onFocus = () => {},
-  placeholder = undefined,
-  rows = undefined,
-  showCharsLeft = true,
+  placeholder,
+  rows,
   showLabel = true,
   type = 'text',
 }: TextFieldProps) {
-  const shouldShowCharsLeft = showCharsLeft && maxLength;
-
-  const [charsLeft, setCharsLeft] = useState<number | undefined>(undefined);
-
-  useEffect(() => {
-    setCharsLeft(defaultValue?.length || undefined);
-  }, [defaultValue]);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (shouldShowCharsLeft) {
-      const charLength = event.currentTarget.value.length;
-      setCharsLeft(maxLength - charLength);
-    }
-
-    // Handle events sent from React Final Form
-    onChange(event);
-  };
-
   const commonProps = {
     defaultValue,
     id,
     maxLength,
     name,
     onBlur,
-    onChange: handleChange,
+    onChange,
     onFocus,
     placeholder,
   };
@@ -102,7 +83,6 @@ export default function TextField({
 
   return (
     <InputLabel
-      charsLeft={charsLeft}
       className={labelClassName}
       description={description}
       hasError={hasError}
@@ -111,7 +91,6 @@ export default function TextField({
       label={label}
       labelTextClassName={labelTextClassName}
       labelWrapperClassName={labelWrapperClassName}
-      showCharsLeft={showCharsLeft}
       showLabel={showLabel}
     >
       {renderControl()}
