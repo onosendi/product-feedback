@@ -24,7 +24,7 @@ const suggestionsSlice = createSlice({
     builder.addMatcher(
       suggestionsApi.endpoints.getSuggestionDetail.matchFulfilled,
       (state, { payload }) => {
-        suggestionsAdapter.addOne(state, payload);
+        suggestionsAdapter.upsertOne(state, payload);
       },
     );
     builder.addMatcher(

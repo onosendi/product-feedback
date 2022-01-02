@@ -10,7 +10,10 @@ const authApi = baseApi.injectEndpoints({
         url: '/auth/login',
         body: credentials,
       }),
-      invalidatesTags: ['Suggestions'],
+      invalidatesTags: [
+        { type: 'Suggestions', id: 'LIST' },
+        { type: 'Suggestions', id: 'DETAIL' },
+      ],
     }),
   }),
 });
