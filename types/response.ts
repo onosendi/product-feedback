@@ -38,8 +38,3 @@ export interface SuggestionResponse {
   userId: string;
   votes: number;
 }
-
-export interface EditSuggestionResponse {
-  slug: string;
-  slugChanged: boolean;
-}

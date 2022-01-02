@@ -8,6 +8,7 @@ import {
   Button,
   Container,
   DelayChildren,
+  Error404,
   GoBack,
 } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
@@ -25,9 +26,17 @@ export default function SuggestionDetail() {
 
   const suggestionExists = !!Object.entries(suggestion).length;
 
-  if (!suggestionExists && !isFetching) {
+  if (isFetching) {
     // TODO
-    return <p>Not found</p>;
+    return (
+      <DelayChildren>
+        <p>Loading...</p>
+      </DelayChildren>
+    );
+  }
+
+  if (!suggestionExists) {
+    return <Error404 />;
   }
 
   return (

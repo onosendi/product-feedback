@@ -1,6 +1,6 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
 import type { DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
-import type { EditSuggestionResponse, SuggestionResponse } from '@t/response';
+import type { SuggestionResponse } from '@t/response';
 import type {
   FastifyPluginAsync,
   FastifyReply,
@@ -189,10 +189,6 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
         title,
       } = request.body;
 
-      const slug = title === detail?.title
-        ? detail.slug
-        : makeSlug(title);
-
       await fastify.knex.transaction(async (trx) => {
         const { id: categoryId } = await fastify
           .knex('suggestion_category')
@@ -206,23 +202,14 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
           .update({
             category_id: categoryId,
             description,
-            slug,
             status: suggestionStatus,
             title,
           })
           .where({ id: suggestionId })
-          .returning('slug')
           .transacting(trx);
       });
 
-      const response: EditSuggestionResponse = {
-        slug,
-        slugChanged: !(slug === detail?.slug),
-      };
-
-      reply
-        .status(status.HTTP_200_OK)
-        .send(response);
+      reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
 

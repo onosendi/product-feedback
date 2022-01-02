@@ -53,13 +53,8 @@ export default function CreateOrUpdate({
       await createSuggestion(body);
       navigate(routes.suggestions.list);
     } else {
-      // TODO
-      const response: any = await editSuggestion({ body, suggestionId: suggestion.id });
-      const slug = response?.data?.slug;
-      if (slug) {
-        // TODO: toast
-        navigate(routes.suggestions.detail(slug));
-      }
+      await editSuggestion({ body, suggestionId: suggestion.id });
+      navigate(routes.suggestions.detail(suggestion.slug));
     }
   };
 
