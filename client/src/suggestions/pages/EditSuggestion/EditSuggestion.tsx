@@ -23,6 +23,8 @@ export default function EditSuggestion() {
     );
   }
 
+  // TODO: Don't allow regular users to edit suggestions if it's out of
+  // 'suggestion' status.
   if (
     !Object.entries(suggestion).length
     || (suggestion.userId !== userId && role !== 'admin')

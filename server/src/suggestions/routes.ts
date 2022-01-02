@@ -179,6 +179,8 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
       fastify.needsOwner,
     ],
     handler: async (request, reply) => {
+      // TODO: Don't allow regular users to edit suggestions if it's out of
+      // 'suggestion' status.
       const { detail } = request;
       const { suggestionId } = request.params;
 
