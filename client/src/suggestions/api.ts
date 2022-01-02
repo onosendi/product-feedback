@@ -1,5 +1,5 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
-import type { EditSuggestionResponse, SuggestionResponse } from '@t/response';
+import type { SuggestionResponse } from '@t/response';
 import baseApi from '../lib/api';
 
 const suggestionsApi = baseApi.injectEndpoints({
@@ -45,7 +45,10 @@ const suggestionsApi = baseApi.injectEndpoints({
         url: `/suggestions/${obj.suggestionId}`,
         body: obj.body,
       }),
-      invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
+      invalidatesTags: (result, error, obj) => [
+        { type: 'Suggestions', id: obj.suggestionId },
+        { type: 'Suggestions', id: 'LIST' },
+      ],
     }),
     deleteSuggestion: build.mutation<void, any>({
       query: (suggestionId: string) => ({
