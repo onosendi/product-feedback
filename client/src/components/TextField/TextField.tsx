@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import type { ChangeEvent, ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
+import { ChangeEvent, ChangeEventHandler, HTMLInputTypeAttribute, useEffect } from 'react';
 import { useState } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
@@ -52,12 +52,11 @@ export default function TextField({
 }: TextFieldProps) {
   const shouldShowCharsLeft = showCharsLeft && maxLength;
 
-  const [charsLeft, setCharsLeft] = useState(() => {
-    if (shouldShowCharsLeft) {
-      return maxLength - (defaultValue?.length ?? 0);
-    }
-    return null;
-  });
+  const [charsLeft, setCharsLeft] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    setCharsLeft(defaultValue?.length || undefined);
+  }, [defaultValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (shouldShowCharsLeft) {

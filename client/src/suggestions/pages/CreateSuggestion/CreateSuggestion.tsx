@@ -7,7 +7,7 @@ export default function CreateSuggestion() {
   return (
     <>
       <Helmet>
-        <title>{`Suggestions - ${APP_NAME}`}</title>
+        <title>{`New suggestion - ${APP_NAME}`}</title>
       </Helmet>
       <FormLayout>
         <CreateOrUpdate />

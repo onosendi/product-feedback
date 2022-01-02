@@ -1,4 +1,5 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
+import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
@@ -14,18 +15,25 @@ import {
 } from '../../../components';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
 import { composeValidators, isFilled, isLength } from '../../../lib/validators';
-import { useCreateSuggestionMutation, useDeleteSuggestionMutation } from '../../api';
+import { useCreateSuggestionMutation, useDeleteSuggestionMutation, useEditSuggestionMutation } from '../../api';
 import styles from './CreateOrUpdate.module.scss';
 
-export default function CreateOrUpdate() {
+interface CreateOrUpdateProps {
+  suggestion?: SuggestionResponse | undefined;
+}
+
+export default function CreateOrUpdate({
+  suggestion,
+}: CreateOrUpdateProps) {
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
 
   const [createSuggestion] = useCreateSuggestionMutation();
+  const [editSuggestion] = useEditSuggestionMutation();
   const [deleteSuggestion] = useDeleteSuggestionMutation();
   const { role } = useAuth();
-  const isNew = true;
+  const isNew = suggestion === undefined;
 
   const cancel = () => {
     // TODO
@@ -39,7 +47,11 @@ export default function CreateOrUpdate() {
       status: formRef.current?.status?.value,
     };
 
-    await createSuggestion(body);
+    if (isNew) {
+      createSuggestion(body);
+    } else {
+      editSuggestion({ body, suggestionId: suggestion.id });
+    }
   };
 
   // TODO
@@ -63,8 +75,7 @@ export default function CreateOrUpdate() {
       <h1 className={cx('type-1', styles.heading)}>
         {isNew
           ? 'Create New Feedback'
-          // TODO
-          : 'Editing \'TODO\''}
+          : `Editing ${suggestion.title}`}
       </h1>
       <Form
         onSubmit={onSubmit}
@@ -83,6 +94,7 @@ export default function CreateOrUpdate() {
               )}
               render={({ input, meta }) => (
                 <TextField
+                  defaultValue={suggestion?.title}
                   description="Add a short, descriptive headline"
                   hasError={getHasError(meta)}
                   helperText={getHelperText(meta)}
@@ -94,8 +106,7 @@ export default function CreateOrUpdate() {
               )}
             />
             <SelectField
-              // TODO
-              defaultValue="ux"
+              defaultValue={suggestion?.category?.toLowerCase()}
               description="Choose a category for your feedback"
               id="category"
               label="Category"
@@ -109,8 +120,7 @@ export default function CreateOrUpdate() {
             </SelectField>
             {role === 'admin' && (
               <SelectField
-                // TODO
-                defaultValue="live"
+                defaultValue={suggestion?.status?.toLowerCase()}
                 description="Change feature state"
                 id="status"
                 label={isNew ? 'Status' : 'Update Status'}
@@ -127,6 +137,7 @@ export default function CreateOrUpdate() {
               validate={isFilled}
               render={({ input, meta }) => (
                 <TextField
+                  defaultValue={suggestion?.description}
                   description="Include any specific comments on what should be improved, added, etc."
                   hasError={getHasError(meta)}
                   helperText={getHelperText(meta)}

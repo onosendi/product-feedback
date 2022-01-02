@@ -33,6 +33,16 @@ const suggestionsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
     }),
+    editSuggestion: build.mutation<void, any>({
+      query: (obj: {
+        body: APICreateOrUpdateSuggestion,
+        suggestionId: string,
+      }) => ({
+        method: 'patch',
+        url: `/suggestions/${obj.suggestionId}`,
+        body: obj.body,
+      }),
+    }),
     deleteSuggestion: build.mutation<void, any>({
       query: (suggestionId: string) => ({
         method: 'delete',
@@ -47,6 +57,7 @@ export const {
   useGetSuggestionsQuery,
   useGetSuggestionDetailQuery,
   useCreateSuggestionMutation,
+  useEditSuggestionMutation,
   useDeleteSuggestionMutation,
 } = suggestionsApi;
 
