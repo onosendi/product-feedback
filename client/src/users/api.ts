@@ -12,7 +12,7 @@ const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
     }),
-    validateUsername: build.mutation<ErrorResponse | boolean, any>({
+    validateUsername: build.query<ErrorResponse | boolean, any>({
       query: (username: string) => `/users/validate/${username}`,
     }),
   }),
