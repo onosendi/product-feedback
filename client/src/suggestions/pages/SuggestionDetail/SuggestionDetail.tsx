@@ -24,8 +24,6 @@ export default function SuggestionDetail() {
     isFetching,
   } = useSuggestionDetail();
 
-  const suggestionExists = !!Object.entries(suggestion).length;
-
   if (isFetching) {
     // TODO
     return (
@@ -35,7 +33,7 @@ export default function SuggestionDetail() {
     );
   }
 
-  if (!suggestionExists) {
+  if (!Object.entries(suggestion).length) {
     return <Error404 />;
   }
 
@@ -48,28 +46,17 @@ export default function SuggestionDetail() {
       <Container className={cx(styles.container)}>
         <div className={cx(styles.goBackAndEditFeedbackWrapper)}>
           <GoBack shade="dark" />
-          {(!isFetching && (suggestion.id === userId || role === 'admin')) && (
+          {(suggestion.id === userId || role === 'admin') && (
             <Button href={routes.suggestions.edit(suggestion.slug)} variant="2">
               Edit Feedback
             </Button>
           )}
         </div>
         <div className={cx(styles.detailWrapper)}>
-          {isFetching
-            // TODO: Loading spinner
-            ? (
-              <DelayChildren>
-                <p>Loading...</p>
-              </DelayChildren>
-            )
-            : <SuggestionsItem data={suggestion} link={false} />}
+          <SuggestionsItem data={suggestion} link={false} />
         </div>
-        {(!isFetching && suggestionExists) && (
-          <>
-            <ListComments suggestionId={suggestion.id} />
-            <CreateComment suggestionId={suggestion.id} />
-          </>
-        )}
+        <ListComments suggestionId={suggestion.id} />
+        <CreateComment suggestionId={suggestion.id} />
       </Container>
     </>
   );

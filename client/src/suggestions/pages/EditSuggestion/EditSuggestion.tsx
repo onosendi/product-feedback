@@ -1,19 +1,33 @@
 import type { SuggestionResponse } from '@t/response';
 import { Helmet } from 'react-helmet-async';
+import { useAuth } from '../../../auth/hooks';
+import { DelayChildren, Error404 } from '../../../components';
 import { FormLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import { CreateOrUpdate } from '../../components';
 import { useSuggestionDetail } from '../../hooks';
 
 export default function EditSuggestion() {
+  const { role, userId } = useAuth();
   const {
     data: suggestion = {} as SuggestionResponse,
     isFetching,
   } = useSuggestionDetail();
 
-  // TODO: don't allow non owners to visit this page either
-  if (!Object.entries(suggestion).length && !isFetching) {
-    return <p>Not found</p>;
+  if (isFetching) {
+    // TODO
+    return (
+      <DelayChildren>
+        <p>Loading...</p>
+      </DelayChildren>
+    );
+  }
+
+  if (
+    !Object.entries(suggestion).length
+    || (suggestion.userId !== userId && role !== 'admin')
+  ) {
+    return <Error404 />;
   }
 
   return (
