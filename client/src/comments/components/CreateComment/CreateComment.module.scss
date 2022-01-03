@@ -1,8 +1,11 @@
 @use '../../../assets/scss/abstracts/mixins';
 
+.loginToComment {
+  margin-top: 2.4rem;
+}
+
 .form {
   margin-top: 2.4rem;
-  margin-bottom: 4.8rem;
 
   @include mixins.respond-to(md) {
     padding: 3.2rem;

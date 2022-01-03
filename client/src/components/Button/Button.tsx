@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import type { ReactNode } from 'react';
 import { forwardRef } from 'react';
+import type { NavigateOptions } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 
@@ -10,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   href?: string | null;
+  navigateOptions?: NavigateOptions;
   onClick?: VoidFunction;
   prependPlus?: boolean;
   selected?: boolean;
@@ -23,6 +25,7 @@ const Button = forwardRef<any, ButtonProps>(({
   disabled = false,
   fullWidth = false,
   href = null,
+  navigateOptions,
   onClick = () => {},
   prependPlus = false,
   selected = false,
@@ -45,7 +48,15 @@ const Button = forwardRef<any, ButtonProps>(({
   };
 
   return href
-    ? <Link to={href} {...commonProps}>{children}</Link>
+    ? (
+      <Link
+        to={href}
+        {...commonProps}
+        {...navigateOptions}
+      >
+        {children}
+      </Link>
+    )
     // eslint-disable-next-line react/button-has-type
     : <button type={type} {...commonProps}>{children}</button>;
 });
