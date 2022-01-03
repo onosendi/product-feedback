@@ -32,6 +32,7 @@ export default function InputLabel({
   showCharsLeft = true,
   showLabel = true,
 }: InputLabelProps) {
+  // Don't let errors move the page around
   const renderLabel = () => {
     if (showLabel) {
       return (
