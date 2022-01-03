@@ -37,18 +37,24 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
   });
 
   // Create comment
-  fastify.route<{ Body: APICreateComment }>({
+  fastify.route<{
+    Body: APICreateComment,
+    Querystring: {
+      parent_id?: string | null,
+      suggestion_id: string,
+    },
+  }>({
     method: 'POST',
     url: '/',
     schema: createCommentSchema,
     preValidation: [fastify.needsAuthentication],
     handler: async (request, reply) => {
       const { id: userId } = request.authUser;
+      const { content } = request.body;
       const {
-        commentParentId = null,
-        content,
-        suggestionId,
-      } = request.body;
+        parent_id: commentParentId = null,
+        suggestion_id: suggestionId,
+      } = request.query;
 
       const suggestion = await fastify
         .knex('suggestion')

@@ -19,7 +19,5 @@ export interface APICreateOrUpdateSuggestion {
 }
 
 export interface APICreateComment {
-  commentParentId?: string;
   content: string;
-  suggestionId: string;
 }
