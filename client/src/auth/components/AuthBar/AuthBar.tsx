@@ -17,7 +17,7 @@ export default function AuthBar({
   wrapperClassName = null,
 }: AuthBarProps) {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { pathname, search } = useLocation();
   const { isAuthenticated, ...auth } = useAuth();
 
   const handleLogout = () => {
@@ -41,7 +41,7 @@ export default function AuthBar({
           <p className={cx('type-body2', styles.loginOrRegister)}>
             <Link
               navigateOptions={{
-                state: { path: location.pathname + location.search },
+                state: { path: pathname + search },
               }}
               href={routes.auth.login}
             >
