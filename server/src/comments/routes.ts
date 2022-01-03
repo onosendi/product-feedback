@@ -8,20 +8,25 @@ import { createCommentSchema, listCommentsSchema } from './schemas';
 const commentRoutes: FastifyPluginAsync = async (fastify) => {
   // List comments
   fastify.route<{
-    // TODO: this should use querystring `?suggestionId=...`
-    Params: { suggestionId: string },
+    Querystring: { suggestion_id: string },
   }>({
     method: 'GET',
-    url: '/:suggestionId',
+    url: '/',
     schema: listCommentsSchema,
-    preHandler: [
-      fastify.decorateRequestDetail({
-        select: ['id'],
-        table: 'suggestion',
-      }),
-    ],
     handler: async (request, reply) => {
-      const { suggestionId } = request.params;
+      const { suggestion_id: suggestionId } = request.query;
+
+      const suggestion = await fastify
+        .knex('suggestion')
+        .select('id')
+        .where({ id: suggestionId })
+        .first();
+      if (!suggestion) {
+        const error = new Error('Record does not exist');
+        reply
+          .status(status.HTTP_400_BAD_REQUEST)
+          .send(error);
+      }
 
       const comments = await getComments(fastify.knex, suggestionId);
 

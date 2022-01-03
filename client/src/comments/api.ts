@@ -4,7 +4,7 @@ import baseApi from '../lib/api';
 const commentsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getComments: build.query<DBComment[], any>({
-      query: (slug: string) => `/comments/${slug}`,
+      query: (suggestionId: string) => `/comments?suggestion_id=${suggestionId}`,
     }),
   }),
 });

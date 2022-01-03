@@ -25,7 +25,7 @@ export default function ListComments({
     );
   }
 
-  if (!Object.entries(comments).length && !isFetching) {
+  if (!Object.entries(comments).length) {
     return null;
   }
 
