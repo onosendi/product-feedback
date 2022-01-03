@@ -45,7 +45,7 @@ export default function SuggestionDetail() {
       <AuthBar className={cx(styles.authBar)} />
       <Container className={cx(styles.container)}>
         <div className={cx(styles.goBackAndEditFeedbackWrapper)}>
-          <GoBack shade="dark" />
+          <GoBack href={routes.suggestions.list} shade="dark" />
           {(suggestion.id === userId || role === 'admin') && (
             <Button href={routes.suggestions.edit(suggestion.slug)} variant="2">
               Edit Feedback

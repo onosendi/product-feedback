@@ -1,33 +1,53 @@
 import cx from 'clsx';
-import { useNavigate } from 'react-router-dom';
+import type { NavigateOptions } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './GoBack.module.scss';
 
 interface GoBackProps {
   className?: string;
+  href?: string;
+  navigateOptions?: NavigateOptions;
   shade: 'light' | 'dark';
 }
 
 export default function GoBack({
   className,
+  href,
+  navigateOptions,
   shade,
 }: GoBackProps) {
   const navigate = useNavigate();
 
+  const commonProps = {
+    className: cx(
+      'type-4',
+      styles.goBack,
+      styles[shade],
+      className,
+    ),
+  };
+
   const onClick = () => {
-    // TODO
     navigate(-1);
   };
 
+  if (href) {
+    return (
+      <Link
+        to={href}
+        {...navigateOptions}
+        {...commonProps}
+      >
+        Go Back
+      </Link>
+    );
+  }
+
   return (
-    // eslint-disable-next-line react/button-has-type
     <button
-      className={cx(
-        'type-4',
-        styles.goBack,
-        styles[shade],
-        className,
-      )}
       onClick={onClick}
+      type="button"
+      {...commonProps}
     >
       Go Back
     </button>

@@ -4,6 +4,7 @@ import { useAuth } from '../../../auth/hooks';
 import { DelayChildren, Error404 } from '../../../components';
 import { FormLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
+import routes from '../../../lib/routes';
 import { CreateOrUpdate } from '../../components';
 import { useSuggestionDetail } from '../../hooks';
 
@@ -37,7 +38,11 @@ export default function EditSuggestion() {
       <Helmet>
         <title>{`New suggestion - ${APP_NAME}`}</title>
       </Helmet>
-      <FormLayout>
+      <FormLayout
+        goBackProps={{
+          href: routes.suggestions.detail(suggestion.slug),
+        }}
+      >
         <CreateOrUpdate suggestion={suggestion} />
       </FormLayout>
     </>

@@ -6,15 +6,18 @@ import styles from './FormLayout.module.scss';
 
 interface DialogLayoutProps {
   children: ReactNode;
+  // TODO
+  goBackProps?: any;
 }
 
 export default function DialogLayout({
   children,
+  goBackProps,
 }: DialogLayoutProps) {
   return (
     <Container className={cx(styles.container)}>
       <div className={cx(styles.goBackAndUserBarWrapper)}>
-        <GoBack shade="dark" />
+        <GoBack shade="dark" {...goBackProps} />
         <AuthBar
           className={cx(styles.userBar)}
           wrapperClassName={cx(styles.userBarWrapper)}
