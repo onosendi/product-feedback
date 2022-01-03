@@ -2,14 +2,14 @@ import baseApi from '../lib/api';
 
 const votesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    createVote: build.mutation<void, any>({
-      query: (suggestionId: string) => ({
+    createVote: build.mutation<void, string>({
+      query: (suggestionId) => ({
         method: 'post',
         url: `/votes/${suggestionId}`,
       }),
     }),
-    deleteVote: build.mutation<void, any>({
-      query: (suggestionId: string) => ({
+    deleteVote: build.mutation<void, string>({
+      query: (suggestionId) => ({
         method: 'delete',
         url: `/votes/${suggestionId}`,
       }),

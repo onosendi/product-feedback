@@ -41,11 +41,12 @@ export default function CreateOrUpdate({
     navigate(-1);
   };
 
-  const onSubmit = async (values: APICreateOrUpdateSuggestion) => {
+  const onSubmit = async (values: Record<string, any>) => {
     const body = {
-      ...values,
       category: formRef.current?.category?.value,
+      description: values.description,
       status: formRef.current?.status?.value,
+      title: values.title,
     };
 
     if (isNew) {
@@ -53,14 +54,20 @@ export default function CreateOrUpdate({
       await createSuggestion(body);
       navigate(routes.suggestions.list);
     } else {
-      await editSuggestion({ body, suggestionId: suggestion.id });
+      await editSuggestion({
+        body,
+        meta: { suggestionId: suggestion.id },
+      });
       navigate(routes.suggestions.detail(suggestion.slug));
     }
   };
 
   const handleDeleteSuggestsion = async () => {
-    await deleteSuggestion(suggestion?.id);
-    navigate(routes.suggestions.list);
+    if (suggestion?.id) {
+      await deleteSuggestion(suggestion.id);
+      navigate(routes.suggestions.list);
+      // TODO: toast
+    }
   };
 
   const toggleDeleteDialog = () => {

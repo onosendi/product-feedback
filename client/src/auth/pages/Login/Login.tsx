@@ -1,4 +1,3 @@
-import type { APILogin } from '@t/api';
 import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
@@ -25,10 +24,13 @@ export default function Login() {
   const [errors, setErrors] = useState(false);
   const [login] = useLoginMutation();
 
-  const onSubmit = async (values: APILogin) => {
+  const onSubmit = async (values: Record<string, any>) => {
     setErrors(false);
     try {
-      await login(values).unwrap();
+      await login({
+        username: values.username,
+        password: values.password,
+      }).unwrap();
     } catch (error) {
       const err = error as any;
       if (err?.status === status.HTTP_401_UNAUTHORIZED) {

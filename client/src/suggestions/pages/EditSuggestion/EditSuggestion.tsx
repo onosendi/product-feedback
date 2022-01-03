@@ -1,19 +1,21 @@
 import type { SuggestionResponse } from '@t/response';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../auth/hooks';
 import { DelayChildren, Error404 } from '../../../components';
 import { FormLayout } from '../../../layouts';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
+import { useGetSuggestionDetailQuery } from '../../api';
 import { CreateOrUpdate } from '../../components';
-import { useSuggestionDetail } from '../../hooks';
 
 export default function EditSuggestion() {
+  const { slug } = useParams<{ slug: any }>();
   const { role, userId } = useAuth();
   const {
     data: suggestion = {} as SuggestionResponse,
     isFetching,
-  } = useSuggestionDetail();
+  } = useGetSuggestionDetailQuery(slug);
 
   if (isFetching) {
     // TODO

@@ -4,8 +4,8 @@ import baseApi from '../lib/api';
 
 const usersApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    register: build.mutation<AuthResponse, any>({
-      query: (body: APIRegister) => ({
+    register: build.mutation<AuthResponse, APIRegister>({
+      query: (body) => ({
         method: 'post',
         url: '/users',
         body,
@@ -15,8 +15,8 @@ const usersApi = baseApi.injectEndpoints({
         { type: 'Suggestions', id: 'DETAIL' },
       ],
     }),
-    validateUsername: build.query<ErrorResponse | boolean, any>({
-      query: (username: string) => `/users/validate/${username}`,
+    validateUsername: build.query<ErrorResponse | boolean, string>({
+      query: (username) => `/users/validate/${username}`,
     }),
   }),
 });

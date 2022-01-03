@@ -1,6 +1,7 @@
 import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 import { AuthBar } from '../../../auth/components';
 import { useAuth } from '../../../auth/hooks';
 import { CreateComment, ListComments } from '../../../comments/components';
@@ -13,16 +14,17 @@ import {
 } from '../../../components';
 import { APP_NAME } from '../../../lib/constants';
 import routes from '../../../lib/routes';
+import { useGetSuggestionDetailQuery } from '../../api';
 import { SuggestionsItem } from '../../components';
-import { useSuggestionDetail } from '../../hooks';
 import styles from './SuggestionDetail.module.scss';
 
 export default function SuggestionDetail() {
+  const { slug } = useParams<{ slug: any }>();
   const { role, userId } = useAuth();
   const {
     data: suggestion = {} as SuggestionResponse,
     isFetching,
-  } = useSuggestionDetail();
+  } = useGetSuggestionDetailQuery(slug);
 
   if (isFetching) {
     // TODO

@@ -2,10 +2,17 @@ import type { APICreateOrUpdateSuggestion } from '@t/api';
 import type { SuggestionResponse } from '@t/response';
 import baseApi from '../lib/api';
 
+interface EditSuggestionObject {
+  body: APICreateOrUpdateSuggestion;
+  meta: {
+    suggestionId: string,
+  };
+}
+
 const suggestionsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getSuggestions: build.query<SuggestionResponse[], any>({
-      query: (querystring: string) => {
+    getSuggestions: build.query<SuggestionResponse[], string>({
+      query: (querystring) => {
         let url = '/suggestions';
         if (querystring) {
           url += `?${querystring}`;
@@ -21,37 +28,34 @@ const suggestionsApi = baseApi.injectEndpoints({
           : [{ type: 'Suggestions', id: 'LIST' }]
       ),
     }),
-    getSuggestionDetail: build.query<SuggestionResponse, any>({
-      query: (slug: string) => `/suggestions/${slug}`,
+    getSuggestionDetail: build.query<SuggestionResponse, string>({
+      query: (slug) => `/suggestions/${slug}`,
       providesTags: (result) => [
         { type: 'Suggestions', id: result?.id },
         { type: 'Suggestions', id: 'DETAIL' },
       ],
     }),
-    createSuggestion: build.mutation<void, any>({
-      query: (body: APICreateOrUpdateSuggestion) => ({
+    createSuggestion: build.mutation<void, APICreateOrUpdateSuggestion>({
+      query: (body) => ({
         method: 'POST',
         url: '/suggestions',
         body,
       }),
       invalidatesTags: [{ type: 'Suggestions', id: 'LIST' }],
     }),
-    editSuggestion: build.mutation<void, any>({
-      query: (obj: {
-        body: APICreateOrUpdateSuggestion,
-        suggestionId: string,
-      }) => ({
+    editSuggestion: build.mutation<void, EditSuggestionObject>({
+      query: (obj) => ({
         method: 'PATCH',
-        url: `/suggestions/${obj.suggestionId}`,
+        url: `/suggestions/${obj.meta.suggestionId}`,
         body: obj.body,
       }),
       invalidatesTags: (result, error, obj) => [
-        { type: 'Suggestions', id: obj.suggestionId },
+        { type: 'Suggestions', id: obj.meta.suggestionId },
         { type: 'Suggestions', id: 'LIST' },
       ],
     }),
-    deleteSuggestion: build.mutation<void, any>({
-      query: (suggestionId: string) => ({
+    deleteSuggestion: build.mutation<void, string>({
+      query: (suggestionId) => ({
         method: 'DELETE',
         url: `/suggestions/${suggestionId}`,
       }),

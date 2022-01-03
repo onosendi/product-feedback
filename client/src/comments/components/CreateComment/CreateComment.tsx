@@ -1,7 +1,5 @@
-import type { APICreateComment } from '@t/api';
 import cx from 'clsx';
 import type { FormApi } from 'final-form';
-import qs from 'qs';
 import { useRef } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useLocation } from 'react-router-dom';
@@ -26,14 +24,11 @@ export default function CreateComment({
   const [createComment] = useCreateCommentMutation();
 
   const onSubmit = async (values: Record<string, any>, form: FormApi) => {
-    const querystring = qs.stringify({ suggestion_id: suggestionId });
-    const obj = {
-      content: values.content,
-      querystring,
-    };
-
     // TODO: toast
-    await createComment(obj);
+    await createComment({
+      body: { content: values.content },
+      meta: { suggestionId },
+    });
 
     if (formRef.current) {
       formRef.current.content.value = '';

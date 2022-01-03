@@ -1,4 +1,3 @@
-import type { APIRegister } from '@t/api';
 import cx from 'clsx';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
@@ -29,8 +28,12 @@ export default function Register() {
   const dispatch = useDispatch();
   const [register] = useRegisterMutation();
 
-  const onSubmit = async (values: APIRegister) => {
-    await register(values);
+  const onSubmit = async (values: Record<string, any>) => {
+    await register({
+      username: values.username,
+      password: values.password,
+      passwordConfirm: values.passwordConfirm,
+    });
   };
 
   // TODO: debounce this

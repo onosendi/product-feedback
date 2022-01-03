@@ -1,9 +1,11 @@
+import type { APICreateComment } from '@t/api';
 import type { DBComment } from '@t/database';
+import qs from 'qs';
 import baseApi from '../lib/api';
 
 interface CreateCommentObject {
-  content: string;
-  querystring: {
+  body: APICreateComment;
+  meta: {
     parentId?: string,
     suggestionId: string,
   };
@@ -11,16 +13,21 @@ interface CreateCommentObject {
 
 const commentsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getComments: build.query<DBComment[], any>({
-      query: (suggestionId: string) => `/comments?suggestion_id=${suggestionId}`,
+    getComments: build.query<DBComment[], string>({
+      query: (suggestionId) => `/comments?suggestion_id=${suggestionId}`,
       providesTags: (result, error, id) => [{ type: 'Comments', id }],
     }),
-    createComment: build.mutation<DBComment, any>({
-      query: (obj: CreateCommentObject) => ({
-        method: 'POST',
-        url: `/comments?${obj.querystring}`,
-        body: { content: obj.content },
-      }),
+    createComment: build.mutation<DBComment, CreateCommentObject>({
+      query: (obj) => {
+        const querystring = qs.stringify({
+          suggestion_id: obj.meta.suggestionId,
+        });
+        return {
+          method: 'POST',
+          url: `/comments?${querystring}`,
+          body: obj.body,
+        };
+      },
     }),
   }),
 });
