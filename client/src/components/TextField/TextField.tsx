@@ -8,6 +8,7 @@ interface TextFieldProps {
   autoFocus?: boolean;
   defaultValue?: TypeOrUndefined;
   description?: TypeOrUndefined;
+  disabled?: boolean;
   hasError?: boolean;
   helperText?: TypeOrUndefined;
   id: string;
@@ -31,6 +32,7 @@ interface TextFieldProps {
 export default function TextField({
   defaultValue,
   description,
+  disabled,
   hasError = false,
   helperText,
   id,
@@ -51,6 +53,7 @@ export default function TextField({
 }: TextFieldProps) {
   const commonProps = {
     defaultValue,
+    disabled,
     id,
     maxLength,
     name,
