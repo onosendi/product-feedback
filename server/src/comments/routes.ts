@@ -1,8 +1,9 @@
 import type { APICreateComment } from '@t/api';
+import type { DBComment } from '@t/database';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
-import { getComments } from './queries';
+import { getCommentById, getComments } from './queries';
 import { createCommentSchema, listCommentsSchema } from './schemas';
 
 const commentRoutes: FastifyPluginAsync = async (fastify) => {
@@ -68,21 +69,31 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
           .send(error);
       }
 
-      const commentId = uuidv4();
+      try {
+        await fastify.knex.transaction(async (trx) => {
+          const commentId = uuidv4();
 
-      await fastify
-        .knex('suggestion_comment')
-        .insert({
-          id: commentId,
-          content,
-          user_id: userId,
-          suggestion_id: suggestionId,
-          suggestion_comment_parent_id: commentParentId,
+          await fastify
+            .knex('suggestion_comment')
+            .insert({
+              id: commentId,
+              content,
+              user_id: userId,
+              suggestion_id: suggestionId,
+              suggestion_comment_parent_id: commentParentId,
+            })
+            .transacting(trx);
+
+          const comment: DBComment = await getCommentById(fastify.knex, commentId)
+            .transacting(trx);
+
+          reply
+            .status(status.HTTP_201_CREATED)
+            .send(comment);
         });
-
-      reply
-        .status(status.HTTP_201_CREATED)
-        .send(status.HTTP_201_CREATED);
+      } catch {
+        throw new Error();
+      }
     },
   });
 };

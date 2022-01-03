@@ -45,3 +45,20 @@ export function getComments(knex: Knex, suggestionId: string) {
     .whereNull('sc.suggestion_comment_parent_id')
     .where({ 'sc.suggestion_id': suggestionId });
 }
+
+export function getCommentById(knex: Knex, commentId: string) {
+  return knex('suggestion_comment as sc')
+    .select(
+      'sc.id',
+      'sc.content',
+      'sc.suggestion_id',
+      'sc.suggestion_comment_parent_id',
+      'u.username',
+      'u.first_name',
+      'u.last_name',
+      'u.picture',
+    )
+    .join('user as u', 'u.id', '=', 'sc.user_id')
+    .where({ 'sc.id': commentId })
+    .first();
+}

@@ -1,6 +1,9 @@
 import cx from 'clsx';
+import { useSelector } from 'react-redux';
 import { DelayChildren, Paper } from '../../../components';
+import type { RootState } from '../../../lib/store';
 import { useGetCommentsQuery } from '../../api';
+import { selectComments } from '../../slice';
 import CommentItem from '../CommentItem';
 import styles from './ListComments.module.scss';
 
@@ -11,10 +14,9 @@ interface ListCommentsProps {
 export default function ListComments({
   suggestionId,
 }: ListCommentsProps) {
-  const {
-    data: comments = [],
-    isFetching,
-  } = useGetCommentsQuery(suggestionId);
+  const { isFetching } = useGetCommentsQuery(suggestionId);
+  const comments = useSelector((state: RootState) => (
+    selectComments(state, suggestionId)));
 
   if (isFetching) {
     // TODO

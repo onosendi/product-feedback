@@ -15,15 +15,12 @@ const commentsApi = baseApi.injectEndpoints({
       query: (suggestionId: string) => `/comments?suggestion_id=${suggestionId}`,
       providesTags: (result, error, id) => [{ type: 'Comments', id }],
     }),
-    createComment: build.mutation<void, any>({
+    createComment: build.mutation<DBComment, any>({
       query: (obj: CreateCommentObject) => ({
         method: 'POST',
         url: `/comments?${obj.querystring}`,
         body: { content: obj.content },
       }),
-      invalidatesTags: (result, error, obj) => [
-        { type: 'Comments', id: obj.suggestionId },
-      ],
     }),
   }),
 });
