@@ -24,6 +24,8 @@ export const needsOwner: FastifyPluginAsync = fp(async (fastify) => {
 });
 
 export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
+  // TODO: This abstraction doesn't work in a lot of places. Ficture
+  // something else out.
   fastify.decorateRequest('detail', null);
 
   fastify.decorate(
