@@ -17,3 +17,9 @@ export interface APICreateOrUpdateSuggestion {
   status?: DBSuggestionStatus;
   title: string;
 }
+
+export interface APICreateComment {
+  commentParentId?: string;
+  content: string;
+  suggestionId: string;
+}

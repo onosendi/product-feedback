@@ -35,11 +35,7 @@ export const requestDetail: FastifyPluginAsync = fp(async (fastify) => {
       tableColumn?: string,
     }) {
       return async (
-        request: FastifyRequest<{
-          Params: {
-            [key in string]: string;
-          },
-        }>,
+        request: FastifyRequest<{ Params: Record<string, string> }>,
         reply: FastifyReply,
       ) => {
         const {
