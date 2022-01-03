@@ -17,6 +17,7 @@ const baseApi = createApi({
   baseQuery,
   endpoints: () => ({}),
   tagTypes: [
+    'Comments',
     'Suggestions',
   ],
 });
