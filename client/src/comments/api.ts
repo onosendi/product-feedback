@@ -21,7 +21,9 @@ const commentsApi = baseApi.injectEndpoints({
         url: `/comments?${obj.querystring}`,
         body: { content: obj.content },
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Comments', id }],
+      invalidatesTags: (result, error, obj) => [
+        { type: 'Comments', id: obj.suggestionId },
+      ],
     }),
   }),
 });

@@ -1,6 +1,9 @@
+import type { APICreateComment } from '@t/api';
 import cx from 'clsx';
+import qs from 'qs';
 import { Field, Form } from 'react-final-form';
 import { Button, Paper, TextField } from '../../../components';
+import { useCreateCommentMutation } from '../../api';
 import styles from './CreateComment.module.scss';
 
 interface CreateCommentProps {
@@ -10,10 +13,17 @@ interface CreateCommentProps {
 export default function CreateComment({
   suggestionId,
 }: CreateCommentProps) {
-  const onSubmit = (values: {
-    content: string,
-  }) => {
-    console.log(values);
+  const [createComment] = useCreateCommentMutation();
+
+  const onSubmit = async (values: APICreateComment) => {
+    const querystring = qs.stringify({ suggestion_id: suggestionId });
+    const obj = {
+      ...values,
+      querystring,
+    };
+
+    // TODO: toast
+    await createComment(obj);
   };
 
   return (
