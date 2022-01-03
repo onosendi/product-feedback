@@ -1,5 +1,5 @@
 import type { APICreateComment } from '@t/api';
-import type { DBComment } from '@t/database';
+import type { CommentResponse } from '@t/response';
 import qs from 'qs';
 import baseApi from '../lib/api';
 
@@ -13,11 +13,11 @@ interface CreateCommentObject {
 
 const commentsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getComments: build.query<DBComment[], string>({
+    getComments: build.query<CommentResponse[], string>({
       query: (suggestionId) => `/comments?suggestion_id=${suggestionId}`,
       providesTags: (result, error, id) => [{ type: 'Comments', id }],
     }),
-    createComment: build.mutation<DBComment, CreateCommentObject>({
+    createComment: build.mutation<CommentResponse, CreateCommentObject>({
       query: (obj) => {
         const querystring = qs.stringify({
           suggestion_id: obj.meta.suggestionId,

@@ -1,5 +1,5 @@
 import type { APICreateComment } from '@t/api';
-import type { DBComment } from '@t/database';
+import type { CommentResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
@@ -29,7 +29,7 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
           .send(error);
       }
 
-      const comments = await getComments(fastify.knex, suggestionId);
+      const comments: CommentResponse[] = await getComments(fastify.knex, suggestionId);
 
       reply
         .status(status.HTTP_200_OK)
@@ -84,7 +84,7 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
             })
             .transacting(trx);
 
-          const comment: DBComment = await getCommentById(fastify.knex, commentId)
+          const comment: CommentResponse = await getCommentById(fastify.knex, commentId)
             .transacting(trx);
 
           reply

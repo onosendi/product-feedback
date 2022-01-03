@@ -38,3 +38,18 @@ export interface SuggestionResponse {
   userId: string;
   votes: number;
 }
+
+//
+// Comments
+//
+export interface CommentResponse {
+  content: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+  picture: string;
+  replies: CommentResponse[];
+  suggestionCommentParentId: string;
+  suggestionId: string;
+  username: string;
+}
