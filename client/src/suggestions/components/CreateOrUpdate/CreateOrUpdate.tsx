@@ -36,10 +36,9 @@ export default function CreateOrUpdate({
   const { role } = useAuth();
   const isNew = suggestion === undefined;
 
-  const cancel = () => {
-    // TODO
-    navigate(-1);
-  };
+  const cancelHref = suggestion
+    ? routes.suggestions.detail(suggestion.slug)
+    : routes.suggestions.list;
 
   const onSubmit = async (values: Record<string, any>) => {
     const body = {
@@ -174,7 +173,11 @@ export default function CreateOrUpdate({
               >
                 {isNew ? 'Add Feedback' : 'Save Changes'}
               </Button>
-              <Button className={cx(styles.cancel)} onClick={cancel} variant="3">
+              <Button
+                className={cx(styles.cancel)}
+                href={cancelHref}
+                variant="3"
+              >
                 Cancel
               </Button>
               {!isNew && (
