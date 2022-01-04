@@ -19,7 +19,7 @@ export default function AppBar() {
     <>
       <header className={cx(styles.header)}>
         <hgroup className={cx(styles.headerGroup)}>
-          <h1 className={cx('type-2')}>Frontend Mentor</h1>
+          <h1 className={cx('type-2')}>Product Feedback</h1>
           <h2 className={cx('type-jost-medium')}>Feedback Board</h2>
         </hgroup>
         <button
