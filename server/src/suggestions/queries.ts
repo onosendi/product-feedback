@@ -44,3 +44,13 @@ export function getSuggestions(knex: Knex, userId: string) {
       's.id',
     );
 }
+
+export function getRoadmapCount(knex: Knex) {
+  return knex('suggestion')
+    .select(
+      knex.raw('sum(case when status=\'planned\' then 1 else 0 end) as planned'),
+      knex.raw('sum(case when status=\'in-progress\' then 1 else 0 end) as in_progress'),
+      knex.raw('sum(case when status=\'live\' then 1 else 0 end) as live'),
+    )
+    .first();
+}

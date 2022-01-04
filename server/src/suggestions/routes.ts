@@ -11,12 +11,13 @@ import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
 import { createVote } from '../votes/queries';
-import { getSuggestions } from './queries';
+import { getRoadmapCount, getSuggestions } from './queries';
 import {
   createSuggestionSchema,
   deleteSuggestionSchema,
   editSuggestionSchema,
   listSuggestionsSchema,
+  roadmapCountSchema,
   suggestionDetailSchema,
 } from './schemas';
 
@@ -239,6 +240,20 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
         .delete();
 
       reply.status(status.HTTP_204_NO_CONTENT);
+    },
+  });
+
+  // Roadmap count
+  fastify.route({
+    method: 'GET',
+    url: '/roadmap/count',
+    schema: roadmapCountSchema,
+    handler: async (request, reply) => {
+      const response = await getRoadmapCount(fastify.knex);
+
+      reply
+        .status(status.HTTP_200_OK)
+        .send(response);
     },
   });
 };

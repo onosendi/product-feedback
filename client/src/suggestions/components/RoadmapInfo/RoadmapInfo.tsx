@@ -1,6 +1,8 @@
+import type { RoadmapCountResponse } from '@t/response';
 import cx from 'clsx';
 import { Link, Paper } from '../../../components';
 import routes from '../../../lib/routes';
+import { useGetRoadmapCountQuery } from '../../api';
 // import { selectRoadmapInfo } from '../../redux/feedbackSlice';
 import styles from './RoadmapInfo.module.scss';
 
@@ -11,9 +13,9 @@ const roadmapMap = [
 ];
 
 export default function RoadmapInfo() {
-  // TODO
-  // const roadmapInfo = useSelector(selectRoadmapInfo);
-  const roadmapInfo: any = {};
+  const {
+    data: roadmapCount = {} as RoadmapCountResponse,
+  } = useGetRoadmapCountQuery();
 
   return (
     <Paper aria-label="road map" className={cx(styles.nav)} component="nav">
@@ -29,7 +31,9 @@ export default function RoadmapInfo() {
         {roadmapMap.map((item) => (
           <div className={cx(styles[`${item.key}Bullet`])} key={item.key}>
             <dt className={cx('type-jost')}>{item.title}</dt>
-            <dd className={cx('type-jost-bold')}>{roadmapInfo[item.key]}</dd>
+            <dd className={cx('type-jost-bold')}>
+              {roadmapCount[item.key as keyof RoadmapCountResponse]}
+            </dd>
           </div>
         ))}
       </dl>
