@@ -1,3 +1,4 @@
+import type { FormApi } from 'final-form';
 import type { IsEmptyOptions } from 'validator/lib/isEmpty';
 import _isEmpty from 'validator/lib/isEmpty';
 import type { IsLengthOptions } from 'validator/lib/isLength';
@@ -40,4 +41,14 @@ export function isLength(value: string = '', options?: IsLengthOptions) {
     ? `Must be at least ${options?.min} characters`
     : `Can't be more than ${options?.max} characters`;
   return _isLength(value.trim(), options) ? undefined : message;
+}
+
+export function isNotEqualToInitial(form: FormApi) {
+  return (value: string = '') => {
+    const fieldState = form.getFieldState('content');
+    if (value === fieldState?.initial) {
+      return 'Required';
+    }
+    return undefined;
+  };
 }

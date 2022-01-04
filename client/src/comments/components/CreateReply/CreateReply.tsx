@@ -4,7 +4,7 @@ import type { FocusEvent } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Button, TextField } from '../../../components';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { composeValidators, isFilled } from '../../../lib/validators';
+import { composeValidators, isFilled, isNotEqualToInitial } from '../../../lib/validators';
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateReply.module.scss';
 
@@ -38,6 +38,8 @@ export default function CreateReply({
     currentTarget.selectionEnd = currentTarget.selectionStart;
   };
 
+  const initialContentValue = `@${data.username} `;
+
   return (
     <Form
       onSubmit={onSubmit}
@@ -60,16 +62,16 @@ export default function CreateReply({
         >
           <Field
             name="content"
-            initialValue={`@${data.username} `}
+            initialValue={initialContentValue}
             validate={composeValidators(
               [isFilled],
+              [isNotEqualToInitial(form)],
             )}
-            // TODO: Validate this
             render={({ input, meta }) => (
               <TextField
                 {...input}
                 autoFocus
-                defaultValue={`@${data.username} `}
+                defaultValue={initialContentValue}
                 hasError={getHasError(meta)}
                 helperText={getHelperText(meta)}
                 id={`comment-${data.id}`}
