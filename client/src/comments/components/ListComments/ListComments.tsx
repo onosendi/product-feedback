@@ -1,10 +1,10 @@
 import cx from 'clsx';
 import { useSelector } from 'react-redux';
+import { CommentItem } from '..';
 import { DelayChildren, Paper } from '../../../components';
 import type { RootState } from '../../../lib/store';
 import { useGetCommentsQuery } from '../../api';
 import { selectComments } from '../../slice';
-import CommentItem from '../CommentItem';
 import styles from './ListComments.module.scss';
 
 interface ListCommentsProps {

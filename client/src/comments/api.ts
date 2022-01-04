@@ -20,6 +20,7 @@ const commentsApi = baseApi.injectEndpoints({
     createComment: build.mutation<CommentResponse, CreateCommentObject>({
       query: (obj) => {
         const querystring = qs.stringify({
+          ...(obj.meta.parentId && { parent_id: obj.meta.parentId }),
           suggestion_id: obj.meta.suggestionId,
         });
         return {

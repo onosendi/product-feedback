@@ -59,29 +59,3 @@
     font-weight: 700;
   }
 }
-
-.commentForm {
-  display: grid;
-  grid-gap: 1.6rem;
-  margin-top: 2.4rem;
-
-  @include mixins.respond-to(md) {
-    margin-left: 7.2rem;
-  }
-
-  &Comment {
-    @include mixins.respond-to(md) {
-      grid-template-columns: 46.1rem auto;
-    }
-  }
-
-  &Reply {
-    @include mixins.respond-to(md) {
-      grid-template-columns: 41.6rem auto;
-    }
-  }
-}
-
-.replyButton {
-  align-self: start;
-}

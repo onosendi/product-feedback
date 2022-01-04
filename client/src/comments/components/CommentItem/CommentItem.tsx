@@ -1,18 +1,16 @@
-import type { DBComment } from '@t/database';
+import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
-import type { FocusEvent } from 'react';
 import { useState } from 'react';
-import { Field, Form } from 'react-final-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { CreateReply } from '..';
 import { useAuth } from '../../../auth/hooks';
-import { Button, TextField } from '../../../components';
 import routes from '../../../lib/routes';
 import { getFullName } from '../../../lib/utils';
 import { Picture } from '../../../users/components';
 import styles from './CommentItem.module.scss';
 
 interface CommentItemProps {
-  data: DBComment;
+  data: CommentResponse;
   parentId: string;
 }
 
@@ -25,20 +23,9 @@ export default function CommentItem({
   const { pathname } = useLocation();
   const { isAuthenticated } = useAuth();
 
-  const {
-    content,
-    firstName,
-    lastName,
-    id,
-    picture,
-    suggestionCommentParentId,
-    suggestionId,
-    username,
-  } = data;
-
-  const fullName = getFullName(firstName, lastName);
+  const fullName = getFullName(data.firstName, data.lastName);
   const hasName = !!fullName;
-  const tokenizedContent = content.split(/(@\w+)/g);
+  const tokenizedContent = data.content.split(/(@\w+)/g);
   const stylizedContent = tokenizedContent.map((token, index) => (
     // In this case, it's okay to use `index` as a key.
     // eslint-disable-next-line react/no-array-index-key
@@ -53,27 +40,17 @@ export default function CommentItem({
     setShowReply(!showReply);
   };
 
-  const onFocus = (event: FocusEvent<HTMLInputElement>) => {
-    const { currentTarget } = event;
-    currentTarget.selectionStart = currentTarget.value.length;
-    currentTarget.selectionEnd = currentTarget.selectionStart;
-  };
-
-  const onSubmit = () => {
-    console.log(suggestionId);
-  };
-
   return (
     <article>
       <footer className={cx(styles.footer)}>
         <Picture
-          alt={hasName ? fullName : username}
+          alt={hasName ? fullName : data.username}
           className={cx(styles.picture)}
-          src={picture}
+          src={data.picture}
         />
         <div className={cx(styles.namesWrapper)}>
           {hasName && <p className={cx('type-jost-bold', styles.name)}>{fullName}</p>}
-          <p className={cx('type-jost', styles.username)}>{username}</p>
+          <p className={cx('type-jost', styles.username)}>{data.username}</p>
         </div>
         <button
           className={cx('type-body3', styles.reply)}
@@ -85,45 +62,7 @@ export default function CommentItem({
       </footer>
       <p className={cx('type-body2', styles.content)}>{stylizedContent}</p>
       {showReply && (
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, values }) => (
-            <form
-              className={cx(
-                styles.commentForm,
-                suggestionCommentParentId
-                  ? styles.commentFormReply
-                  : styles.commentFormComment,
-
-              )}
-              noValidate
-              onSubmit={onSubmit}
-            >
-              <Field
-                name="content"
-                render={({ input, meta }) => (
-                  <TextField
-                    autoFocus
-                    defaultValue={`@${username} `}
-                    id={`comment-${id}`}
-                    label="Add reply"
-                    maxLength={255}
-                    multiline
-                    showLabel={false}
-                    {...input}
-                  />
-                )}
-              />
-              <Button
-                className={cx(styles.replyButton)}
-                type="submit"
-                variant="1"
-              >
-                Post Reply
-              </Button>
-            </form>
-          )}
-        />
+        <CreateReply data={data} parentId={parentId} />
       )}
     </article>
   );

@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { DBComment } from '@t/database';
+import type { CommentResponse } from '@t/response';
 import type { RootState } from '../lib/store';
 import commentsApi from './api';
 
 interface CommentsState {
-  [key: string]: DBComment[];
+  [key: string]: CommentResponse[];
 }
 
 const initialState: CommentsState = {};
@@ -25,8 +25,8 @@ const suggestionsSlice = createSlice({
     builder.addMatcher(
       commentsApi.endpoints.createComment.matchFulfilled,
       (state, { payload }) => {
-        const comments = state;
         const { suggestionId } = payload;
+        const comments = state;
         comments[suggestionId].push(payload);
       },
     );
