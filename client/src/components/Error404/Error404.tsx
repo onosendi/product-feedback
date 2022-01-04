@@ -1,4 +1,4 @@
-import styles from './Error404.module.scss';
+// import styles from './Error404.module.scss';
 
 export default function Error404() {
   // TODO

@@ -1,4 +1,3 @@
-import type { APICreateOrUpdateSuggestion } from '@t/api';
 import type { SuggestionResponse } from '@t/response';
 import cx from 'clsx';
 import { useRef, useState } from 'react';

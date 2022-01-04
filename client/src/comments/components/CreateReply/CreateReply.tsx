@@ -4,7 +4,6 @@ import type { FormApi } from 'final-form';
 import { Field, Form } from 'react-final-form';
 import { Button, TextField } from '../../../components';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { isFilled } from '../../../lib/validators';
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateReply.module.scss';
 
