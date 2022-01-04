@@ -71,6 +71,10 @@ const suggestionsApi = baseApi.injectEndpoints({
   }),
 });
 
+export function selectSuggestionCount(querystring: string) {
+  return suggestionsApi.endpoints.getSuggestions.select(querystring);
+}
+
 export const {
   useGetSuggestionsQuery,
   useGetSuggestionDetailQuery,

@@ -9,6 +9,7 @@ import {
   Header,
   RoadmapInfo,
   SortFilter,
+  SuggestionCountDisplay,
   SuggestionsParent,
 } from '../../components';
 import styles from './ListSuggestions.module.scss';
@@ -39,8 +40,7 @@ export default function ListSuggestions() {
             className={cx(styles.sortBarContainer)}
             wrapperClassName={cx(styles.sortBarWrapper)}
           >
-            {/* // TODO */}
-            {/* <SuggestionsCounter className={cx(styles.suggestionsCounter)} /> */}
+            <SuggestionCountDisplay className={cx(styles.suggestionsCounter)} />
             <SortFilter>
               <SelectItem value="votes-desc">Most Upvotes</SelectItem>
               <SelectItem value="votes-asc">Least Upvotes</SelectItem>

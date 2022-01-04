@@ -171,7 +171,7 @@ export default function CreateOrUpdate({
             <div className={cx(styles.buttonWrapper)}>
               <Button
                 className={cx(styles.add)}
-                disabled={pristine || submitting || hasValidationErrors(form)}
+                disabled={submitting || hasValidationErrors(form)}
                 type="submit"
                 variant="1"
               >

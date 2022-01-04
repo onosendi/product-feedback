@@ -29,7 +29,6 @@ export default function SuggestionsItem({
           forRoadmap && styles.status,
           forRoadmap && styles[`status${data.status}`],
         )}
-        // TODO
         component={link ? Link : 'div'}
         to={routes.suggestions.detail(data.slug)}
       >

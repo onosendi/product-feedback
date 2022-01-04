@@ -23,3 +23,7 @@ export function getHelperText(meta: FieldMetaState<any>): undefined | string {
 export function getHasError(meta: FieldMetaState<any>): boolean {
   return !!(meta.touched && meta.error);
 }
+
+export function pluralize(string: string, count: number) {
+  return (count === 1 ? string : `${string}s`);
+}
