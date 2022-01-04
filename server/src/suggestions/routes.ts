@@ -243,6 +243,8 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
     },
   });
 
+  // TODO: Better endpoint. Make roadmap return all suggestions that don't
+  // have 'suggestion' status, then count them on the front end.
   // Roadmap count
   fastify.route({
     method: 'GET',
