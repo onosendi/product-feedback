@@ -16,8 +16,9 @@
     "react"
   ],
   "rules": {
-    "no-restricted-exports": "off",
     "import/prefer-default-export": "off",
+    "max-len": "off",
+    "no-restricted-exports": "off",
     "react/display-name": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
