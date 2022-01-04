@@ -6,6 +6,7 @@ import routes from '../lib/routes';
 const CreateSuggestion = lazy(() => import('./pages/CreateSuggestion'));
 const EditSuggestion = lazy(() => import('./pages/EditSuggestion'));
 const ListSuggestions = lazy(() => import('./pages/ListSuggestions'));
+const Roadmap = lazy(() => import('./pages/Roadmap'));
 const SuggestionDetail = lazy(() => import('./pages/SuggestionDetail'));
 
 const suggestionRoutes = [
@@ -27,6 +28,11 @@ const suggestionRoutes = [
     )}
     key="suggestions-create"
     path={routes.suggestions.create}
+  />,
+  <Route
+    element={<Roadmap />}
+    key="roadmap"
+    path="/roadmap"
   />,
   <Route
     element={(

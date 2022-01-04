@@ -1,0 +1,148 @@
+@use '../../../assets/scss/abstracts/mixins';
+@use '../../../assets/scss/abstracts/palette';
+
+.headerWrapper {
+  background-color: var(--clr-primary-darkslategray);
+
+  @include mixins.respond-to(md) {
+    background-color: unset;
+    margin-top: 5.6rem;
+  }
+}
+
+.header {
+  min-height: 10rem;
+  position: relative;
+
+  @include mixins.respond-to(md) {
+    background-color: var(--clr-primary-darkslategray);
+    border-radius: 1rem;
+    min-height: 11.3rem;
+  }
+
+  & > * {
+    position: absolute;
+  }
+}
+
+.heading {
+  color: var(--clr-neutral-100);
+  top: 5rem;
+
+  @include mixins.respond-to(md) {
+    left: 3.2rem;
+  }
+}
+
+.addFeedbackButton {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @include mixins.respond-to(md) {
+    right: 2.4rem;
+  }
+}
+
+.goBack {
+  top: 1.6rem;
+
+  @include mixins.respond-to(md) {
+    left: 3.2rem;
+  }
+}
+
+.statusButtonWrapper {
+  --roadmap-button-bottom-border-color: #{palette.$lightslategray};
+
+  border-bottom: 0.1rem solid hsl(var(--roadmap-button-bottom-border-color) / 25%);
+
+  @include mixins.respond-to(md) {
+    display: none;
+  }
+}
+
+.statusButtonContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.statusButton {
+  @include mixins.transition(color);
+
+  --roadmap-button-color: #{palette.$darkslateblue};
+
+  color: hsl(var(--roadmap-button-color) / var(--roadmap-button-color-opacity, 40%));
+  min-height: 5.9rem;
+  position: relative;
+
+  &Active {
+    --roadmap-button-color-opacity: 100%;
+
+    &::after {
+      background-color: var(--clr-primary-blueviolet);
+      bottom: 0;
+      content: '';
+      height: 0.4rem;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  &:focus-visible,
+  &:hover {
+    color: var(--clr-primary-blueviolet);
+  }
+}
+
+@supports not selector(.button:focus-visible) {
+  .statusButton:focus {
+    color: var(--clr-primary-blueviolet);
+  }
+}
+
+.statusColumns {
+  display: grid;
+  grid-gap: 1rem;
+  margin-bottom: 9.8rem;
+  margin-top: 2.4rem;
+
+  @include mixins.respond-to(md) {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 3.2rem;
+  }
+
+  & > div {
+    display: none;
+
+    @include mixins.respond-to(md) {
+      display: block;
+    }
+
+    &.showColumn {
+      display: block;
+    }
+  }
+}
+
+.columnHeader {
+  color: var(--clr-primary-darkslateblue);
+  font-size: 1.8rem;
+  letter-spacing: 0.025rem;
+
+  @include mixins.respond-to(md) {
+    font-size: 1.4rem;
+    letter-spacing: 0.019rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.columnDescription {
+  color: var(--clr-primary-slategray);
+  font-size: 1.3rem;
+
+  @include mixins.respond-to(md) {
+    font-size: 1.4rem;
+  }
+}
