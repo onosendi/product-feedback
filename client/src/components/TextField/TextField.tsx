@@ -1,6 +1,6 @@
 import type { TypeOrUndefined } from '@t/props';
 import cx from 'clsx';
-import type { ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
+import type { ChangeEventHandler, FocusEvent, HTMLInputTypeAttribute } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
@@ -21,7 +21,8 @@ interface TextFieldProps {
   name: string;
   onBlur?: VoidFunction;
   onChange?: ChangeEventHandler;
-  onFocus?: VoidFunction;
+  // TODO
+  onFocus?: (event?: any) => void;
   placeholder?: string;
   rows?: TypeOrUndefined<number>;
   showCharsLeft?: TypeOrUndefined<boolean>;
@@ -30,6 +31,7 @@ interface TextFieldProps {
 }
 
 export default function TextField({
+  autoFocus,
   defaultValue,
   description,
   disabled,
@@ -52,6 +54,7 @@ export default function TextField({
   type = 'text',
 }: TextFieldProps) {
   const commonProps = {
+    autoFocus,
     defaultValue,
     disabled,
     id,

@@ -1,6 +1,6 @@
 import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
-import type { FormApi } from 'final-form';
+import type { FocusEvent } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Button, TextField } from '../../../components';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
@@ -20,7 +20,7 @@ export default function CreateReply({
 }: CreateReplyProps) {
   const [createComment] = useCreateCommentMutation();
 
-  const onSubmit = async (values: Record<string, any>, form: FormApi) => {
+  const onSubmit = async (values: Record<string, any>) => {
     await createComment({
       body: { content: values.content },
       meta: {
@@ -31,15 +31,15 @@ export default function CreateReply({
     setShowReply(false);
   };
 
-  // const onFocus = (event: FocusEvent<HTMLInputElement>) => {
-  //   const { currentTarget } = event;
-  //   currentTarget.selectionStart = currentTarget.value.length;
-  //   currentTarget.selectionEnd = currentTarget.selectionStart;
-  // };
+  const onFocus = (event: FocusEvent<HTMLInputElement>) => {
+    const { currentTarget } = event;
+    currentTarget.selectionStart = currentTarget.value.length;
+    currentTarget.selectionEnd = currentTarget.selectionStart;
+  };
 
   return (
     <Form
-      onSubmit={(values, form) => { onSubmit(values, form); }}
+      onSubmit={onSubmit}
       render={({ form, handleSubmit, submitting }) => (
         <form
           className={cx(
@@ -57,16 +57,20 @@ export default function CreateReply({
             // TODO: Validate this
             render={({ input, meta }) => (
               <TextField
+                {...input}
                 autoFocus
                 defaultValue={`@${data.username} `}
                 hasError={getHasError(meta)}
                 helperText={getHelperText(meta)}
                 id={`comment-${data.id}`}
                 label="Add reply"
+                onFocus={(event) => {
+                  input.onFocus(event);
+                  onFocus(event);
+                }}
                 maxLength={255}
                 multiline
                 showLabel={false}
-                {...input}
               />
             )}
           />
