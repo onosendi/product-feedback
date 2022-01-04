@@ -4,6 +4,7 @@ import type { FocusEvent } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Button, TextField } from '../../../components';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
+import { composeValidators, isFilled } from '../../../lib/validators';
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateReply.module.scss';
 
@@ -40,7 +41,12 @@ export default function CreateReply({
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ form, handleSubmit, submitting }) => (
+      render={({
+        form,
+        handleSubmit,
+        pristine,
+        submitting,
+      }) => (
         <form
           className={cx(
             styles.commentForm,
@@ -54,6 +60,10 @@ export default function CreateReply({
         >
           <Field
             name="content"
+            initialValue={`@${data.username} `}
+            validate={composeValidators(
+              [isFilled],
+            )}
             // TODO: Validate this
             render={({ input, meta }) => (
               <TextField
@@ -76,7 +86,7 @@ export default function CreateReply({
           />
           <Button
             className={cx(styles.replyButton)}
-            disabled={submitting || hasValidationErrors(form)}
+            disabled={pristine || submitting || hasValidationErrors(form)}
             type="submit"
             variant="1"
           >

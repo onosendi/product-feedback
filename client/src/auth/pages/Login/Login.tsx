@@ -53,7 +53,12 @@ export default function Login() {
             )}
             <Form
               onSubmit={onSubmit}
-              render={({ form, handleSubmit, submitting }) => (
+              render={({
+                form,
+                handleSubmit,
+                pristine,
+                submitting,
+              }) => (
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
@@ -83,7 +88,7 @@ export default function Login() {
                     )}
                   />
                   <Button
-                    disabled={submitting || hasValidationErrors(form)}
+                    disabled={pristine || submitting || hasValidationErrors(form)}
                     fullWidth
                     type="submit"
                     variant="1"

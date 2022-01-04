@@ -90,7 +90,12 @@ export default function CreateOrUpdate({
       </h1>
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, submitting, form }) => (
+        render={({
+          form,
+          handleSubmit,
+          pristine,
+          submitting,
+        }) => (
           <form
             className={cx(styles.form)}
             noValidate
@@ -166,7 +171,7 @@ export default function CreateOrUpdate({
             <div className={cx(styles.buttonWrapper)}>
               <Button
                 className={cx(styles.add)}
-                disabled={submitting || hasValidationErrors(form)}
+                disabled={pristine || submitting || hasValidationErrors(form)}
                 type="submit"
                 variant="1"
               >

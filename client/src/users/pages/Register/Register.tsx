@@ -66,7 +66,12 @@ export default function Register() {
                   passwordConfirm: 'Passwords do not match',
                 }),
               })}
-              render={({ form, handleSubmit, submitting }) => (
+              render={({
+                form,
+                handleSubmit,
+                pristine,
+                submitting,
+              }) => (
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
@@ -121,7 +126,7 @@ export default function Register() {
                     )}
                   />
                   <Button
-                    disabled={submitting || hasValidationErrors(form)}
+                    disabled={pristine || submitting || hasValidationErrors(form)}
                     fullWidth
                     type="submit"
                     variant="1"

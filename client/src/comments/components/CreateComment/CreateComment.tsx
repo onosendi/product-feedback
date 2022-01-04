@@ -57,7 +57,12 @@ export default function CreateComment({
   return (
     <Form
       onSubmit={(values, form) => { onSubmit(values, form); }}
-      render={({ form, handleSubmit, submitting }) => (
+      render={({
+        form,
+        handleSubmit,
+        pristine,
+        submitting,
+      }) => (
         <Paper
           className={cx(styles.form)}
           component="form"
@@ -85,7 +90,7 @@ export default function CreateComment({
           />
           <div className={cx(styles.buttonWrapper)}>
             <Button
-              disabled={submitting || hasValidationErrors(form)}
+              disabled={pristine || submitting || hasValidationErrors(form)}
               type="submit"
               variant="1"
             >
