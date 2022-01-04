@@ -43,9 +43,9 @@ export function isLength(value: string = '', options?: IsLengthOptions) {
   return _isLength(value.trim(), options) ? undefined : message;
 }
 
-export function isNotEqualToInitial(form: FormApi) {
+export function isNotEqualToInitial(fieldName: string, form: FormApi) {
   return (value: string = '') => {
-    const fieldState = form.getFieldState('content');
+    const fieldState = form.getFieldState(fieldName);
     if (value === fieldState?.initial) {
       return 'Required';
     }

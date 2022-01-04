@@ -65,7 +65,7 @@ export default function CreateReply({
             initialValue={initialContentValue}
             validate={composeValidators(
               [isFilled],
-              [isNotEqualToInitial(form)],
+              [isNotEqualToInitial('content', form)],
             )}
             render={({ input, meta }) => (
               <TextField
