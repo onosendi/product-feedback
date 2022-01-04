@@ -10,11 +10,13 @@ import styles from './CreateReply.module.scss';
 interface CreateReplyProps {
   data: CommentResponse;
   parentId: string;
+  setShowReply: (state: boolean) => void;
 }
 
 export default function CreateReply({
   data,
   parentId,
+  setShowReply,
 }: CreateReplyProps) {
   const [createComment] = useCreateCommentMutation();
 
@@ -26,6 +28,7 @@ export default function CreateReply({
         suggestionId: data.suggestionId,
       },
     });
+    setShowReply(false);
   };
 
   // const onFocus = (event: FocusEvent<HTMLInputElement>) => {

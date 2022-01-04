@@ -62,7 +62,11 @@ export default function CommentItem({
       </footer>
       <p className={cx('type-body2', styles.content)}>{stylizedContent}</p>
       {showReply && (
-        <CreateReply data={data} parentId={parentId} />
+        <CreateReply
+          data={data}
+          parentId={parentId}
+          setShowReply={setShowReply}
+        />
       )}
     </article>
   );

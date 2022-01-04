@@ -25,9 +25,20 @@ const suggestionsSlice = createSlice({
     builder.addMatcher(
       commentsApi.endpoints.createComment.matchFulfilled,
       (state, { payload }) => {
-        const { suggestionId } = payload;
-        const comments = state;
-        comments[suggestionId].push(payload);
+        const { suggestionCommentParentId, suggestionId } = payload;
+        const comments = state[suggestionId];
+
+        if (suggestionCommentParentId) {
+          const comment = comments.find((c) => c.id === suggestionCommentParentId);
+          if (comment) {
+            if (!comment.replies) {
+              comment.replies = [];
+            }
+            comment.replies.push(payload);
+          }
+        } else {
+          comments.push(payload);
+        }
       },
     );
   },
