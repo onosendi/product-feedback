@@ -17,12 +17,12 @@ export default function SuggestionCountDisplay({
 
   // TODO: better selector
   const { data } = useSelector(selectSuggestionCount(querystring));
-  const suggestionCount = data?.length || '';
+  const suggestionCount = data?.length;
   const suggestionText = pluralize('Suggestion', suggestionCount || 0);
 
   return (
     <p className={cx('type-jost-bold', styles.text, className)}>
-      {`${suggestionCount} ${suggestionText}`}
+      {`${suggestionCount || ''} ${suggestionText}`}
     </p>
   );
 }
