@@ -39,11 +39,9 @@ export interface SuggestionResponse {
   votes: number;
 }
 
-export interface RoadmapCountResponse {
-  inProgress: number;
-  live: number;
-  planned: number;
-}
+export type RoadmapResponse = {
+  [key in Exclude<DBSuggestionStatus, 'suggestion'>]: SuggestionResponse[];
+};
 
 //
 // Comments

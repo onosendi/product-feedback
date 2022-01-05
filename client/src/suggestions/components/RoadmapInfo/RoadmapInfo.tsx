@@ -1,13 +1,11 @@
-import type { SuggestionResponse } from '@t/response';
+import type { RoadmapResponse } from '@t/response';
 import cx from 'clsx';
-import { useMemo } from 'react';
 import { Link, Paper } from '../../../components';
 import routes from '../../../lib/routes';
 import { useGetRoadmapQuery } from '../../api';
-// import { selectRoadmapInfo } from '../../redux/feedbackSlice';
 import styles from './RoadmapInfo.module.scss';
 
-const roadmapMap = [
+const roadmapMap: any = [
   { title: 'Planned', key: 'planned' },
   { title: 'In-Progress', key: 'in-progress' },
   { title: 'Live', key: 'live' },
@@ -15,17 +13,8 @@ const roadmapMap = [
 
 export default function RoadmapInfo() {
   const {
-    data: roadmap = [] as SuggestionResponse[],
+    data: roadmap = {} as RoadmapResponse,
   } = useGetRoadmapQuery();
-
-  const reducer = (
-    acc: Record<string, number>,
-    { status }: { status: string },
-  ) => (!acc[status]
-    ? { ...acc, [status]: 1 }
-    : { ...acc, [status]: acc[status] + 1 });
-
-  const roadmapCount = useMemo(() => roadmap.reduce(reducer, {}), [roadmap]);
 
   return (
     <Paper aria-label="road map" className={cx(styles.nav)} component="nav">
@@ -38,11 +27,12 @@ export default function RoadmapInfo() {
         View
       </Link>
       <dl className={cx(styles.list)}>
-        {roadmapMap.map((item) => (
+        {roadmapMap.map((item: any) => (
           <div className={cx(styles[`${item.key}Bullet`])} key={item.key}>
             <dt className={cx('type-jost')}>{item.title}</dt>
             <dd className={cx('type-jost-bold')}>
-              {roadmapCount[item.key] || 0}
+              {/* @ts-ignore TODO */}
+              {roadmap[item.key]?.length || 0}
             </dd>
           </div>
         ))}

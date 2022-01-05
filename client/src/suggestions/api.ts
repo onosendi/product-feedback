@@ -69,6 +69,21 @@ const suggestionsApi = baseApi.injectEndpoints({
     getRoadmap: build.query<SuggestionResponse[], void>({
       query: () => '/suggestions/roadmap',
       providesTags: [{ type: 'Suggestions', id: 'ROADMAP' }],
+      transformResponse: (response: SuggestionResponse[]) => {
+        const reducer = (
+          acc: any,
+          suggestion: SuggestionResponse,
+        ) => ({
+          ...acc,
+          [suggestion.status]: [...acc[suggestion.status], suggestion],
+        });
+
+        return response.reduce(reducer, {
+          'in-progress': [],
+          live: [],
+          planned: [],
+        });
+      },
     }),
   }),
 });
