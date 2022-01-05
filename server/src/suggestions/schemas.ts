@@ -114,15 +114,4 @@ export const editSuggestionSchema: FastifySchema = {
 // TODO
 export const deleteSuggestionSchema: FastifySchema = {};
 
-export const roadmapCountSchema: FastifySchema = {
-  response: {
-    [status.HTTP_200_OK]: {
-      type: 'object',
-      properties: {
-        inProgress: { type: 'number' },
-        live: { type: 'number' },
-        planned: { type: 'number' },
-      },
-    },
-  },
-};
+export const roadmapCountSchema: FastifySchema = {};

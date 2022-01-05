@@ -52,6 +52,7 @@ const suggestionsApi = baseApi.injectEndpoints({
       invalidatesTags: (result, error, obj) => [
         { type: 'Suggestions', id: obj.meta.suggestionId },
         { type: 'Suggestions', id: 'LIST' },
+        { type: 'Suggestions', id: 'ROADMAP' },
       ],
     }),
     deleteSuggestion: build.mutation<void, string>({
@@ -62,11 +63,12 @@ const suggestionsApi = baseApi.injectEndpoints({
       invalidatesTags: (result, error, id) => [
         { type: 'Suggestions', id },
         { type: 'Suggestions', id: 'LIST' },
+        { type: 'Suggestions', id: 'ROADMAP' },
       ],
     }),
-    getRoadmapCount: build.query<RoadmapCountResponse, void>({
-      query: () => '/suggestions/roadmap/count',
-      providesTags: [{ type: 'Suggestions', id: 'ROADMAP_COUNT' }],
+    getRoadmap: build.query<SuggestionResponse[], void>({
+      query: () => '/suggestions/roadmap',
+      providesTags: [{ type: 'Suggestions', id: 'ROADMAP' }],
     }),
   }),
 });
@@ -77,7 +79,7 @@ export const {
   useCreateSuggestionMutation,
   useEditSuggestionMutation,
   useDeleteSuggestionMutation,
-  useGetRoadmapCountQuery,
+  useGetRoadmapQuery,
 } = suggestionsApi;
 
 export default suggestionsApi;
