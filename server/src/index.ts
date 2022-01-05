@@ -18,6 +18,7 @@ const fastify: FastifyInstance = Fastify({
     customOptions: {
       $data: true,
       allErrors: true,
+      coerceTypes: 'array',
       removeAdditional: 'all',
     },
   },

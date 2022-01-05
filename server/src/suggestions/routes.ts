@@ -48,7 +48,7 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
   // List suggestions
   fastify.route<{
     Querystring: {
-      category: DBSuggestionCategories,
+      category: DBSuggestionCategories[],
       order: 'asc' | 'desc',
       sort: 'votes' | 'comments',
     },
@@ -63,11 +63,8 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
         .where({ 's.status': 'suggestion' });
 
       const { category } = request.query;
-      const categories = Array.isArray(category)
-        ? category
-        : category && category.split(' ');
-      if (categories) {
-        suggestions.whereIn('category', categories);
+      if (category) {
+        suggestions.whereIn('category', category);
       }
 
       const order = request.query?.order === 'asc' ? 'asc' : 'desc';

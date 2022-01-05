@@ -2,6 +2,16 @@ import type { FastifySchema } from 'fastify';
 import status from '../lib/httpStatusCodes';
 
 export const listSuggestionsSchema: FastifySchema = {
+  querystring: {
+    properties: {
+      category: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+    },
+  },
   response: {
     [status.HTTP_200_OK]: {
       type: 'array',
