@@ -7,6 +7,7 @@ export function getSuggestions(knex: Knex, userId: string) {
       's.title',
       's.slug',
       's.description',
+      's.status',
       's.user_id',
       // TODO: rename votes -> vote_count
       knex.raw('coalesce(votes, 0) as votes'),

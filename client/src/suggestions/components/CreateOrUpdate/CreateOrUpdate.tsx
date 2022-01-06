@@ -72,6 +72,8 @@ export default function CreateOrUpdate({
     setShowDialog(!showDialog);
   };
 
+  console.log(suggestion?.status);
+
   return (
     <Paper className={cx(styles.paper)} component="main">
       {showDialog && (
@@ -93,7 +95,6 @@ export default function CreateOrUpdate({
         render={({
           form,
           handleSubmit,
-          pristine,
           submitting,
         }) => (
           <form
