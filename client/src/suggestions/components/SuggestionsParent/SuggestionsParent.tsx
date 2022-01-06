@@ -23,7 +23,7 @@ export default function SuggestionsParent() {
     );
   }
 
-  if (!suggestions.length && !isFetching) {
+  if (!suggestions.length) {
     return (
       <Paper className={cx(styles.noFeedback)}>
         <h3 className={cx('type-1', styles.noFeedbackHeading)}>

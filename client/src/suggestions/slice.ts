@@ -28,6 +28,13 @@ const suggestionsSlice = createSlice({
       },
     );
     builder.addMatcher(
+      suggestionsApi.endpoints.getRoadmap.matchFulfilled,
+      (state, { payload }) => {
+        // TODO
+        console.log(payload);
+      },
+    );
+    builder.addMatcher(
       votesApi.endpoints.createVote.matchFulfilled,
       (state, action) => {
         const { originalArgs: suggestionId } = action.meta.arg;

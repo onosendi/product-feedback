@@ -1,5 +1,5 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
-import type { RoadmapCountResponse, SuggestionResponse } from '@t/response';
+import type { RoadmapResponse, SuggestionResponse } from '@t/response';
 import baseApi from '../lib/api';
 
 interface EditSuggestionObject {
@@ -66,7 +66,7 @@ const suggestionsApi = baseApi.injectEndpoints({
         { type: 'Suggestions', id: 'ROADMAP' },
       ],
     }),
-    getRoadmap: build.query<SuggestionResponse[], void>({
+    getRoadmap: build.query<RoadmapResponse, void>({
       query: () => '/suggestions/roadmap',
       providesTags: [{ type: 'Suggestions', id: 'ROADMAP' }],
       transformResponse: (response: SuggestionResponse[]) => {

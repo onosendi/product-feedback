@@ -5,7 +5,7 @@ import routes from '../../../lib/routes';
 import { useGetRoadmapQuery } from '../../api';
 import styles from './RoadmapInfo.module.scss';
 
-const roadmapMap: any = [
+const roadmapMap = [
   { title: 'Planned', key: 'planned' },
   { title: 'In-Progress', key: 'in-progress' },
   { title: 'Live', key: 'live' },
@@ -27,12 +27,11 @@ export default function RoadmapInfo() {
         View
       </Link>
       <dl className={cx(styles.list)}>
-        {roadmapMap.map((item: any) => (
+        {roadmapMap.map((item) => (
           <div className={cx(styles[`${item.key}Bullet`])} key={item.key}>
             <dt className={cx('type-jost')}>{item.title}</dt>
             <dd className={cx('type-jost-bold')}>
-              {/* @ts-ignore TODO */}
-              {roadmap[item.key]?.length || 0}
+              {roadmap[item.key as keyof RoadmapResponse]?.length}
             </dd>
           </div>
         ))}
