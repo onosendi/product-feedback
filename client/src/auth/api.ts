@@ -13,6 +13,7 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: [
         { type: 'Feedback', id: 'LIST' },
         { type: 'Feedback', id: 'DETAIL' },
+        { type: 'Feedback', id: 'ROADMAP' },
       ],
     }),
   }),

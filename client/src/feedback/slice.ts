@@ -18,7 +18,7 @@ const feedbackSlice = createSlice({
     builder.addMatcher(
       feedbackApi.endpoints.getSuggestions.matchFulfilled,
       (state, { payload }) => {
-        feedbackAdapter.addMany(state, payload);
+        feedbackAdapter.setMany(state, payload);
       },
     );
     builder.addMatcher(
@@ -30,7 +30,7 @@ const feedbackSlice = createSlice({
     builder.addMatcher(
       feedbackApi.endpoints.getRoadmap.matchFulfilled,
       (state, { payload }) => {
-        feedbackAdapter.addMany(state, payload);
+        feedbackAdapter.setMany(state, payload);
       },
     );
     builder.addMatcher(
