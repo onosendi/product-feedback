@@ -1,5 +1,4 @@
 import type { DBSuggestionStatus } from '@t/database';
-import type { RoadmapResponse } from '@t/response';
 import cx from 'clsx';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -14,18 +13,18 @@ type ShowStatusState = Omit<DBSuggestionStatus, 'suggestion'>;
 
 export default function Roadmap() {
   const [showStatus, setShowStatus] = useState<ShowStatusState>('planned');
-  const {
-    data: roadmap = {} as RoadmapResponse,
-    isFetching,
-  } = useGetRoadmapQuery();
+  // const {
+  //   data: roadmap = {} as RoadmapResponse,
+  //   isFetching,
+  // } = useGetRoadmapQuery();
 
   const isPlanned = showStatus === 'planned';
   const isInProgress = showStatus === 'in-progress';
   const isLive = showStatus === 'live';
 
-  const plannedHeading = `Planned (${roadmap.planned?.length})`;
-  const inProgressHeading = `In-Progress (${roadmap['in-progress']?.length})`;
-  const liveHeading = `Live (${roadmap.live?.length})`;
+  // const plannedHeading = `Planned (${roadmap.planned?.length})`;
+  // const inProgressHeading = `In-Progress (${roadmap['in-progress']?.length})`;
+  // const liveHeading = `Live (${roadmap.live?.length})`;
 
   const mobileNavButtons = [
     { status: 'planned', text: 'Planned', show: isPlanned },
@@ -33,14 +32,14 @@ export default function Roadmap() {
     { status: 'live', text: 'Live', show: isLive },
   ];
 
-  if (isFetching) {
-    // TODO
-    return (
-      <DelayChildren>
-        <p>Loading...</p>
-      </DelayChildren>
-    );
-  }
+  // if (isFetching) {
+  //   // TODO
+  //   return (
+  //     <DelayChildren>
+  //       <p>Loading...</p>
+  //     </DelayChildren>
+  //   );
+  // }
 
   return (
     <>

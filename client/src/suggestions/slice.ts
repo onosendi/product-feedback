@@ -18,7 +18,7 @@ const suggestionsSlice = createSlice({
     builder.addMatcher(
       suggestionsApi.endpoints.getSuggestions.matchFulfilled,
       (state, { payload }) => {
-        suggestionsAdapter.setMany(state, payload);
+        suggestionsAdapter.addMany(state, payload);
       },
     );
     builder.addMatcher(
@@ -30,8 +30,7 @@ const suggestionsSlice = createSlice({
     builder.addMatcher(
       suggestionsApi.endpoints.getRoadmap.matchFulfilled,
       (state, { payload }) => {
-        // TODO
-        console.log(payload);
+        suggestionsAdapter.addMany(state, payload);
       },
     );
     builder.addMatcher(

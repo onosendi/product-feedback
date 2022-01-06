@@ -39,10 +39,6 @@ export interface SuggestionResponse {
   votes: number;
 }
 
-export type RoadmapResponse = {
-  [key in Exclude<DBSuggestionStatus, 'suggestion'>]: SuggestionResponse[];
-};
-
 //
 // Comments
 //

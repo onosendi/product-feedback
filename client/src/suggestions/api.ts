@@ -1,5 +1,5 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
-import type { RoadmapResponse, SuggestionResponse } from '@t/response';
+import type { SuggestionResponse } from '@t/response';
 import baseApi from '../lib/api';
 
 interface EditSuggestionObject {
@@ -66,24 +66,24 @@ const suggestionsApi = baseApi.injectEndpoints({
         { type: 'Suggestions', id: 'ROADMAP' },
       ],
     }),
-    getRoadmap: build.query<RoadmapResponse, void>({
+    getRoadmap: build.query<SuggestionResponse[], void>({
       query: () => '/suggestions/roadmap',
       providesTags: [{ type: 'Suggestions', id: 'ROADMAP' }],
-      transformResponse: (response: SuggestionResponse[]) => {
-        const reducer = (
-          acc: any,
-          suggestion: SuggestionResponse,
-        ) => ({
-          ...acc,
-          [suggestion.status]: [...acc[suggestion.status], suggestion],
-        });
+      // transformResponse: (response: SuggestionResponse[]) => {
+      //   const reducer = (
+      //     acc: any,
+      //     suggestion: SuggestionResponse,
+      //   ) => ({
+      //     ...acc,
+      //     [suggestion.status]: [...acc[suggestion.status], suggestion],
+      //   });
 
-        return response.reduce(reducer, {
-          'in-progress': [],
-          live: [],
-          planned: [],
-        });
-      },
+      //   return response.reduce(reducer, {
+      //     'in-progress': [],
+      //     live: [],
+      //     planned: [],
+      //   });
+      // },
     }),
   }),
 });
