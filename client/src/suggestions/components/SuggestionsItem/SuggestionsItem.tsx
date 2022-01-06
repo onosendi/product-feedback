@@ -41,8 +41,8 @@ export default function SuggestionsItem({
             <p
               className={cx(
                 'type-jost',
-                styles.status,
                 styles.statusText,
+                styles.forRoadmapStatus,
                 styles[data.status],
               )}
             >

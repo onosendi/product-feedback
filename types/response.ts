@@ -39,10 +39,12 @@ export interface SuggestionResponse {
   votes: number;
 }
 
-type RoadmapCountResponseKeys = Exclude<DBSuggestionStatus, 'suggestion'>;
+export type RoadmapCountResponseKeys = Exclude<DBSuggestionStatus, ''>;
 export type RoadmapCountResponse = {
   [K in RoadmapCountResponseKeys]: number;
 };
+
+export interface RoadmapResponse extends SuggestionResponse {};
 
 //
 // Comments

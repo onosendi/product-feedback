@@ -112,37 +112,4 @@
     grid-template-columns: repeat(3, 1fr);
     margin-top: 3.2rem;
   }
-
-  & > div {
-    display: none;
-
-    @include mixins.respond-to(md) {
-      display: block;
-    }
-
-    &.showColumn {
-      display: block;
-    }
-  }
-}
-
-.columnHeader {
-  color: var(--clr-primary-darkslateblue);
-  font-size: 1.8rem;
-  letter-spacing: 0.025rem;
-
-  @include mixins.respond-to(md) {
-    font-size: 1.4rem;
-    letter-spacing: 0.019rem;
-    margin-bottom: 0.4rem;
-  }
-}
-
-.columnDescription {
-  color: var(--clr-primary-slategray);
-  font-size: 1.3rem;
-
-  @include mixins.respond-to(md) {
-    font-size: 1.4rem;
-  }
 }
