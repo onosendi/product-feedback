@@ -1,3 +1,4 @@
+import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import { useState } from 'react';
@@ -9,10 +10,10 @@ import { getFullName } from '../../../lib/utils';
 import { Picture } from '../../../users/components';
 import styles from './CommentItem.module.scss';
 
-interface CommentItemProps {
-  data: CommentResponse;
-  parentId: string;
-}
+type CommentItemProps = {
+  data: CommentResponse,
+  parentId: DBId,
+};
 
 export default function CommentItem({
   data,

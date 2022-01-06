@@ -1,3 +1,4 @@
+import type { DBId } from '@t/database';
 import cx from 'clsx';
 import { useSelector } from 'react-redux';
 import { CommentItem } from '..';
@@ -8,15 +9,15 @@ import { selectComments } from '../../slice';
 import styles from './ListComments.module.scss';
 
 interface ListCommentsProps {
-  suggestionId: string;
+  feedbackId: DBId;
 }
 
 export default function ListComments({
-  suggestionId,
+  feedbackId,
 }: ListCommentsProps) {
-  const { isFetching } = useGetCommentsQuery(suggestionId);
+  const { isFetching } = useGetCommentsQuery(feedbackId);
   const comments = useSelector((state: RootState) => (
-    selectComments(state, suggestionId)));
+    selectComments(state, feedbackId)));
 
   if (isFetching) {
     // TODO
@@ -41,7 +42,7 @@ export default function ListComments({
         {comments.map((comment) => (
           <li key={comment.id}>
             <CommentItem data={comment} parentId={comment.id} />
-            {comment.replies?.length && (
+            {comment.replies && (
               <ul>
                 {comment.replies.map((reply) => (
                   <li key={reply.id}>

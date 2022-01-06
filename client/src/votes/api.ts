@@ -1,17 +1,18 @@
+import type { DBId } from '@t/database';
 import baseApi from '../lib/api';
 
 const votesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    createVote: build.mutation<void, string>({
-      query: (suggestionId) => ({
+    createVote: build.mutation<void, DBId>({
+      query: (feedbackId) => ({
         method: 'post',
-        url: `/votes/${suggestionId}`,
+        url: `/votes/${feedbackId}`,
       }),
     }),
-    deleteVote: build.mutation<void, string>({
-      query: (suggestionId) => ({
+    deleteVote: build.mutation<void, DBId>({
+      query: (feedbackId) => ({
         method: 'delete',
-        url: `/votes/${suggestionId}`,
+        url: `/votes/${feedbackId}`,
       }),
     }),
   }),

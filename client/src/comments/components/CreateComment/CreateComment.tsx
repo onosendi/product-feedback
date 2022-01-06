@@ -12,11 +12,11 @@ import { useCreateCommentMutation } from '../../api';
 import styles from './CreateComment.module.scss';
 
 interface CreateCommentProps {
-  suggestionId: string;
+  feedbackId: string;
 }
 
 export default function CreateComment({
-  suggestionId,
+  feedbackId,
 }: CreateCommentProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const { pathname, search } = useLocation();
@@ -27,7 +27,7 @@ export default function CreateComment({
     // TODO: toast
     await createComment({
       body: { content: values.content },
-      meta: { suggestionId },
+      meta: { feedbackId },
     });
 
     if (formRef.current) {

@@ -11,8 +11,8 @@ const usersApi = baseApi.injectEndpoints({
         body,
       }),
       invalidatesTags: [
-        { type: 'Suggestions', id: 'LIST' },
-        { type: 'Suggestions', id: 'DETAIL' },
+        { type: 'Feedback', id: 'LIST' },
+        { type: 'Feedback', id: 'DETAIL' },
       ],
     }),
     validateUsername: build.query<ErrorResponse | boolean, string>({

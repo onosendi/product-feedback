@@ -6,11 +6,11 @@ const appRoutes = {
   roadmap: {
     list: '/roadmap',
   },
-  suggestions: {
-    create: '/suggestions/create',
-    detail: (slug: string) => `/suggestions/${slug}`,
-    edit: (slug: string) => `/suggestions/${slug}/edit`,
-    list: '/suggestions',
+  feedback: {
+    create: '/feedback/create',
+    detail: (slug: string) => `/feedback/${slug}`,
+    edit: (slug: string) => `/feedback/${slug}/edit`,
+    list: '/feedback',
   },
   user: {
     edit: '/users/edit',

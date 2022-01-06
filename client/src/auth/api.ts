@@ -4,15 +4,15 @@ import baseApi from '../lib/api';
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<AuthResponse, any>({
-      query: (credentials: APILogin) => ({
+    login: build.mutation<AuthResponse, APILogin>({
+      query: (credentials) => ({
         method: 'post',
         url: '/auth/login',
         body: credentials,
       }),
       invalidatesTags: [
-        { type: 'Suggestions', id: 'LIST' },
-        { type: 'Suggestions', id: 'DETAIL' },
+        { type: 'Feedback', id: 'LIST' },
+        { type: 'Feedback', id: 'DETAIL' },
       ],
     }),
   }),

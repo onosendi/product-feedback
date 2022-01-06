@@ -3,9 +3,9 @@ import type { FastifySchema } from 'fastify';
 const createAndDeletaParamsSchema = {
   params: {
     type: 'object',
-    required: ['suggestionId'],
+    required: ['feedbackId'],
     properties: {
-      suggestionId: {
+      feedbackId: {
         type: 'string',
         format: 'uuid',
       },

@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import type { RootState } from '../lib/store';
 import commentsApi from './api';
 
 interface CommentsState {
-  [key: string]: CommentResponse[];
+  [key: DBId]: CommentResponse[];
 }
 
 const initialState: CommentsState = {};
 
-const suggestionsSlice = createSlice({
+const feedbackSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {},
@@ -18,18 +19,18 @@ const suggestionsSlice = createSlice({
       commentsApi.endpoints.getComments.matchFulfilled,
       (state, { meta, payload }) => {
         const comments = state;
-        const suggestionId = meta.arg.originalArgs;
-        comments[suggestionId] = payload;
+        const feedbackId = meta.arg.originalArgs;
+        comments[feedbackId] = payload;
       },
     );
     builder.addMatcher(
       commentsApi.endpoints.createComment.matchFulfilled,
       (state, { payload }) => {
-        const { suggestionCommentParentId, suggestionId } = payload;
-        const comments = state[suggestionId];
+        const { feedbackCommentParentId, feedbackId } = payload;
+        const comments = state[feedbackId];
 
-        if (suggestionCommentParentId) {
-          const comment = comments.find((c) => c.id === suggestionCommentParentId);
+        if (feedbackCommentParentId) {
+          const comment = comments.find((c) => c.id === feedbackCommentParentId);
           if (comment) {
             if (!comment.replies) {
               comment.replies = [];
@@ -44,8 +45,8 @@ const suggestionsSlice = createSlice({
   },
 });
 
-export function selectComments(state: RootState, suggestionId: string) {
-  return state.comments[suggestionId] || [];
+export function selectComments(state: RootState, feedbackId: DBId) {
+  return state.comments[feedbackId] || [];
 }
 
-export default suggestionsSlice.reducer;
+export default feedbackSlice.reducer;

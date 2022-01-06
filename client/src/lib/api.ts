@@ -18,7 +18,7 @@ const baseApi = createApi({
   endpoints: () => ({}),
   tagTypes: [
     'Comments',
-    'Suggestions',
+    'Feedback',
   ],
 });
 

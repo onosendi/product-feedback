@@ -1,23 +1,23 @@
-import type { DBSuggestionCategories, DBSuggestionStatus } from './database';
+import type { DBCategoryCategory, DBFeedbackStatus } from './database';
 
-export interface APILogin {
-  username: string;
-  password: string;
-}
+export type APILogin = {
+  username: string,
+  password: string,
+};
 
-export interface APIRegister {
-  username: string;
-  password: string;
-  passwordConfirm: string;
-}
+export type APIRegister = {
+  username: string,
+  password: string,
+  passwordConfirm: string,
+};
 
-export interface APICreateOrUpdateSuggestion {
-  category: DBSuggestionCategories;
-  description: string;
-  status?: DBSuggestionStatus;
-  title: string;
-}
+export type APICreateOrUpdateFeedback = {
+  category: DBCategoryCategory,
+  description: string,
+  status?: DBFeedbackStatus,
+  title: string,
+};
 
-export interface APICreateComment {
-  content: string;
-}
+export type APICreateComment = {
+  content: string,
+};

@@ -1,4 +1,5 @@
 import type { APICreateComment } from '@t/api';
+import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,27 +10,27 @@ import { createCommentSchema, listCommentsSchema } from './schemas';
 const commentRoutes: FastifyPluginAsync = async (fastify) => {
   // List comments
   fastify.route<{
-    Querystring: { suggestion_id: string },
+    Querystring: { feedback_id: DBId },
   }>({
     method: 'GET',
     url: '/',
     schema: listCommentsSchema,
     handler: async (request, reply) => {
-      const { suggestion_id: suggestionId } = request.query;
+      const { feedback_id: feedbackId } = request.query;
 
-      const suggestion = await fastify
-        .knex('suggestion')
+      const feedback = await fastify
+        .knex('feedback')
         .select('id')
-        .where({ id: suggestionId })
+        .where({ id: feedbackId })
         .first();
-      if (!suggestion) {
+      if (!feedback) {
         const error = new Error('Record does not exist');
         reply
           .status(status.HTTP_400_BAD_REQUEST)
           .send(error);
       }
 
-      const comments: CommentResponse[] = await getComments(fastify.knex, suggestionId);
+      const comments: CommentResponse[] = await getComments(fastify.knex, feedbackId);
 
       reply
         .status(status.HTTP_200_OK)
@@ -41,8 +42,8 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.route<{
     Body: APICreateComment,
     Querystring: {
-      parent_id?: string | null,
-      suggestion_id: string,
+      parent_id?: DBId | null,
+      feedback_id: DBId,
     },
   }>({
     method: 'POST',
@@ -54,15 +55,15 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
       const { content } = request.body;
       const {
         parent_id: commentParentId = null,
-        suggestion_id: suggestionId,
+        feedback_id: feedbackId,
       } = request.query;
 
-      const suggestion = await fastify
-        .knex('suggestion')
+      const feedback = await fastify
+        .knex('feedback')
         .select('id')
-        .where({ id: suggestionId })
+        .where({ id: feedbackId })
         .first();
-      if (!suggestion) {
+      if (!feedback) {
         const error = new Error('Record does not exist');
         reply
           .status(status.HTTP_400_BAD_REQUEST)
@@ -74,13 +75,13 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
           const commentId = uuidv4();
 
           await fastify
-            .knex('suggestion_comment')
+            .knex('feedback_comment')
             .insert({
               id: commentId,
               content,
               user_id: userId,
-              suggestion_id: suggestionId,
-              suggestion_comment_parent_id: commentParentId,
+              feedback_id: feedbackId,
+              feedback_comment_parent_id: commentParentId,
             })
             .transacting(trx);
 

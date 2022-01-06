@@ -1,4 +1,3 @@
-import type { TypeOrUndefined } from '@t/props';
 import cx from 'clsx';
 import type { ReactNode } from 'react';
 import { InputLabel, SelectCaret, SelectList } from '..';
@@ -12,11 +11,11 @@ import styles from './SelectField.module.scss';
 
 interface SelectFieldProps {
   children: ReactNode;
-  className?: TypeOrUndefined;
-  defaultValue?: TypeOrUndefined;
-  description?: TypeOrUndefined;
+  className?: string;
+  defaultValue?: string;
+  description?: string;
   hasError?: boolean;
-  helperText?: TypeOrUndefined;
+  helperText?: string;
   id: string;
   label: string;
   name: string;

@@ -1,44 +1,38 @@
-export type DBUserRole = 'user' | 'admin';
-export interface DBUser {
-  id: string;
-  createdAt: Date;
-  lastLogin: Date;
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  picture: string;
-  role: DBUserRole;
-}
+export type DBId = string;
 
-export type DBSuggestionStatus = 'suggestion' | 'planned' | 'in-progress' | 'live';
-export interface DBSuggestion {
-  id: string;
-  createdAt: Date;
-  title: string;
-  slug: string;
-  description: string;
-  status: DBSuggestionStatus;
-  userId: string;
-  categoryId: string;
-}
+export type DBUserRole = 'admin' | 'user';
+export type DBUser = {
+  id: DBId,
+  createdAt: Date,
+  lastLogin: Date,
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  picture: string,
+  role: DBUserRole,
+};
 
-export type DBSuggestionCategories = 'feature' | 'ui' | 'ux' | 'enhancemenet' | 'bug';
-export type DBSuggestionCategoryDisplay = 'Feature' | 'UI' | 'UX' | 'Enhancement' | 'Bug';
-export interface DBSuggestionCategory {
-  id: string;
-  category: DBSuggestionCategories;
-  display: DBSuggestionCategoryDisplay;
-}
+export type DBFeedbackStatusSuggestion = 'suggestion';
+export type DBFeedbackStatus =
+  DBFeedbackStatusSuggestion
+  | 'planned'
+  | 'in-progress'
+  | 'live';
+export type DBFeedback = {
+  id: DBId,
+  createdAt: Date,
+  title: string,
+  slug: string,
+  description: string,
+  status: DBFeedbackStatus,
+  userId: DBId,
+};
 
-export interface DBComment {
-  content: string;
-  firstName: string;
-  id: string;
-  lastName: string;
-  picture: string;
-  replies: DBComment[];
-  suggestionCommentParentId: string;
-  suggestionId: string;
-  username: string;
-}
+export type DBCategoryCategory = 'feature' | 'ui' | 'ux' | 'enhancemenet' | 'bug';
+export type DBCategoryDisplay = 'Feature' | 'UI' | 'UX' | 'Enhancement' | 'Bug';
+export type DBCategory = {
+  id: DBId,
+  category: DBCategoryCategory,
+  display: DBCategoryDisplay,
+};

@@ -1,64 +1,65 @@
+import type { DBId } from '@t/database';
 import type { Knex } from 'knex';
 
-export function getComments(knex: Knex, suggestionId: string) {
-  return knex('suggestion_comment as sc')
+export function getComments(knex: Knex, feedbackId: DBId) {
+  return knex('feedback_comment as fc')
     .select(
-      'sc.id',
-      'sc.content',
-      'sc.suggestion_id',
-      'sc.suggestion_comment_parent_id',
+      'fc.id',
+      'fc.content',
+      'fc.feedback_id',
+      'fc.feedback_comment_parent_id',
       'replies',
       'u.username',
       'u.first_name',
       'u.last_name',
       'u.picture',
     )
-    .join('user as u', 'u.id', '=', 'sc.user_id')
+    .join('user as u', 'u.id', '=', 'fc.user_id')
     .leftJoin(
-      knex('suggestion_comment as sc')
+      knex('feedback_comment as fc')
         .select(
-          'suggestion_comment_parent_id',
+          'feedback_comment_parent_id',
           knex.raw(`
             json_agg(
               json_build_object(
-                'id', sc.id,
+                'id', fc.id,
                 'content', content,
-                'suggestion_id', sc.suggestion_id,
-                'suggestion_comment_parent_id', sc.suggestion_comment_parent_id,
+                'feedback_id', fc.feedback_id,
+                'feedback_comment_parent_id', fc.feedback_comment_parent_id,
                 'username', u.username,
                 'first_name', u.first_name,
                 'last_name', u.last_name,
                 'picture', u.picture
               )
-              order by sc.created_at
+              order by fc.created_at
             ) as replies
           `),
         )
-        .join('user as u', 'u.id', '=', 'sc.user_id')
-        .groupBy('suggestion_comment_parent_id')
+        .join('user as u', 'u.id', '=', 'fc.user_id')
+        .groupBy('feedback_comment_parent_id')
         .as('r'),
-      'r.suggestion_comment_parent_id',
+      'r.feedback_comment_parent_id',
       '=',
-      'sc.id',
+      'fc.id',
     )
-    .orderBy('sc.created_at')
-    .whereNull('sc.suggestion_comment_parent_id')
-    .where({ 'sc.suggestion_id': suggestionId });
+    .orderBy('fc.created_at')
+    .whereNull('fc.feedback_comment_parent_id')
+    .where({ 'fc.feedback_id': feedbackId });
 }
 
-export function getCommentById(knex: Knex, commentId: string) {
-  return knex('suggestion_comment as sc')
+export function getCommentById(knex: Knex, commentId: DBId) {
+  return knex('feedback_comment as fc')
     .select(
-      'sc.id',
-      'sc.content',
-      'sc.suggestion_id',
-      'sc.suggestion_comment_parent_id',
+      'fc.id',
+      'fc.content',
+      'fc.feedback_id',
+      'fc.feedback_comment_parent_id',
       'u.username',
       'u.first_name',
       'u.last_name',
       'u.picture',
     )
-    .join('user as u', 'u.id', '=', 'sc.user_id')
-    .where({ 'sc.id': commentId })
+    .join('user as u', 'u.id', '=', 'fc.user_id')
+    .where({ 'fc.id': commentId })
     .first();
 }
