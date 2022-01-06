@@ -2,9 +2,14 @@
   "env": {
     "es2021": true
   },
+  "extends": [
+    "airbnb",
+    "airbnb-typescript"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 13
+    "ecmaVersion": 13,
+    "project": "./tsconfig.json"
   },
   "plugins": [
     "@typescript-eslint"

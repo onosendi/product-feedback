@@ -1,32 +1,31 @@
-import type { TypeOrUndefined } from '@t/props';
 import cx from 'clsx';
-import type { ChangeEventHandler, FocusEvent, HTMLInputTypeAttribute } from 'react';
+import type { ChangeEventHandler, HTMLInputTypeAttribute } from 'react';
 import { InputLabel } from '..';
 import styles from './TextField.module.scss';
 
 interface TextFieldProps {
   autoFocus?: boolean;
-  defaultValue?: TypeOrUndefined;
-  description?: TypeOrUndefined;
+  defaultValue?: string;
+  description?: string;
   disabled?: boolean;
   hasError?: boolean;
-  helperText?: TypeOrUndefined;
+  helperText?: string;
   id: string;
   label: string;
-  labelClassName?: TypeOrUndefined;
-  labelTextClassName?: TypeOrUndefined;
-  labelWrapperClassName?: TypeOrUndefined;
-  maxLength?: TypeOrUndefined<number>;
-  multiline?: TypeOrUndefined<boolean>;
+  labelClassName?: string;
+  labelTextClassName?: string;
+  labelWrapperClassName?: string;
+  maxLength?: number;
+  multiline?: boolean;
   name: string;
   onBlur?: VoidFunction;
   onChange?: ChangeEventHandler;
   // TODO
   onFocus?: (event?: any) => void;
   placeholder?: string;
-  rows?: TypeOrUndefined<number>;
-  showCharsLeft?: TypeOrUndefined<boolean>;
-  showLabel?: TypeOrUndefined<boolean>;
+  rows?: number;
+  showCharsLeft?: boolean;
+  showLabel?: boolean;
   type?: HTMLInputTypeAttribute;
 }
 

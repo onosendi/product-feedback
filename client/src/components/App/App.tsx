@@ -3,12 +3,12 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Error404 } from '..';
 import authRoutes from '../../auth/routes';
 import routes from '../../lib/routes';
-import suggestionsRoutes from '../../suggestions/routes';
+import feedbackRoutes from '../../feedback/routes';
 import userRoutes from '../../users/routes';
 
 const routerRoutes = [
   authRoutes,
-  suggestionsRoutes,
+  feedbackRoutes,
   userRoutes,
 ];
 
@@ -21,7 +21,7 @@ export default function App() {
   return (
     <Suspense fallback={<Fallback />}>
       <Routes>
-        <Route element={<Navigate to={routes.suggestions.list} />} path="/" />
+        <Route element={<Navigate to={routes.feedback.list} />} path="/" />
         {routerRoutes}
         <Route element={<Error404 />} path="*" />
       </Routes>

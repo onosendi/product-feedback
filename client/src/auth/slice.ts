@@ -44,6 +44,6 @@ export function selectAuth(state: RootState) {
   return state.auth;
 }
 
-// TODO: logging out should invalidate suggestions
+// TODO: logging out should invalidate feedback
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

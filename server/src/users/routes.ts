@@ -53,11 +53,11 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     },
   });
 
-  // User detail.
   fastify.route<{
     Params: { username: string },
   }>({
     method: 'GET',
+    // TODO: better url
     url: '/validate/:username',
     schema: userDetailSchema,
     preHandler: [

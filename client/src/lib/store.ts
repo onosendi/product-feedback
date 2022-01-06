@@ -4,15 +4,15 @@ import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
 import authReducer from '../auth/slice';
 import commentsReducer from '../comments/slice';
-import suggestionsReducer from '../suggestions/slice';
+import feedbackReducer from '../feedback/slice';
 import baseApi from './api';
 import { rtkQueryErrorHandler } from './middleware';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
   comments: commentsReducer,
+  feedback: feedbackReducer,
   [baseApi.reducerPath]: baseApi.reducer,
-  suggestions: suggestionsReducer,
 });
 
 const persistConfig = {

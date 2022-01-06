@@ -1,4 +1,4 @@
-import type { DBUser } from '@t/database';
+import type { DBId, DBUser } from '@t/database';
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 import status from '../lib/httpStatusCodes';
@@ -31,7 +31,7 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
           const decoded = fastify.jwt.decode(token) as {
             iat: string,
             token: string,
-            userId: string,
+            userId: DBId,
           };
           const { userId } = decoded;
           const user = await getUserById(fastify.knex, userId);

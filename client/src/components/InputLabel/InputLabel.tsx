@@ -1,21 +1,20 @@
-import type { TypeOrUndefined } from '@t/props';
 import cx from 'clsx';
 import type { ReactNode } from 'react';
 import styles from './InputLabel.module.scss';
 
 interface InputLabelProps {
-  charsLeft?: TypeOrUndefined<number>;
+  charsLeft?: number;
   children: ReactNode;
-  className?: TypeOrUndefined;
-  description?: TypeOrUndefined;
+  className?: string;
+  description?: string;
   hasError?: boolean;
-  helperText?: TypeOrUndefined;
+  helperText?: string;
   htmlFor: string;
   label: string;
-  labelTextClassName?: TypeOrUndefined;
-  labelWrapperClassName?: TypeOrUndefined;
-  showCharsLeft?: TypeOrUndefined<boolean>;
-  showLabel?: TypeOrUndefined<boolean>;
+  labelTextClassName?: string;
+  labelWrapperClassName?: string;
+  showCharsLeft?: boolean;
+  showLabel?: boolean;
 }
 
 export default function InputLabel({

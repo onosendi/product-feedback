@@ -5,9 +5,9 @@ import fastifyJwt from 'fastify-jwt';
 import fastifyKnex from 'fastify-knexjs';
 import auth from './auth';
 import comments from './comments';
+import feedback from './feedback';
 import getKnexConfig from './lib/knexConfig';
 import project from './project';
-import suggestions from './suggestions';
 import users from './users';
 import votes from './votes';
 
@@ -34,7 +34,7 @@ fastify.register(fastifyKnex, getKnexConfig());
 fastify.register(project);
 fastify.register(auth);
 fastify.register(users);
-fastify.register(suggestions);
+fastify.register(feedback);
 fastify.register(votes);
 fastify.register(comments);
 

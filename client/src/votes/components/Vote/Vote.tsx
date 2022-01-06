@@ -5,7 +5,7 @@ import { useAuth } from '../../../auth/hooks';
 import { Button } from '../../../components';
 import routes from '../../../lib/routes';
 import type { RootState } from '../../../lib/store';
-import { selectSuggestionById } from '../../../suggestions/slice';
+import { selectFeedbackById } from '../../../feedback/slice';
 import { useCreateVoteMutation, useDeleteVoteMutation } from '../../api';
 import styles from './Vote.module.scss';
 
@@ -28,9 +28,10 @@ export default function Vote({
   const [createVote] = useCreateVoteMutation();
   const [deleteVote] = useDeleteVoteMutation();
 
-  const suggestion = useSelector((state: RootState) => selectSuggestionById(state, id));
-  const hasVoted = suggestion?.hasVoted;
-  const votes = suggestion?.votes;
+  const feedback = useSelector((state: RootState) => (
+    selectFeedbackById(state, id)));
+  const hasVoted = feedback?.hasVoted;
+  const votes = feedback?.votes;
 
   const onClick = () => {
     if (!isAuthenticated) {

@@ -1,62 +1,75 @@
 import type {
-  DBSuggestionCategoryDisplay,
-  DBSuggestionStatus,
+  DBFeedbackStatus,
+  DBFeedbackStatusSuggestion,
+  DBId,
   DBUserRole,
 } from './database';
 
 //
 // Error
 //
-export interface ErrorResponse {
-  error: string;
-  message: string;
-  statusCode: number;
-}
+export type ErrorResponse = {
+  error: string,
+  message: string,
+  statusCode: number,
+};
 
 //
 // Auth
 //
-export interface AuthResponse {
-  role: DBUserRole;
-  token: string;
-  userId: string;
-  username: string;
-}
-
-//
-// Suggestions
-//
-export interface SuggestionResponse {
-  category: DBSuggestionCategoryDisplay;
-  commentCount: number;
-  description: string;
-  hasVoted: boolean;
-  id: string;
-  slug: string;
-  status: DBSuggestionStatus;
-  title: string;
-  userId: string;
-  votes: number;
-}
-
-export type RoadmapCountResponseKeys = Exclude<DBSuggestionStatus, ''>;
-export type RoadmapCountResponse = {
-  [K in RoadmapCountResponseKeys]: number;
+export type AuthResponse = {
+  role: DBUserRole,
+  token: string,
+  userId: DBId,
+  username: string,
 };
 
-export interface RoadmapResponse extends SuggestionResponse {};
+//
+// Feedback
+//
+type BaseFeedbackResponse = {
+  category: DBFeedbackStatusSuggestion,
+  commentCount: number,
+  description: string,
+  hasVoted: boolean,
+  id: DBId,
+  slug: string,
+  title: string,
+  userId: DBId,
+  votes: number,
+};
+
+export type FeedbackResponse = BaseFeedbackResponse & {
+  status: DBFeedbackStatus,
+};
+
+export type SuggestionsResponse = BaseFeedbackResponse & {
+  status: DBFeedbackStatusSuggestion,
+};
+
+export type RoadmapStatusResponseKeys = Exclude<
+DBFeedbackStatus, DBFeedbackStatusSuggestion
+>;
+
+export type RoadmapCountResponse = {
+  [K in RoadmapStatusResponseKeys]: number;
+};
+
+export type RoadmapResponse = BaseFeedbackResponse & {
+  status: RoadmapStatusResponseKeys,
+};
 
 //
 // Comments
 //
-export interface CommentResponse {
-  content: string;
-  firstName: string;
-  id: string;
-  lastName: string;
-  picture: string;
-  replies: CommentResponse[];
-  suggestionCommentParentId: string;
-  suggestionId: string;
-  username: string;
-}
+export type CommentResponse = {
+  content: string,
+  firstName: string,
+  id: DBId,
+  lastName: string,
+  picture: string,
+  feedbackCommentParentId: DBId | null,
+  feedbackId: DBId,
+  replies: CommentResponse[] | null,
+  username: string,
+};

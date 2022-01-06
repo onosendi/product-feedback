@@ -1,3 +1,4 @@
+import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import type { FocusEvent } from 'react';
@@ -8,11 +9,11 @@ import { composeValidators, isFilled, isNotEqualToInitial } from '../../../lib/v
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateReply.module.scss';
 
-interface CreateReplyProps {
-  data: CommentResponse;
-  parentId: string;
-  setShowReply: (state: boolean) => void;
-}
+type CreateReplyProps = {
+  data: CommentResponse,
+  parentId: DBId,
+  setShowReply: (state: boolean) => void,
+};
 
 export default function CreateReply({
   data,
@@ -26,7 +27,7 @@ export default function CreateReply({
       body: { content: values.content },
       meta: {
         parentId,
-        suggestionId: data.suggestionId,
+        feedbackId: data.feedbackId,
       },
     });
     setShowReply(false);
@@ -52,7 +53,7 @@ export default function CreateReply({
         <form
           className={cx(
             styles.commentForm,
-            data.suggestionCommentParentId
+            data.feedbackCommentParentId
               ? styles.commentFormReply
               : styles.commentFormComment,
 

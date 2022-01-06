@@ -1,3 +1,4 @@
+import type { DBId } from '@t/database';
 import type { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { createVote } from './queries';
@@ -6,23 +7,23 @@ import { createVoteSchema, deleteVoteSchema } from './schemas';
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
   // Create vote
   fastify.route<{
-    Params: { suggestionId: string },
+    Params: { feedbackId: DBId },
   }>({
     method: 'POST',
-    url: '/:suggestionId',
+    url: '/:feedbackId',
     schema: createVoteSchema,
     preValidation: [fastify.needsAuthentication],
     preHandler: [
       fastify.decorateRequestDetail({
         select: ['id'],
-        table: 'suggestion',
+        table: 'feedback',
       }),
     ],
     handler: async (request, reply) => {
-      const { suggestionId } = request.params;
+      const { feedbackId } = request.params;
       const userId = request.authUser.id;
 
-      await createVote(fastify.knex, userId, suggestionId);
+      await createVote(fastify.knex, userId, feedbackId);
 
       reply
         .status(status.HTTP_201_CREATED)
@@ -32,27 +33,27 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
 
   // Delete vote
   fastify.route<{
-    Params: { suggestionId: string },
+    Params: { feedbackId: DBId },
   }>({
     method: 'DELETE',
-    url: '/:suggestionId',
+    url: '/:feedbackId',
     schema: deleteVoteSchema,
     preValidation: [fastify.needsAuthentication],
     preHandler: [
       fastify.decorateRequestDetail({
         select: ['id'],
-        table: 'suggestion',
+        table: 'feedback',
       }),
     ],
     handler: async (request, reply) => {
-      const { suggestionId } = request.params;
+      const { feedbackId } = request.params;
       const userId = request.authUser.id;
 
       await fastify
-        .knex('suggestion_vote')
+        .knex('feedback_vote')
         .where({
           user_id: userId,
-          suggestion_id: suggestionId,
+          feedback_id: feedbackId,
         })
         .delete();
 
