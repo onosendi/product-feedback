@@ -1,26 +1,20 @@
+import type { RoadmapCountResponse } from '@t/response';
 import cx from 'clsx';
 import { Link, Paper } from '../../../components';
 import routes from '../../../lib/routes';
-import { useGetRoadmapQuery } from '../../api';
-import { useRoadmapInfo } from '../../hooks';
+import { useGetRoadmapCountQuery } from '../../api';
 import styles from './RoadmapInfo.module.scss';
 
 const roadmapMap = [
   { title: 'Planned', key: 'planned' },
-  { title: 'In-Progress', key: 'in-progress' },
+  { title: 'In-Progress', key: 'inProgress' },
   { title: 'Live', key: 'live' },
 ];
 
 export default function RoadmapInfo() {
   const {
-    data: roadmapSuggestions = {} as any,
-  } = useGetRoadmapQuery();
-
-  const count = {} as any;
-
-  const foo = useRoadmapInfo(roadmapSuggestions);
-
-  console.log(foo);
+    data: roadmapCount = {} as RoadmapCountResponse,
+  } = useGetRoadmapCountQuery();
 
   return (
     <Paper aria-label="road map" className={cx(styles.nav)} component="nav">
@@ -37,7 +31,7 @@ export default function RoadmapInfo() {
           <div className={cx(styles[`${item.key}Bullet`])} key={item.key}>
             <dt className={cx('type-jost')}>{item.title}</dt>
             <dd className={cx('type-jost-bold')}>
-              {count[item.key]}
+              {roadmapCount[item.key as keyof RoadmapCountResponse]}
             </dd>
           </div>
         ))}

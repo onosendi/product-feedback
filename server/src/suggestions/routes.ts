@@ -1,6 +1,6 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
 import type { DBSuggestionCategories, DBSuggestionStatus } from '@t/database';
-import type { SuggestionResponse } from '@t/response';
+import type { RoadmapCountResponse, SuggestionResponse } from '@t/response';
 import type {
   FastifyPluginAsync,
   FastifyReply,
@@ -11,13 +11,14 @@ import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
 import { createVote } from '../votes/queries';
-import { getRoadmapCount, getSuggestions } from './queries';
+import { getRoadmap, getRoadmapCount, getSuggestions } from './queries';
 import {
   createSuggestionSchema,
   deleteSuggestionSchema,
   editSuggestionSchema,
   listSuggestionsSchema,
   roadmapCountSchema,
+  roadmapSchema,
   suggestionDetailSchema,
 } from './schemas';
 
@@ -242,19 +243,22 @@ const suggestionRoutes: FastifyPluginAsync = async (fastify) => {
 
   fastify.route({
     method: 'GET',
-    url: '/roadmap',
+    url: '/roadmap-count',
     schema: roadmapCountSchema,
     handler: async (request, reply) => {
+      const roadmapCount: RoadmapCountResponse = await getRoadmapCount(fastify.knex);
+      reply.status(status.HTTP_200_OK).send(roadmapCount);
+    },
+  });
+
+  fastify.route({
+    method: 'GET',
+    url: '/roadmap',
+    schema: roadmapSchema,
+    handler: async (request, reply) => {
       const { id: userId } = request.authUser;
-
-      const roadmap = await getSuggestions(fastify.knex, userId)
-        .select('s.status')
-        .whereNot({ 's.status': 'suggestion' })
-        .orderBy('votes', 'desc');
-
-      reply
-        .status(status.HTTP_200_OK)
-        .send(roadmap);
+      const roadmap = await getRoadmap(fastify.knex, userId);
+      reply.status(status.HTTP_200_OK).send(roadmap);
     },
   });
 };

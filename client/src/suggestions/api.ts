@@ -1,5 +1,5 @@
 import type { APICreateOrUpdateSuggestion } from '@t/api';
-import type { SuggestionResponse } from '@t/response';
+import { RoadmapCountResponse, SuggestionResponse } from '@t/response';
 import baseApi from '../lib/api';
 
 interface EditSuggestionObject {
@@ -66,6 +66,10 @@ const suggestionsApi = baseApi.injectEndpoints({
         { type: 'Suggestions', id: 'ROADMAP' },
       ],
     }),
+    getRoadmapCount: build.query<RoadmapCountResponse, void>({
+      query: () => '/suggestions/roadmap-count',
+      providesTags: [{ type: 'Suggestions', id: 'ROADMAP' }],
+    }),
     getRoadmap: build.query<SuggestionResponse[], void>({
       query: () => '/suggestions/roadmap',
       providesTags: [{ type: 'Suggestions', id: 'ROADMAP' }],
@@ -94,6 +98,7 @@ export const {
   useCreateSuggestionMutation,
   useEditSuggestionMutation,
   useDeleteSuggestionMutation,
+  useGetRoadmapCountQuery,
   useGetRoadmapQuery,
 } = suggestionsApi;
 

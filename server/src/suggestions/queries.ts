@@ -45,6 +45,13 @@ export function getSuggestions(knex: Knex, userId: string) {
     );
 }
 
+export function getRoadmap(knex: Knex, userId: string) {
+  return getSuggestions(knex, userId)
+    .select('s.status')
+    .whereNot({ 's.status': 'suggestion' })
+    .orderBy('votes', 'desc');
+}
+
 export function getRoadmapCount(knex: Knex) {
   return knex('suggestion')
     .select(

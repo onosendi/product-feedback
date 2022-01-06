@@ -39,6 +39,11 @@ export interface SuggestionResponse {
   votes: number;
 }
 
+type RoadmapCountResponseKeys = Exclude<DBSuggestionStatus, 'suggestion'>;
+export type RoadmapCountResponse = {
+  [K in RoadmapCountResponseKeys]: number;
+};
+
 //
 // Comments
 //
