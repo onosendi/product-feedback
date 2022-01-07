@@ -3,11 +3,15 @@ import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
+import { services as feedbackServices } from '../feedback/plugins';
 import status from '../lib/httpStatusCodes';
-import { getCommentById, getComments } from './queries';
+import { services } from './plugins';
 import { createCommentSchema, listCommentsSchema } from './schemas';
 
 const commentRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.register(services);
+  fastify.register(feedbackServices);
+
   // List comments
   fastify.route<{
     Querystring: { feedback_id: DBId },
@@ -18,23 +22,11 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
     handler: async (request, reply) => {
       const { feedback_id: feedbackId } = request.query;
 
-      const feedback = await fastify
-        .knex('feedback')
-        .select('id')
-        .where({ id: feedbackId })
-        .first();
-      if (!feedback) {
-        const error = new Error('Record does not exist');
-        reply
-          .status(status.HTTP_400_BAD_REQUEST)
-          .send(error);
-      }
+      await fastify.getQueryOr404(fastify.getFeedback({ id: feedbackId }));
 
-      const comments: CommentResponse[] = await getComments(fastify.knex, feedbackId);
+      const comments: CommentResponse[] = await fastify.getComments(feedbackId);
 
-      reply
-        .status(status.HTTP_200_OK)
-        .send(comments);
+      reply.status(status.HTTP_200_OK).send(comments);
     },
   });
 
@@ -54,47 +46,25 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
       const { id: userId } = request.authUser;
       const { content } = request.body;
       const {
-        parent_id: commentParentId = null,
+        parent_id: feedbackCommentParentId = null,
         feedback_id: feedbackId,
       } = request.query;
 
-      const feedback = await fastify
-        .knex('feedback')
-        .select('id')
-        .where({ id: feedbackId })
-        .first();
-      if (!feedback) {
-        const error = new Error('Record does not exist');
-        reply
-          .status(status.HTTP_400_BAD_REQUEST)
-          .send(error);
-      }
+      await fastify.getQueryOr404(fastify.getFeedback({ id: feedbackId }));
 
-      try {
-        await fastify.knex.transaction(async (trx) => {
-          const commentId = uuidv4();
+      const commentId = uuidv4();
 
-          await fastify
-            .knex('feedback_comment')
-            .insert({
-              id: commentId,
-              content,
-              user_id: userId,
-              feedback_id: feedbackId,
-              feedback_comment_parent_id: commentParentId,
-            })
-            .transacting(trx);
+      await fastify.createComment({
+        commentId,
+        content,
+        userId,
+        feedbackId,
+        feedbackCommentParentId,
+      });
 
-          const comment: CommentResponse = await getCommentById(fastify.knex, commentId)
-            .transacting(trx);
+      const comment: CommentResponse = await fastify.getCommentById(commentId);
 
-          reply
-            .status(status.HTTP_201_CREATED)
-            .send(comment);
-        });
-      } catch {
-        throw new Error();
-      }
+      reply.status(status.HTTP_201_CREATED).send(comment);
     },
   });
 };

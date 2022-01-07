@@ -1,11 +1,12 @@
 import type { APICreateOrUpdateFeedback } from '@t/api';
-import type { DBId } from '@t/database';
+import type { DBFeedbackStatus, DBFeedbackStatusSuggestion, DBId } from '@t/database';
 import type {
   FeedbackResponse,
   RoadmapCountResponse,
   RoadmapResponse,
   SuggestionsResponse,
 } from '@t/response';
+import qs from 'qs';
 import baseApi from '../lib/api';
 
 const feedbackApi = baseApi.injectEndpoints({
@@ -13,9 +14,9 @@ const feedbackApi = baseApi.injectEndpoints({
 
     getSuggestions: build.query<SuggestionsResponse[], string>({
       query: (querystring) => {
-        let url = '/feedback';
+        let url = '/feedback?status=suggestion';
         if (querystring) {
-          url += `?${querystring}`;
+          url += `&${querystring}`;
         }
         return url;
       },
@@ -87,7 +88,15 @@ const feedbackApi = baseApi.injectEndpoints({
     }),
 
     getRoadmap: build.query<RoadmapResponse[], void>({
-      query: () => '/feedback/roadmap',
+      query: () => {
+        const qsArr: Exclude<DBFeedbackStatus, DBFeedbackStatusSuggestion>[] = [
+          'in-progress',
+          'live',
+          'planned',
+        ];
+        const querystring = qs.stringify({ status: qsArr }, { indices: false });
+        return `/feedback?${querystring}`;
+      },
       providesTags: [{ type: 'Feedback', id: 'ROADMAP' }],
     }),
 

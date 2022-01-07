@@ -21,12 +21,13 @@ export type DBFeedbackStatus =
   | 'live';
 export type DBFeedback = {
   id: DBId,
-  createdAt: Date,
+  createdAt?: Date,
   title: string,
   slug: string,
   description: string,
   status: DBFeedbackStatus,
   userId: DBId,
+  categoryId: DBId,
 };
 
 export type DBCategoryCategory = 'feature' | 'ui' | 'ux' | 'enhancemenet' | 'bug';
@@ -35,4 +36,13 @@ export type DBCategory = {
   id: DBId,
   category: DBCategoryCategory,
   display: DBCategoryDisplay,
+};
+
+export type DBComment = {
+  id: DBId,
+  createdAt?: Date,
+  content: string,
+  userId: DBId,
+  feedbackId: DBId,
+  feedbackCommentParentId: DBId | null,
 };

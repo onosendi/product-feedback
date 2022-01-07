@@ -3,25 +3,15 @@ import type { DBCategoryCategory, DBFeedbackStatus, DBId } from '@t/database';
 import type {
   FeedbackResponse,
   RoadmapCountResponse,
-  RoadmapResponse,
   SuggestionsResponse,
 } from '@t/response';
-import type {
-  FastifyPluginAsync,
-  FastifyReply,
-  FastifyRequest,
-  HookHandlerDoneFunction,
-} from 'fastify';
+import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import makeSlug from '../lib/makeSlug';
-import { createVote } from '../votes/queries';
-import {
-  deleteFeedback,
-  getFeedback,
-  getRoadmap,
-  getRoadmapCount,
-} from './queries';
+import { INSUFFICIENT_PRIVILEGES } from '../project/errors';
+import { services as voteServices } from '../votes/plugins';
+import { needsAdminToModifyStatus, services } from './plugins';
 import {
   createFeedbackSchema,
   deleteFeedbackSchema,
@@ -29,69 +19,52 @@ import {
   feedbackDetailSchema,
   listFeedbackSchema,
   roadmapCountSchema,
-  roadmapSchema,
 } from './schemas';
 
 const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
-  // User must have admin to specify a feedback's status
-  fastify.decorate(
-    'needsAdminToModifyStatus',
-    function (
-      request: FastifyRequest<{
-        Body: { status: DBFeedbackStatus },
-      }>,
-      reply: FastifyReply,
-      done: HookHandlerDoneFunction,
-    ) {
-      const { role } = request.authUser;
+  fastify.register(services);
+  fastify.register(voteServices);
+  await fastify.register(needsAdminToModifyStatus);
 
-      if (request.body.status && role !== 'admin') {
-        const error = new Error('Only administrators can change the status');
-        reply
-          .status(status.HTTP_403_FORBIDDEN)
-          .send(error);
-      }
-
-      done();
-    },
-  );
-
-  // List feedback
   // TODO: Make this the roadmap route too with querystring
+  // List feedback
   fastify.route<{
     Querystring: {
       category: DBCategoryCategory[],
       order: 'asc' | 'desc',
       sort: 'votes' | 'comment_count',
+      status: DBFeedbackStatus[],
     },
   }>({
     method: 'GET',
     url: '/',
     schema: listFeedbackSchema,
     handler: async (request, reply) => {
-      const userId = request.authUser.id;
+      const { id: userId } = request.authUser;
+      const {
+        category,
+        status: feedbackStatus,
+        sort,
+        order,
+      } = request.query;
 
-      const feedback = getFeedback(fastify.knex, userId)
-        .where({ 'f.status': 'suggestion' });
+      const feedback = fastify.getFeedbackList(userId);
 
-      const { category } = request.query;
       if (category) {
         feedback.whereIn('category', category);
       }
 
-      const order = request.query?.order === 'asc' ? 'asc' : 'desc';
-      const sorting = request.query?.sort;
-      const sort = ['votes', 'comment_count'].includes(sorting)
-        ? sorting
-        : 'votes';
+      if (feedbackStatus) {
+        feedback.whereIn('f.status', feedbackStatus);
+      }
 
-      feedback.orderBy(sort, order);
+      const ordering = order === 'asc' ? 'asc' : 'desc';
+      const sorting = ['votes', 'comment_count'].includes(sort) ? sort : 'votes';
+      feedback.orderBy(sorting, ordering);
 
       const response: SuggestionsResponse[] = await feedback;
 
-      reply
-        .status(status.HTTP_200_OK)
-        .send(response);
+      reply.status(status.HTTP_200_OK).send(response);
     },
   });
 
@@ -102,24 +75,15 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     url: '/:slug',
     schema: feedbackDetailSchema,
-    preHandler: [
-      fastify.decorateRequestDetail({
-        select: ['id'],
-        table: 'feedback',
-        tableColumn: 'slug',
-      }),
-    ],
     handler: async (request, reply) => {
       const { id: userId } = request.authUser;
       const { slug } = request.params;
 
-      const feedback: FeedbackResponse = await getFeedback(fastify.knex, userId)
-        .where({ slug })
-        .first();
+      const feedback: FeedbackResponse = await fastify.getQueryOr404(
+        fastify.getFeedbackDetail({ userId, slug }),
+      );
 
-      reply
-        .status(status.HTTP_200_OK)
-        .send(feedback);
+      reply.status(status.HTTP_200_OK).send(feedback);
     },
   });
 
@@ -138,37 +102,25 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
         status: feedbackStatus = 'suggestion',
         title,
       } = request.body;
+
       const feedbackId = uuidv4();
       const slug = makeSlug(title);
+      const { id: categoryId } = await fastify.getCategory(category);
 
-      await fastify.knex.transaction(async (trx) => {
-        const { id: categoryId } = await fastify
-          .knex('feedback_category')
-          .select('id')
-          .where({ category })
-          .first()
-          .transacting(trx);
-
-        await fastify
-          .knex('feedback')
-          .insert({
-            id: feedbackId,
-            title,
-            slug,
-            description,
-            status: feedbackStatus,
-            user_id: userId,
-            category_id: categoryId,
-          })
-          .transacting(trx);
-
-        await createVote(fastify.knex, userId, feedbackId)
-          .transacting(trx);
+      await fastify.createFeedback({
+        categoryId,
+        description,
+        feedbackId,
+        slug,
+        status: feedbackStatus,
+        title,
+        userId,
       });
 
-      reply
-        .status(status.HTTP_201_CREATED)
-        .send(status.HTTP_201_CREATED);
+      const voteId = uuidv4();
+      await fastify.createVote({ feedbackId, userId, voteId });
+
+      reply.status(status.HTTP_201_CREATED).send(status.HTTP_201_CREATED);
     },
   });
 
@@ -181,45 +133,38 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:feedbackId',
     schema: editFeedbackSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [
-      fastify.needsAdminToModifyStatus,
-      fastify.decorateRequestDetail({
-        select: ['status', 'title', 'slug'],
-        table: 'feedback',
-      }),
-      fastify.needsOwner,
-    ],
+    preHandler: [fastify.needsAdminToModifyStatus],
     handler: async (request, reply) => {
-      // TODO: Don't allow regular users to edit feedback if it's out of
-      // 'feedback' status.
-      const { detail } = request;
+      const { role, id: userId } = request.authUser;
       const { feedbackId } = request.params;
-
       const {
         category,
         description,
-        status: feedbackStatus = detail?.status,
+        status: feedbackStatus = 'suggestion',
         title,
       } = request.body;
 
-      await fastify.knex.transaction(async (trx) => {
-        const { id: categoryId } = await fastify
-          .knex('feedback_category')
-          .select('id')
-          .where({ category })
-          .first()
-          .transacting(trx);
+      const feedback = await fastify.getQueryOr404(
+        fastify.getFeedback({ id: feedbackId }),
+      );
 
-        await fastify
-          .knex('feedback')
-          .update({
-            category_id: categoryId,
-            description,
-            status: feedbackStatus,
-            title,
-          })
-          .where({ id: feedbackId })
-          .transacting(trx);
+      if (
+        (
+          userId !== feedback.userId
+          || ['in-progress', 'live', 'planned'].includes(feedback.status)
+        )
+        && role !== 'admin'
+      ) {
+        throw new Error(INSUFFICIENT_PRIVILEGES);
+      }
+
+      const { id: categoryId } = await fastify.getCategory(category);
+      await fastify.editFeedback({
+        categoryId,
+        description,
+        feedbackId,
+        status: feedbackStatus,
+        title,
       });
 
       reply.status(status.HTTP_204_NO_CONTENT);
@@ -234,16 +179,20 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:feedbackId',
     schema: deleteFeedbackSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [
-      fastify.decorateRequestDetail({
-        select: ['id'],
-        table: 'feedback',
-      }),
-      fastify.needsOwner,
-    ],
     handler: async (request, reply) => {
+      const { role, id: userId } = request.authUser;
       const { feedbackId } = request.params;
-      await deleteFeedback(fastify.knex, feedbackId);
+
+      const feedback = await fastify.getQueryOr404(
+        fastify.getFeedback({ id: feedbackId }),
+      );
+
+      if (userId !== feedback.userId && role !== 'admin') {
+        throw new Error(INSUFFICIENT_PRIVILEGES);
+      }
+
+      await fastify.deleteFeedback(feedbackId);
+
       reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
@@ -253,19 +202,8 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/roadmap-count',
     schema: roadmapCountSchema,
     handler: async (request, reply) => {
-      const roadmapCount: RoadmapCountResponse = await getRoadmapCount(fastify.knex);
+      const roadmapCount: RoadmapCountResponse = await fastify.getRoadmapCount();
       reply.status(status.HTTP_200_OK).send(roadmapCount);
-    },
-  });
-
-  fastify.route({
-    method: 'GET',
-    url: '/roadmap',
-    schema: roadmapSchema,
-    handler: async (request, reply) => {
-      const { id: userId } = request.authUser;
-      const roadmap: RoadmapResponse[] = await getRoadmap(fastify.knex, userId);
-      reply.status(status.HTTP_200_OK).send(roadmap);
     },
   });
 };

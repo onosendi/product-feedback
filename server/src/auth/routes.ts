@@ -4,10 +4,13 @@ import type { AuthResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import status from '../lib/httpStatusCodes';
 import { checkPassword } from '../lib/passwordHasher';
-import { updateLastLogin } from '../users/queries';
+import { INVALID_USERRNAME_OR_PASSWORD } from '../project/errors';
+import { services as userServices } from '../users/plugins';
 import { loginSchema } from './schemas';
 
 const authRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.register(userServices);
+
   // Authenticate
   fastify.route<{ Body: APILogin }>({
     method: 'POST',
@@ -16,19 +19,15 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
-      const user: DBUser = await fastify
-        .knex('user')
-        .select('id', 'password', 'role')
-        .where({ username })
-        .first();
+      const user: Pick<DBUser, 'id' | 'password' | 'role'> = await fastify
+        .getUser({ username })
+        .select('password');
 
       if (!checkPassword(password, user?.password)) {
-        const error = new Error('Invalid username or password');
-        reply.status(status.HTTP_401_UNAUTHORIZED).send(error);
-        return;
+        throw new Error(INVALID_USERRNAME_OR_PASSWORD);
       }
 
-      await updateLastLogin(fastify.knex, user.id);
+      await fastify.updateLastLogin(user.id);
 
       const token = fastify.jwt.sign({ userId: user.id });
       const response: AuthResponse = {
@@ -37,9 +36,8 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         userId: user.id,
         username,
       };
-      reply
-        .status(status.HTTP_200_OK)
-        .send(response);
+
+      reply.status(status.HTTP_200_OK).send(response);
     },
   });
 };

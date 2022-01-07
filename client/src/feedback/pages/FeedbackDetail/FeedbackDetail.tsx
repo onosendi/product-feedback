@@ -48,11 +48,19 @@ export default function FeedbackDetail() {
       <Container className={cx(styles.container)}>
         <div className={cx(styles.goBackAndEditFeedbackWrapper)}>
           <GoBack href={routes.feedback.list} shade="dark" />
-          {(feedback.id === userId || role === 'admin') && (
-            <Button href={routes.feedback.edit(feedback.slug)} variant="2">
-              Edit Feedback
-            </Button>
-          )}
+          {
+            (
+              (
+                feedback.userId === userId
+                && !['planned', 'in-progress', 'live'].includes(feedback.status)
+              )
+              || role === 'admin'
+            ) && (
+              <Button href={routes.feedback.edit(feedback.slug)} variant="2">
+                Edit Feedback
+              </Button>
+            )
+          }
         </div>
         <div className={cx(styles.detailWrapper)}>
           <FeedbackItem data={feedback} link={false} />

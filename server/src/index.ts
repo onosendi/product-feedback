@@ -1,12 +1,9 @@
 import dotenv from 'dotenv';
 import type { FastifyInstance } from 'fastify';
 import Fastify from 'fastify';
-import fastifyJwt from 'fastify-jwt';
-import fastifyKnex from 'fastify-knexjs';
 import auth from './auth';
 import comments from './comments';
 import feedback from './feedback';
-import getKnexConfig from './lib/knexConfig';
 import project from './project';
 import users from './users';
 import votes from './votes';
@@ -24,12 +21,6 @@ const fastify: FastifyInstance = Fastify({
   },
   logger: process.env.NODE_ENV === 'development',
 });
-
-fastify.register(fastifyJwt, {
-  secret: process.env.APP_SECRET as string,
-});
-
-fastify.register(fastifyKnex, getKnexConfig());
 
 fastify.register(project);
 fastify.register(auth);

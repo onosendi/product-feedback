@@ -4,10 +4,13 @@ import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
 import { createPassword } from '../lib/passwordHasher';
-import { updateLastLogin } from './queries';
+import { RECORD_NOT_FOUND, USERNAME_ALREADY_EXISTS } from '../project/errors';
+import { services } from './plugins';
 import { registerSchema, userDetailSchema } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.register(services);
+
   // Create user.
   fastify.route<{ Body: APIRegister }>({
     method: 'POST',
@@ -16,29 +19,20 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
-      const user = await fastify
-        .knex('user')
-        .select('id', 'role')
-        .where({ username })
-        .first();
+      const user = await fastify.getUser({ username });
       if (user) {
-        const error = new Error('Username already exists');
-        reply.status(status.HTTP_400_BAD_REQUEST).send(error);
-        return;
+        throw new Error(USERNAME_ALREADY_EXISTS);
       }
 
       const userId = uuidv4();
       const passwordHash = createPassword(password);
-      const [role] = await fastify
-        .knex('user')
-        .insert({
-          id: userId,
-          username,
-          password: passwordHash,
-        })
-        .returning('role');
+      const [role] = await fastify.createUser({
+        userId,
+        username,
+        password: passwordHash,
+      }).returning('role');
 
-      await updateLastLogin(fastify.knex, userId);
+      await fastify.updateLastLogin(userId);
 
       const token = fastify.jwt.sign({ userId });
       const response: AuthResponse = {
@@ -47,9 +41,8 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         userId,
         username,
       };
-      reply
-        .status(status.HTTP_201_CREATED)
-        .send(response);
+
+      reply.status(status.HTTP_201_CREATED).send(response);
     },
   });
 
@@ -60,17 +53,13 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     // TODO: better url
     url: '/validate/:username',
     schema: userDetailSchema,
-    preHandler: [
-      fastify.decorateRequestDetail({
-        select: ['id'],
-        table: 'user',
-        tableColumn: 'username',
-      }),
-    ],
-    handler: (request, reply) => {
-      reply
-        .status(status.HTTP_200_OK)
-        .send(true);
+    handler: async (request, reply) => {
+      const { username } = request.params;
+      const user = await fastify.getUser({ username });
+      if (!user) {
+        throw new Error(RECORD_NOT_FOUND);
+      }
+      reply.status(status.HTTP_200_OK).send(true);
     },
   });
 };

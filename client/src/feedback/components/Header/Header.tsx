@@ -20,7 +20,7 @@ export default function AppBar() {
       <header className={cx(styles.header)}>
         <hgroup className={cx(styles.headerGroup)}>
           <h1 className={cx('type-2')}>Product Feedback</h1>
-          <h2 className={cx('type-jost-medium')}>Feedback Board</h2>
+          <h2 className={cx('type-jost-medium')}>Suggestion Board</h2>
         </hgroup>
         <button
           aria-label="nav drawer"

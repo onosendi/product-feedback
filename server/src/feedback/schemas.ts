@@ -10,8 +10,14 @@ export const listFeedbackSchema: FastifySchema = {
           type: 'string',
         },
       },
-      order: { type: 'string' },
       sort: { type: 'string' },
+      status: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+      order: { type: 'string' },
     },
   },
   response: {

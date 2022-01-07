@@ -1,10 +1,15 @@
 import type { DBId } from '@t/database';
 import type { FastifyPluginAsync } from 'fastify';
+import { v4 as uuidv4 } from 'uuid';
 import status from '../lib/httpStatusCodes';
-import { createVote } from './queries';
+import { services } from './plugins';
+import { services as feedbackServices } from '../feedback/plugins';
 import { createVoteSchema, deleteVoteSchema } from './schemas';
 
 const votesRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.register(services);
+  fastify.register(feedbackServices);
+
   // Create vote
   fastify.route<{
     Params: { feedbackId: DBId },
@@ -13,21 +18,13 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:feedbackId',
     schema: createVoteSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [
-      fastify.decorateRequestDetail({
-        select: ['id'],
-        table: 'feedback',
-      }),
-    ],
     handler: async (request, reply) => {
       const { feedbackId } = request.params;
-      const userId = request.authUser.id;
-
-      await createVote(fastify.knex, userId, feedbackId);
-
-      reply
-        .status(status.HTTP_201_CREATED)
-        .send(status.HTTP_201_CREATED);
+      await fastify.getQueryOr404(fastify.getFeedback({ id: feedbackId }));
+      const { id: userId } = request.authUser;
+      const voteId = uuidv4();
+      await fastify.createVote({ feedbackId, userId, voteId });
+      reply.status(status.HTTP_201_CREATED).send(status.HTTP_201_CREATED);
     },
   });
 
@@ -39,24 +36,11 @@ const votesRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/:feedbackId',
     schema: deleteVoteSchema,
     preValidation: [fastify.needsAuthentication],
-    preHandler: [
-      fastify.decorateRequestDetail({
-        select: ['id'],
-        table: 'feedback',
-      }),
-    ],
     handler: async (request, reply) => {
       const { feedbackId } = request.params;
-      const userId = request.authUser.id;
-
-      await fastify
-        .knex('feedback_vote')
-        .where({
-          user_id: userId,
-          feedback_id: feedbackId,
-        })
-        .delete();
-
+      await fastify.getQueryOr404(fastify.getFeedback({ id: feedbackId }));
+      const { id: userId } = request.authUser;
+      await fastify.deleteVote({ feedbackId, userId });
       reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
