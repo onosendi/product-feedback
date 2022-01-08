@@ -10,11 +10,7 @@ export default function CreateFeedback() {
       <Helmet>
         <title>{`New suggestion - ${APP_NAME}`}</title>
       </Helmet>
-      <FormLayout
-        goBackProps={{
-          href: routes.feedback.list,
-        }}
-      >
+      <FormLayout>
         <CreateOrUpdate />
       </FormLayout>
     </>

@@ -40,11 +40,7 @@ export default function EditFeedback() {
       <Helmet>
         <title>{`New feedback - ${APP_NAME}`}</title>
       </Helmet>
-      <FormLayout
-        goBackProps={{
-          href: routes.feedback.detail(feedback.slug),
-        }}
-      >
+      <FormLayout>
         <CreateOrUpdate feedback={feedback} />
       </FormLayout>
     </>

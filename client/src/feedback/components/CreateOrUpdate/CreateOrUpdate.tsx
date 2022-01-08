@@ -12,6 +12,7 @@ import {
   SelectItem,
   TextField,
 } from '../../../components';
+import { usePreviousPage } from '../../../hooks';
 import routes from '../../../lib/routes';
 import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
 import { composeValidators, isFilled, isLength } from '../../../lib/validators';
@@ -32,16 +33,13 @@ export default function CreateOrUpdate({
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
+  const previousPage = usePreviousPage();
 
   const [createFeedback] = useCreateFeedbackMutation();
   const [editFeedback] = useEditFeedbackMutation();
   const [deleteFeedback] = useDeleteFeedbackMutation();
   const { role } = useAuth();
   const isNew = feedback === undefined;
-
-  const cancelHref = feedback
-    ? routes.feedback.detail(feedback.slug)
-    : routes.feedback.list;
 
   const onSubmit = async (values: Record<string, any>) => {
     const body = {
@@ -54,20 +52,19 @@ export default function CreateOrUpdate({
     if (isNew) {
       // TODO: toast
       await createFeedback(body);
-      navigate(routes.feedback.list);
     } else {
       await editFeedback({
         body,
         meta: { feedbackId: feedback.id },
       });
-      navigate(routes.feedback.detail(feedback.slug));
     }
+    navigate(previousPage);
   };
 
   const handleDeleteSuggestsion = async () => {
     if (feedback?.id) {
       await deleteFeedback(feedback.id);
-      navigate(routes.feedback.list);
+      navigate(previousPage);
       // TODO: toast
     }
   };
@@ -182,7 +179,7 @@ export default function CreateOrUpdate({
               </Button>
               <Button
                 className={cx(styles.cancel)}
-                href={cancelHref}
+                href={previousPage}
                 variant="3"
               >
                 Cancel

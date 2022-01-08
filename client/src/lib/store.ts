@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from '../auth/slice';
 import commentsReducer from '../comments/slice';
 import feedbackReducer from '../feedback/slice';
+import projectReducer from '../project/slice';
 import baseApi from './api';
 import { rtkQueryErrorHandler } from './middleware';
 
@@ -12,6 +13,7 @@ const combinedReducers = combineReducers({
   auth: authReducer,
   comments: commentsReducer,
   feedback: feedbackReducer,
+  project: projectReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
