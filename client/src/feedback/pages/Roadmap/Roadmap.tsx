@@ -77,11 +77,7 @@ export default function Roadmap() {
         >
           Add Feedback
         </Button>
-        <GoBack
-          href={routes.feedback.list}
-          className={cx(styles.goBack)}
-          shade="light"
-        />
+        <GoBack className={cx(styles.goBack)} shade="light" />
       </Container>
       <Container
         className={cx(styles.statusButtonContainer)}

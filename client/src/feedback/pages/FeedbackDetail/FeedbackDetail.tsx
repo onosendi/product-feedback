@@ -47,7 +47,7 @@ export default function FeedbackDetail() {
       <AuthBar className={cx(styles.authBar)} />
       <Container className={cx(styles.container)}>
         <div className={cx(styles.goBackAndEditFeedbackWrapper)}>
-          <GoBack href={routes.feedback.list} shade="dark" />
+          <GoBack shade="dark" />
           {
             (
               (
