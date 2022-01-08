@@ -5,6 +5,7 @@ import authRoutes from '../../auth/routes';
 import routes from '../../lib/routes';
 import feedbackRoutes from '../../feedback/routes';
 import userRoutes from '../../users/routes';
+import { useHistoryManager } from '../../hooks';
 
 const routerRoutes = [
   authRoutes,
@@ -18,6 +19,8 @@ function Fallback() {
 }
 
 export default function App() {
+  useHistoryManager();
+
   return (
     <Suspense fallback={<Fallback />}>
       <Routes>

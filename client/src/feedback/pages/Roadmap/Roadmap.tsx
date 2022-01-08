@@ -1,4 +1,4 @@
-import type { RoadmapStatusResponseKeys, RoadmapResponse } from '@t/response';
+import type { RoadmapResponse, RoadmapStatusResponseKeys } from '@t/response';
 import cx from 'clsx';
 import { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -78,8 +78,8 @@ export default function Roadmap() {
           Add Feedback
         </Button>
         <GoBack
-          className={cx(styles.goBack)}
           href={routes.feedback.list}
+          className={cx(styles.goBack)}
           shade="light"
         />
       </Container>
