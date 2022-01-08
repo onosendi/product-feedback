@@ -36,7 +36,7 @@ export const registerSchema: FastifySchema = {
   },
 };
 
-export const userDetailSchema: FastifySchema = {
+export const userValidateSchema: FastifySchema = {
   params: {
     type: 'object',
     required: ['username'],
@@ -52,3 +52,5 @@ export const userDetailSchema: FastifySchema = {
     },
   },
 };
+
+export const userDetailSchema: FastifySchema = {};

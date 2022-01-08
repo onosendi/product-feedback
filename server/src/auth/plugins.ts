@@ -38,6 +38,7 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
       request.authUser = {} as DBUser;
       const authorization = request?.headers?.authorization;
       if (authorization) {
+        // TODO Do we need try catch here?
         try {
           const [, token] = authorization.split(' ');
           const decoded = fastify.jwt.decode(token) as {
@@ -48,6 +49,7 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
           const { userId } = decoded;
           const user = await fastify.getUser({ id: userId });
           if (!user) {
+            // TODO use error handling to handle this
             const error = new Error('Invalid user ID');
             reply.status(status.HTTP_400_BAD_REQUEST).send(error);
             return;

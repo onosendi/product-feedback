@@ -1,0 +1,53 @@
+@use '../../../assets/scss/abstracts/mixins';
+
+.form {
+  margin-top: 4.4rem; 
+  padding-bottom: 4rem;
+
+  @include mixins.respond-to(md) {
+    margin-top: 5.8rem;
+  }
+}
+
+.userPictureWrapper {
+  align-items: flex-start;
+  display: flex;
+
+  @include mixins.respond-to(md) {
+    grid-column: 1 / span 2;
+  }
+}
+
+.fileLabel {
+  margin-right: 2rem;
+}
+
+.userPicture {
+  margin-top: 3.8rem;
+}
+
+.paper {
+  margin-bottom: 4rem;
+}
+
+.legend {
+  color: var(--clr-primary-darkslategray);
+  margin-bottom: 2.4rem;
+}
+
+.textFieldWrapper {
+  display: grid;
+  grid-gap: 2rem;
+
+  @include mixins.respond-to(md) {
+    grid-template-columns: repeat(2, 1fr);
+
+    & > *:first-child {
+      grid-column: 1 / span 2;
+    }
+  }
+}
+
+.buttonWrapper {
+  text-align: right;
+}
