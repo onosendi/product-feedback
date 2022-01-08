@@ -1,7 +1,7 @@
 import type { DBId } from '@t/database';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import status from '../lib/httpStatusCodes';
+import status from '../project/httpStatusCodes';
 import { services } from './plugins';
 import { services as feedbackServices } from '../feedback/plugins';
 import { createVoteSchema, deleteVoteSchema } from './schemas';

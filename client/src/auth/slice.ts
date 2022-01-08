@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import type { DBUserRole } from '@t/database';
-import type { RootState } from '../lib/store';
+import type { RootState } from '../project/store';
 import usersApi from '../users/api';
 import authApi from './api';
 

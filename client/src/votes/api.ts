@@ -1,5 +1,5 @@
 import type { DBId } from '@t/database';
-import baseApi from '../lib/api';
+import baseApi from '../project/api';
 
 const votesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

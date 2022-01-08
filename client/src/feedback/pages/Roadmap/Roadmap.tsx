@@ -7,9 +7,9 @@ import {
   Container,
   DelayChildren,
   GoBack,
-} from '../../../components';
-import { APP_NAME } from '../../../lib/constants';
-import routes from '../../../lib/routes';
+} from '../../../project/components';
+import { APP_NAME } from '../../../project/constants';
+import routes from '../../../project/routes';
 import { useGetRoadmapQuery } from '../../api';
 import { RoadmapItem } from '../../components';
 import styles from './Roadmap.module.scss';

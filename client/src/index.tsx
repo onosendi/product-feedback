@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import './assets/scss/index.scss';
-import { App } from './components';
-import { persistor, store } from './lib/store';
+import { App } from './project/components';
+import { persistor, store } from './project/store';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

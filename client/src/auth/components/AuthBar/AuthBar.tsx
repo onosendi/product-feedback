@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Container, Link } from '../../../components';
-import routes from '../../../lib/routes';
+import { Container, Link } from '../../../project/components';
+import routes from '../../../project/routes';
 import { useAuth } from '../../hooks';
 import { logout } from '../../slice';
 import styles from './AuthBar.module.scss';

@@ -1,13 +1,13 @@
 import cx from 'clsx';
 import type { ReactNode } from 'react';
-import { SelectCaret, SelectList } from '../../../components';
+import { SelectCaret, SelectList } from '../../../project/components';
 import {
   useAnimatedToggle,
   useKeyDown,
   useOutsideClick,
   useQuerystring,
   useSelectValue,
-} from '../../../hooks';
+} from '../../../project/hooks';
 import styles from './SortFilter.module.scss';
 
 interface SortFilterProps {

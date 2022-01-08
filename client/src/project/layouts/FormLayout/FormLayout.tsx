@@ -1,6 +1,6 @@
 import cx from 'clsx';
 import type { ReactNode } from 'react';
-import { AuthBar } from '../../auth/components';
+import { AuthBar } from '../../../auth/components';
 import { Container, GoBack } from '../../components';
 import styles from './FormLayout.module.scss';
 

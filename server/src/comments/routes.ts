@@ -4,7 +4,7 @@ import type { CommentResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import { services as feedbackServices } from '../feedback/plugins';
-import status from '../lib/httpStatusCodes';
+import status from '../project/httpStatusCodes';
 import { services } from './plugins';
 import { createCommentSchema, listCommentsSchema } from './schemas';
 

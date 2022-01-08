@@ -1,5 +1,5 @@
 import type { FastifySchema } from 'fastify';
-import status from '../lib/httpStatusCodes';
+import status from '../project/httpStatusCodes';
 
 // TODO: share response schema with user/schema/registerSchema
 export const loginSchema: FastifySchema = {

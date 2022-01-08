@@ -1,7 +1,7 @@
 import type { RoadmapCountResponse } from '@t/response';
 import cx from 'clsx';
-import { Link, Paper } from '../../../components';
-import routes from '../../../lib/routes';
+import { Link, Paper } from '../../../project/components';
+import routes from '../../../project/routes';
 import { useGetRoadmapCountQuery } from '../../api';
 import styles from './RoadmapInfo.module.scss';
 

@@ -1,9 +1,9 @@
 import type { FeedbackResponse } from '@t/response';
 import cx from 'clsx';
 import { Link } from 'react-router-dom';
-import { Paper } from '../../../components';
-import routes from '../../../lib/routes';
-import { capitalize } from '../../../lib/utils';
+import { Paper } from '../../../project/components';
+import routes from '../../../project/routes';
+import { capitalize } from '../../../project/utils';
 import { Vote } from '../../../votes/components';
 import styles from './FeedbackItem.module.scss';
 

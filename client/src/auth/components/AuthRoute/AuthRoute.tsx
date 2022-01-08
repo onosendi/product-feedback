@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import routes from '../../../lib/routes';
+import routes from '../../../project/routes';
 import { useAuth } from '../../hooks';
 
 interface AuthRouteProps {

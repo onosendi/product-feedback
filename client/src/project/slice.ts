@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { RootState } from '../lib/store';
+import type { RootState } from './store';
 
 type InitialState = {
   history: string[],

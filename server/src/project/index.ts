@@ -3,7 +3,7 @@ import fastifyJwt from 'fastify-jwt';
 import fastifyKnex from 'fastify-knexjs';
 import fp from 'fastify-plugin';
 import type { Knex } from 'knex';
-import getKnexConfig from '../lib/knexConfig';
+import getKnexConfig from './knexConfig';
 import errorHandler from './errors';
 import plugins from './plugins';
 

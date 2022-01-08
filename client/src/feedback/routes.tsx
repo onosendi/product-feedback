@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 import { AuthRoute } from '../auth/components';
-import routes from '../lib/routes';
+import routes from '../project/routes';
 
 const CreateFeedback = lazy(() => import('./pages/CreateFeedback'));
 const EditFeedback = lazy(() => import('./pages/EditFeedback'));

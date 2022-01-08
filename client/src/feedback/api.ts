@@ -7,7 +7,7 @@ import type {
   SuggestionsResponse,
 } from '@t/response';
 import qs from 'qs';
-import baseApi from '../lib/api';
+import baseApi from '../project/api';
 
 const feedbackApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

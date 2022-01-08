@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CreateReply } from '..';
 import { useAuth } from '../../../auth/hooks';
-import routes from '../../../lib/routes';
-import { getFullName } from '../../../lib/utils';
+import routes from '../../../project/routes';
+import { getFullName } from '../../../project/utils';
 import { Picture } from '../../../users/components';
 import styles from './CommentItem.module.scss';
 

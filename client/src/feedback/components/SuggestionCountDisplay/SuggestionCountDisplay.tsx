@@ -1,6 +1,6 @@
 import cx from 'clsx';
-import { useQuerystring } from '../../../hooks';
-import { pluralize } from '../../../lib/utils';
+import { useQuerystring } from '../../../project/hooks';
+import { pluralize } from '../../../project/utils';
 import { useGetSuggestionsQuery } from '../../api';
 import styles from './SuggestionCountDisplay.module.scss';
 

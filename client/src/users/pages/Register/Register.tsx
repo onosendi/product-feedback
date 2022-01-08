@@ -8,17 +8,17 @@ import {
   Link,
   Paper,
   TextField,
-} from '../../../components';
-import { AuthLayout } from '../../../layouts';
-import { APP_NAME } from '../../../lib/constants';
-import routes from '../../../lib/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
+} from '../../../project/components';
+import { AuthLayout } from '../../../project/layouts';
+import { APP_NAME } from '../../../project/constants';
+import routes from '../../../project/routes';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
 import {
   composeValidators,
   isFilled,
   isLength,
   simpleMemoize,
-} from '../../../lib/validators';
+} from '../../../project/validators';
 import usersApi, { useRegisterMutation } from '../../api';
 import styles from './Register.module.scss';
 

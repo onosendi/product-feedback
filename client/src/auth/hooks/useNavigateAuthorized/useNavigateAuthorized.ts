@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import routes from '../../../lib/routes';
+import routes from '../../../project/routes';
 import useAuth from '../useAuth';
 
 export default function useNavigateAuthorized() {

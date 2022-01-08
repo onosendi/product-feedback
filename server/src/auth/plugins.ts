@@ -1,7 +1,7 @@
 import type { DBId, DBUser } from '@t/database';
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest as FR } from 'fastify';
 import fp from 'fastify-plugin';
-import status from '../lib/httpStatusCodes';
+import status from '../project/httpStatusCodes';
 import { services as userServices } from '../users/plugins';
 
 declare module 'fastify' {

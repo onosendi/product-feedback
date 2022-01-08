@@ -11,9 +11,9 @@ import {
   DelayChildren,
   Error404,
   GoBack,
-} from '../../../components';
-import { APP_NAME } from '../../../lib/constants';
-import routes from '../../../lib/routes';
+} from '../../../project/components';
+import { APP_NAME } from '../../../project/constants';
+import routes from '../../../project/routes';
 import { useGetFeedbackDetailQuery } from '../../api';
 import { FeedbackItem } from '../../components';
 import styles from './FeedbackDetail.module.scss';

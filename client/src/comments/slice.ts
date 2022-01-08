@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
-import type { RootState } from '../lib/store';
+import type { RootState } from '../project/store';
 import commentsApi from './api';
 
 interface CommentsState {

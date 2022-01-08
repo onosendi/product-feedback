@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import { FeedbackList } from '..';
-import { Button, DelayChildren, Paper } from '../../../components';
-import { useQuerystring } from '../../../hooks';
-import routes from '../../../lib/routes';
+import { Button, DelayChildren, Paper } from '../../../project/components';
+import { useQuerystring } from '../../../project/hooks';
+import routes from '../../../project/routes';
 import { useGetSuggestionsQuery } from '../../api';
 import styles from './Feedback.module.scss';
 

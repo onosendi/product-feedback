@@ -4,10 +4,10 @@ import { useRef } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../../auth/hooks';
-import { Button, Paper, TextField } from '../../../components';
-import routes from '../../../lib/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { isFilled } from '../../../lib/validators';
+import { Button, Paper, TextField } from '../../../project/components';
+import routes from '../../../project/routes';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
+import { isFilled } from '../../../project/validators';
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateComment.module.scss';
 

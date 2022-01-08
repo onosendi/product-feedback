@@ -1,6 +1,6 @@
 import type { APILogin } from '@t/api';
 import type { AuthResponse } from '@t/response';
-import baseApi from '../lib/api';
+import baseApi from '../project/api';
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

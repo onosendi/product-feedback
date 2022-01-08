@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { FormLayout } from '../../../layouts';
-import { APP_NAME } from '../../../lib/constants';
-import routes from '../../../lib/routes';
+import { APP_NAME } from '../../../project/constants';
+import { FormLayout } from '../../../project/layouts';
 import { CreateOrUpdate } from '../../components';
 
 export default function CreateFeedback() {

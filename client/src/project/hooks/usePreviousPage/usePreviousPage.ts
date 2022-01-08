@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import routes from '../../lib/routes';
-import { selectHistory } from '../../project/slice';
+import routes from '../../routes';
+import { selectHistory } from '../../slice';
 
 export default function usePreviousPage() {
   const history = useSelector(selectHistory);

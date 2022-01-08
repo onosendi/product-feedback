@@ -11,11 +11,11 @@ import {
   SelectField,
   SelectItem,
   TextField,
-} from '../../../components';
-import { usePreviousPage } from '../../../hooks';
-import routes from '../../../lib/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { composeValidators, isFilled, isLength } from '../../../lib/validators';
+} from '../../../project/components';
+import { usePreviousPage } from '../../../project/hooks';
+import routes from '../../../project/routes';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
+import { composeValidators, isFilled, isLength } from '../../../project/validators';
 import {
   useCreateFeedbackMutation,
   useDeleteFeedbackMutation,

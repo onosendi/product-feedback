@@ -1,5 +1,5 @@
 import type { FastifySchema } from 'fastify';
-import status from '../lib/httpStatusCodes';
+import status from '../project/httpStatusCodes';
 
 export const listFeedbackSchema: FastifySchema = {
   querystring: {

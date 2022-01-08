@@ -1,5 +1,5 @@
 import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import status from '../lib/httpStatusCodes';
+import status from './httpStatusCodes';
 
 export const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';
 export const INVALID_USERRNAME_OR_PASSWORD = 'INVALID_USERRNAME_OR_PASSWORD';

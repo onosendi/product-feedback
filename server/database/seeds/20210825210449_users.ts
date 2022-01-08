@@ -1,7 +1,7 @@
 import type { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
-import { createPassword } from '../../src/lib/passwordHasher';
+import { createPassword } from '../../src/project/passwordHasher';
 
 export async function seed(knex: Knex) {
   await knex('user').del();

@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import type { FeedbackResponse } from '@t/response';
-import type { RootState } from '../lib/store';
+import type { RootState } from '../project/store';
 import votesApi from '../votes/api';
 import feedbackApi from './api';
 

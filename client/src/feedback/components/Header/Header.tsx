@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import { createPortal } from 'react-dom';
 import { Drawer } from '..';
-import { Backdrop } from '../../../components';
-import { useAnimatedToggle } from '../../../hooks';
+import { Backdrop } from '../../../project/components';
+import { useAnimatedToggle } from '../../../project/hooks';
 import styles from './Header.module.scss';
 
 export default function AppBar() {

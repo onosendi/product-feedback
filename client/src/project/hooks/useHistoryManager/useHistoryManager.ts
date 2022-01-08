@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { addHistory } from '../../project/slice';
+import { addHistory } from '../../slice';
 
 export default function useHistoryManager() {
   const { pathname, search } = useLocation();

@@ -1,7 +1,7 @@
 import type { DBCategoryDisplay } from '@t/database';
 import cx from 'clsx';
-import { Button, Paper } from '../../../components';
-import { useQuerystring } from '../../../hooks';
+import { Button, Paper } from '../../../project/components';
+import { useQuerystring } from '../../../project/hooks';
 import styles from './FilterCategories.module.scss';
 
 type FilterFeedbackCategory = DBCategoryDisplay | 'All';

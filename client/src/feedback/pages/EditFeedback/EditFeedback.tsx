@@ -2,10 +2,9 @@ import type { FeedbackResponse } from '@t/response';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../auth/hooks';
-import { DelayChildren, Error404 } from '../../../components';
-import { FormLayout } from '../../../layouts';
-import { APP_NAME } from '../../../lib/constants';
-import routes from '../../../lib/routes';
+import { DelayChildren, Error404 } from '../../../project/components';
+import { APP_NAME } from '../../../project/constants';
+import { FormLayout } from '../../../project/layouts';
 import { useGetFeedbackDetailQuery } from '../../api';
 import { CreateOrUpdate } from '../../components';
 

@@ -3,9 +3,9 @@ import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import type { FocusEvent } from 'react';
 import { Field, Form } from 'react-final-form';
-import { Button, TextField } from '../../../components';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { composeValidators, isFilled, isNotEqualToInitial } from '../../../lib/validators';
+import { Button, TextField } from '../../../project/components';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
+import { composeValidators, isFilled, isNotEqualToInitial } from '../../../project/validators';
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateReply.module.scss';
 

@@ -2,7 +2,7 @@ import type { APICreateComment } from '@t/api';
 import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import qs from 'qs';
-import baseApi from '../lib/api';
+import baseApi from '../project/api';
 
 const commentsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

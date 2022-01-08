@@ -7,13 +7,13 @@ import {
   Link,
   Paper,
   TextField,
-} from '../../../components';
-import { AuthLayout } from '../../../layouts';
-import { APP_NAME } from '../../../lib/constants';
-import status from '../../../lib/httpStatusCodes';
-import routes from '../../../lib/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../lib/utils';
-import { isFilled } from '../../../lib/validators';
+} from '../../../project/components';
+import { APP_NAME } from '../../../project/constants';
+import status from '../../../project/httpStatusCodes';
+import { AuthLayout } from '../../../project/layouts';
+import routes from '../../../project/routes';
+import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
+import { isFilled } from '../../../project/validators';
 import { useLoginMutation } from '../../api';
 import { useNavigateAuthorized } from '../../hooks';
 import styles from './Login.module.scss';

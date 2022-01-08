@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
-import routes from '../lib/routes';
+import routes from '../project/routes';
 
 const Register = lazy(() => import('./pages/Register'));
 

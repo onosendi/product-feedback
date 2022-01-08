@@ -3,7 +3,7 @@ import FocusTrap from 'focus-trap-react';
 import type { RefObject } from 'react';
 import { useRef } from 'react';
 import { FilterCategories, RoadmapInfo } from '..';
-import { useKeyDown, useNoScroll, useOutsideClick } from '../../../hooks';
+import { useKeyDown, useNoScroll, useOutsideClick } from '../../../project/hooks';
 import styles from './Drawer.module.scss';
 
 interface DrawerProps {

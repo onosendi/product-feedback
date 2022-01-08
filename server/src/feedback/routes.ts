@@ -7,8 +7,8 @@ import type {
 } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import status from '../lib/httpStatusCodes';
-import makeSlug from '../lib/makeSlug';
+import status from '../project/httpStatusCodes';
+import makeSlug from '../project/makeSlug';
 import { INSUFFICIENT_PRIVILEGES } from '../project/errors';
 import { services as voteServices } from '../votes/plugins';
 import { needsAdminToModifyStatus, services } from './plugins';
