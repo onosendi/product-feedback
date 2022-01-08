@@ -15,8 +15,8 @@ const projectSlice = createSlice({
   reducers: {
     addHistory: (state, { payload: item }) => {
       const s = state;
-      const hist = state.history;
-      s.history = [...hist.length > 10 ? hist.slice(1) : hist, item];
+      const hist = s.history;
+      s.history = [...hist.length >= 10 ? hist.slice(1) : hist, item];
     },
   },
 });
