@@ -4,12 +4,13 @@ export type DBUserRole = 'admin' | 'user';
 export type DBUser = {
   id: DBId,
   createdAt: Date,
+  email: string,
+  emailHash: string,
   lastLogin: Date,
   username: string,
   password: string,
   firstName: string,
   lastName: string,
-  picture: string,
   role: DBUserRole,
 };
 

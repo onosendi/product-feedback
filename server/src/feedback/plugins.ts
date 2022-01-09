@@ -112,6 +112,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       });
   });
 
+  // TODO: have separate argu for 'feedbackId'
   fastify.decorate('editFeedback', function (obj: any) {
     return fastify.knex('feedback')
       .update({

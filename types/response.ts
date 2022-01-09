@@ -2,6 +2,7 @@ import type {
   DBFeedbackStatus,
   DBFeedbackStatusSuggestion,
   DBId,
+  DBUser,
   DBUserRole,
 } from './database';
 
@@ -62,14 +63,21 @@ export type RoadmapResponse = BaseFeedbackResponse & {
 //
 // Comments
 //
+// TODO: extend these from database types
 export type CommentResponse = {
   content: string,
+  email: string,
+  emailHash: string,
   firstName: string,
   id: DBId,
   lastName: string,
-  picture: string,
   feedbackCommentParentId: DBId | null,
   feedbackId: DBId,
   replies: CommentResponse[] | null,
   username: string,
 };
+
+//
+// User
+//
+export type UserResponse = Omit<DBUser, 'password'>;

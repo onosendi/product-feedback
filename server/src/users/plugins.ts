@@ -14,6 +14,17 @@ declare module 'fastify' {
       },
     ) => Knex.QueryBuilder;
     updateLastLogin: (userId: DBId) => Knex.QueryBuilder;
+    editUser: (
+      userId: DBId,
+      obj: {
+        email: string | null,
+        emailHash: string,
+        firstName: string | null,
+        lastName: string | null,
+        password: string | undefined,
+        username: string,
+      },
+    ) => Knex.QueryBuilder;
   }
 }
 
@@ -23,11 +34,12 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .knex('user')
       .select(
         'created_at',
+        'email',
+        'email_hash',
         'first_name',
         'id',
         'last_login',
         'last_name',
-        'picture',
         'role',
         'username',
       )
@@ -50,5 +62,19 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .knex('user')
       .where({ id: userId })
       .update({ last_login: new Date() });
+  });
+
+  fastify.decorate('editUser', function (userId: any, obj: any) {
+    return fastify
+      .knex('user')
+      .update({
+        email: obj.email,
+        email_hash: obj.emailHash,
+        first_name: obj.firstName,
+        last_name: obj.lastName,
+        password: obj.password,
+        username: obj.username,
+      })
+      .where({ id: userId });
   });
 });

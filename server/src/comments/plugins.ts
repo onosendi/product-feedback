@@ -33,7 +33,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
         'u.username',
         'u.first_name',
         'u.last_name',
-        'u.picture',
+        'u.email_hash',
       )
       .join('user as u', 'u.id', '=', 'fc.user_id')
       .leftJoin(
@@ -50,7 +50,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
                   'username', u.username,
                   'first_name', u.first_name,
                   'last_name', u.last_name,
-                  'picture', u.picture
+                  'email_hash', 'u.email_hash'
                 )
                 order by fc.created_at
               ) as replies
@@ -79,7 +79,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
         'u.username',
         'u.first_name',
         'u.last_name',
-        'u.picture',
+        'u.email_hash',
       )
       .join('user as u', 'u.id', '=', 'fc.user_id')
       .where({ 'fc.id': commentId })

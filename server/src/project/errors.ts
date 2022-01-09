@@ -2,6 +2,7 @@ import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import status from './httpStatusCodes';
 
 export const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';
+export const INVALID_PASSWORD = 'INVALID_PASSWORD';
 export const INVALID_USERRNAME_OR_PASSWORD = 'INVALID_USERRNAME_OR_PASSWORD';
 export const RECORD_NOT_FOUND = 'RECORD_NOT_FOUND';
 export const USERNAME_ALREADY_EXISTS = 'USERNAME_ALREADY_EXISTS';
@@ -14,6 +15,12 @@ export default function errorHandler(
   if (error.message === INSUFFICIENT_PRIVILEGES) {
     const err = new Error('Insufficient privileges');
     reply.status(status.HTTP_403_FORBIDDEN).send(err);
+    return;
+  }
+
+  if (error.message === INVALID_PASSWORD) {
+    const err = new Error('Invalid password');
+    reply.status(status.HTTP_400_BAD_REQUEST).send(err);
     return;
   }
 

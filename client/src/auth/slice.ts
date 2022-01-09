@@ -37,6 +37,14 @@ const authSlice = createSlice({
         isAuthenticated: true,
       }),
     );
+    builder.addMatcher(
+      usersApi.endpoints.editUser.matchFulfilled,
+      (state, action) => {
+        const s = state;
+        const { username } = action.meta.arg.originalArgs;
+        s.username = username;
+      },
+    );
   },
 });
 

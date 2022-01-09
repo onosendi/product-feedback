@@ -1,5 +1,5 @@
-import type { APIRegister } from '@t/api';
-import type { AuthResponse, ErrorResponse } from '@t/response';
+import type { APIEditUser, APIRegister } from '@t/api';
+import type { AuthResponse, ErrorResponse, UserResponse } from '@t/response';
 import baseApi from '../project/api';
 
 const usersApi = baseApi.injectEndpoints({
@@ -18,9 +18,24 @@ const usersApi = baseApi.injectEndpoints({
     validateUsername: build.query<ErrorResponse | boolean, string>({
       query: (username) => `/users/validate/${username}`,
     }),
+    getUserDetail: build.query<UserResponse, string>({
+      query: (username) => `/users/${username}`,
+    }),
+    editUser: build.mutation<void, APIEditUser>({
+      query: (body) => ({
+        method: 'PATCH',
+        url: '/users',
+        body,
+      }),
+      // TODO invalidate tags
+    }),
   }),
 });
 
-export const { useRegisterMutation } = usersApi;
+export const {
+  useRegisterMutation,
+  useGetUserDetailQuery,
+  useEditUserMutation,
+} = usersApi;
 
 export default usersApi;

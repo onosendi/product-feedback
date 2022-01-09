@@ -28,7 +28,9 @@
         }
       }
     }],
+    "func-names" : "off",
     "max-len": "off",
-    "no-console": [1, { "allow": ["warn", "error"]}]
+    "no-console": [1, { "allow": ["warn", "error"]}],
+    "prefer-arrow-callback": "off"
   }
 }

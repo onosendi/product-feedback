@@ -26,8 +26,8 @@
   margin-top: 3.8rem;
 }
 
-.paper {
-  margin-bottom: 4rem;
+.paper + .paper {
+  margin-top: 4rem;
 }
 
 .legend {
@@ -49,5 +49,6 @@
 }
 
 .buttonWrapper {
+  margin-top: 4rem;
   text-align: right;
 }

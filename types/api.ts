@@ -21,3 +21,13 @@ export type APICreateOrUpdateFeedback = {
 export type APICreateComment = {
   content: string,
 };
+
+export type APIEditUser = {
+  currentPassword: string,
+  email: string,
+  firstName: string,
+  lastName: string,
+  password: string,
+  passwordConfirm: string,
+  username: string,
+};

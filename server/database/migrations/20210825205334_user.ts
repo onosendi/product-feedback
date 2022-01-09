@@ -8,8 +8,9 @@ export const up = (knex: Knex) => knex.schema.createTable('user', (t) => {
   t.string('password', 161).notNullable();
   t.string('first_name', 50);
   t.string('last_name', 50);
-  t.string('picture');
   t.enu('role', ['user', 'admin']).defaultTo('user');
+  t.string('email', 254);
+  t.string('email_hash', 32);
 });
 
 export const down = (knex: Knex) => knex.schema.dropTableIfExists('user');

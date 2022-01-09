@@ -16,9 +16,11 @@
     "react"
   ],
   "rules": {
+    "func-names" : "off",
     "import/prefer-default-export": "off",
     "max-len": "off",
     "no-restricted-exports": "off",
+    "prefer-arrow-callback": "off",
     "react/display-name": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",

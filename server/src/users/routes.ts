@@ -1,12 +1,19 @@
-import type { APIRegister } from '@t/api';
+import type { APIEditUser, APIRegister } from '@t/api';
+import type { DBUser } from '@t/database';
 import type { AuthResponse } from '@t/response';
+import { MD5 } from 'crypto-js';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import { RECORD_NOT_FOUND, USERNAME_ALREADY_EXISTS } from '../project/errors';
+import { INVALID_PASSWORD, USERNAME_ALREADY_EXISTS } from '../project/errors';
 import status from '../project/httpStatusCodes';
-import { createPassword } from '../project/passwordHasher';
+import { checkPassword, createPassword } from '../project/passwordHasher';
 import { services } from './plugins';
-import { registerSchema, userDetailSchema, userValidateSchema } from './schemas';
+import {
+  editUserSchema,
+  registerSchema,
+  userDetailSchema,
+  userValidateSchema,
+} from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.register(services);
@@ -74,6 +81,55 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         return;
       }
       reply.status(status.HTTP_200_OK).send({ username });
+    },
+  });
+
+  fastify.route<{ Body: APIEditUser }>({
+    method: 'PATCH',
+    url: '/',
+    schema: editUserSchema,
+    preValidation: [fastify.needsAuthentication],
+    handler: async (request, reply) => {
+      const { id: userId, username } = request.authUser;
+      const {
+        currentPassword,
+        email = null,
+        firstName = null,
+        lastName = null,
+        password,
+        passwordConfirm,
+        username: newUsername,
+      } = request.body;
+
+      // TODO
+      const updateObj: any = {
+        email,
+        emailHash: MD5(email || '').toString(),
+        firstName,
+        lastName,
+        username: newUsername,
+      };
+
+      if (newUsername && newUsername !== username) {
+        const user = await fastify.getUser({ username: newUsername });
+        if (user) {
+          throw new Error(USERNAME_ALREADY_EXISTS);
+        }
+      }
+
+      if (currentPassword && password && passwordConfirm) {
+        const user: Pick<DBUser, 'password'> = await fastify
+          .getUser({ id: userId })
+          .select('password');
+        if (!checkPassword(currentPassword, user.password)) {
+          throw new Error(INVALID_PASSWORD);
+        }
+        updateObj.password = createPassword(password);
+      }
+
+      await fastify.editUser(userId, updateObj);
+
+      reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
 };

@@ -47,7 +47,7 @@ export default function CommentItem({
         <Picture
           alt={hasName ? fullName : data.username}
           className={cx(styles.picture)}
-          src={data.picture}
+          emailHash={data.emailHash}
         />
         <div className={cx(styles.namesWrapper)}>
           {hasName && <p className={cx('type-jost-bold', styles.name)}>{fullName}</p>}

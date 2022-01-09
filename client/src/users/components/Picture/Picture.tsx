@@ -4,22 +4,22 @@ import styles from './Picture.module.scss';
 interface PictureProps {
   alt: string;
   className?: string;
-  src?: string;
+  emailHash?: string;
 }
 
 export default function Picture({
   alt,
   className,
-  src,
+  emailHash = '',
 }: PictureProps) {
-  const imgSrc = src ?? '/static/img/default-user-picture.png';
   const defaultAlt = 'User picture placeholder';
+  const src = `https://www.gravatar.com/avatar/${emailHash}?s=40&d=mp`;
 
   return (
     <img
       alt={src ? alt : defaultAlt}
-      className={cx(styles.img, !src && styles.opaque, className)}
-      src={imgSrc}
+      className={cx(styles.img, className)}
+      src={src}
     />
   );
 }
