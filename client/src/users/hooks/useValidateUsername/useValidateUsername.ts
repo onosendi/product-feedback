@@ -1,3 +1,5 @@
+import { AnyAction, ThunkAction } from '@reduxjs/toolkit';
+import { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate';
 import { useDispatch } from 'react-redux';
 import usersApi from '../../api';
 
@@ -12,10 +14,10 @@ export default function useValidateUsername() {
   ) => {
     if (!meta.pristine && value?.length >= 3) {
       // TODO
-      const response: any = await dispatch(
-        usersApi.endpoints.validateUsername.initiate(value),
-      );
-      if (response?.data === true) {
+      const { isError } = await dispatch(
+        usersApi.endpoints.getUserDetail.initiate(value),
+      ) as any;
+      if (!isError) {
         return 'Username already exists';
       }
     }

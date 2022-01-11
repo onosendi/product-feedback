@@ -37,12 +37,12 @@ export default function Register() {
     });
   };
 
-  // TODO: debounce this
+  // TODO: use hook
   const validateUsername = simpleMemoize(async (username: string) => {
     if (username.length >= 3) {
       // TODO
       const response: any = await dispatch(
-        usersApi.endpoints.validateUsername.initiate(username),
+        usersApi.endpoints.getUserDetail.initiate(username),
       );
       if (response?.data === true) {
         return 'Username already exists';

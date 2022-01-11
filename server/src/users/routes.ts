@@ -12,7 +12,6 @@ import {
   editUserSchema,
   registerSchema,
   userDetailSchema,
-  userValidateSchema,
 } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
@@ -57,30 +56,16 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     Params: { username: string },
   }>({
     method: 'GET',
-    // TODO: better url
-    url: '/validate/:username',
-    schema: userValidateSchema,
-    handler: async (request, reply) => {
-      const { username } = request.params;
-      await fastify.getQueryOr404(fastify.getUser({ username }));
-      reply.status(status.HTTP_200_OK).send(true);
-    },
-  });
-
-  fastify.route<{
-    Params: { username: string },
-  }>({
-    method: 'GET',
     url: '/:username',
     schema: userDetailSchema,
     handler: async (request, reply) => {
       const { username } = request.params;
       const user = await fastify.getQueryOr404(fastify.getUser({ username }));
-      if (Object.entries(request.authUser).length) {
+      if (request.authUser.username === username) {
         reply.status(status.HTTP_200_OK).send(user);
         return;
       }
-      reply.status(status.HTTP_200_OK).send({ username });
+      reply.status(status.HTTP_204_NO_CONTENT);
     },
   });
 
@@ -101,12 +86,12 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         username: newUsername,
       } = request.body;
 
-      // TODO
-      const updateObj: any = {
+      const updateObj = {
         email,
         emailHash: MD5(email || '').toString(),
         firstName,
         lastName,
+        password,
         username: newUsername,
       };
 

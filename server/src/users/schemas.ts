@@ -12,6 +12,7 @@ export const schema: FastifyPluginAsync = fp(async (fastify) => {
         type: 'string',
         const: { $data: '1/password' },
       },
+      userId: { type: 'string' },
       username: { type: 'string', minLength: 3, maxLength: 50 },
     },
   });
@@ -29,24 +30,7 @@ export const registerSchema: FastifySchema = {
   },
   response: {
     [status.HTTP_200_OK]: {
-      $ref: 'auth#/responses/login',
-    },
-  },
-};
-
-export const userValidateSchema: FastifySchema = {
-  params: {
-    type: 'object',
-    required: ['username'],
-    properties: {
-      username: {
-        type: 'string',
-      },
-    },
-  },
-  response: {
-    [status.HTTP_200_OK]: {
-      type: 'boolean',
+      $ref: 'auth/response#/login',
     },
   },
 };

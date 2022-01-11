@@ -1,5 +1,5 @@
 import type { APIEditUser, APIRegister } from '@t/api';
-import type { AuthResponse, ErrorResponse, UserResponse } from '@t/response';
+import type { AuthResponse, UserResponse } from '@t/response';
 import baseApi from '../project/api';
 
 const usersApi = baseApi.injectEndpoints({
@@ -15,9 +15,6 @@ const usersApi = baseApi.injectEndpoints({
         { type: 'Feedback', id: 'DETAIL' },
       ],
     }),
-    validateUsername: build.query<ErrorResponse | boolean, string>({
-      query: (username) => `/users/validate/${username}`,
-    }),
     getUserDetail: build.query<UserResponse, string>({
       query: (username) => `/users/${username}`,
     }),
@@ -27,7 +24,6 @@ const usersApi = baseApi.injectEndpoints({
         url: '/users',
         body,
       }),
-      // TODO invalidate tags
     }),
   }),
 });

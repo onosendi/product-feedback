@@ -4,23 +4,20 @@ import status from '../project/httpStatusCodes';
 
 export const schema: FastifyPluginAsync = fp(async (fastify) => {
   fastify.addSchema({
-    $id: 'auth',
+    $id: 'auth/response',
     type: 'object',
-    responses: {
-      login: {
-        type: 'object',
-        properties: {
-          role: { type: 'string' },
-          token: { type: 'string' },
-          userId: { type: 'string' },
-          username: { type: 'string' },
-        },
+    login: {
+      type: 'object',
+      properties: {
+        role: { type: 'string' },
+        token: { type: 'string' },
+        userId: { type: 'string' },
+        username: { type: 'string' },
       },
     },
   });
 });
 
-// TODO: share response schema with user/schema/registerSchema
 export const loginSchema: FastifySchema = {
   body: {
     type: 'object',
@@ -32,7 +29,7 @@ export const loginSchema: FastifySchema = {
   },
   response: {
     [status.HTTP_200_OK]: {
-      $ref: 'auth#/responses/login',
+      $ref: 'auth/response#/login',
     },
   },
 };
