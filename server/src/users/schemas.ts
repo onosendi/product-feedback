@@ -5,13 +5,13 @@ import status from '../project/httpStatusCodes';
 export const schema: FastifyPluginAsync = fp(async (fastify) => {
   fastify.addSchema({
     $id: 'users',
-    type: 'object',
     properties: {
       password: { type: 'string', minLength: 6 },
       passwordConfirm: {
         type: 'string',
         const: { $data: '1/password' },
       },
+      role: { type: 'string' },
       userId: { type: 'string' },
       username: { type: 'string', minLength: 3, maxLength: 50 },
     },
@@ -35,7 +35,28 @@ export const registerSchema: FastifySchema = {
   },
 };
 
-export const userDetailSchema: FastifySchema = {};
+export const userDetailSchema: FastifySchema = {
+  params: {
+    type: 'object',
+    required: ['username'],
+    properties: {
+      username: { type: 'string' },
+    },
+  },
+  response: {
+    [status.HTTP_200_OK]: {
+      createdAt: { type: 'string' },
+      email: { type: 'string' },
+      emailHash: { type: 'string' },
+      firstName: { type: 'string' },
+      id: { $ref: 'users#/properties/userId' },
+      lastLogin: { type: 'string' },
+      lastName: { type: 'string' },
+      role: { $ref: 'users#/properties/role' },
+      username: { type: 'string' },
+    },
+  },
+};
 
 export const editUserSchema: FastifySchema = {
   body: {

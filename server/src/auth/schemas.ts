@@ -5,7 +5,6 @@ import status from '../project/httpStatusCodes';
 export const schema: FastifyPluginAsync = fp(async (fastify) => {
   fastify.addSchema({
     $id: 'auth/response',
-    type: 'object',
     login: {
       type: 'object',
       properties: {
