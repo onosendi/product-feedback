@@ -5,9 +5,9 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from '../auth/slice';
 import commentsReducer from '../comments/slice';
 import feedbackReducer from '../feedback/slice';
-import projectReducer from '../project/slice';
 import baseApi from './api';
 import { rtkQueryErrorHandler } from './middleware';
+import projectReducer from './slice';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
@@ -38,3 +38,4 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof combinedReducers>;
+export type AppDispatch = typeof store.dispatch;

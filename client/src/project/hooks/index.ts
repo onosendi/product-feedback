@@ -1,4 +1,5 @@
 export { default as useAnimatedToggle } from './useAnimatedToggle';
+export { default as useAppDispatch } from './useAppDispatch';
 export { default as useHistoryManager } from './useHistoryManager';
 export { default as useKeyDown } from './useKeyDown';
 export { default as useNoScroll } from './useNoScroll';
