@@ -1,50 +1,42 @@
-import type { FastifySchema } from 'fastify';
+import type { FastifyPluginAsync, FastifySchema } from 'fastify';
+import fp from 'fastify-plugin';
 import status from '../project/httpStatusCodes';
 
-export const listFeedbackSchema: FastifySchema = {
-  querystring: {
+export const schema: FastifyPluginAsync = fp(async (fastify) => {
+  fastify.addSchema({
+    $id: 'feedback',
     properties: {
       category: {
         type: 'array',
         items: {
           type: 'string',
+          enum: ['feature', 'ui', 'ux', 'enhancement', 'bug'],
         },
       },
-      sort: { type: 'string' },
+      feedbackId: { type: 'string', format: 'uuid' },
       status: {
         type: 'array',
         items: {
           type: 'string',
-        },
-      },
-      order: { type: 'string' },
-    },
-  },
-  response: {
-    [status.HTTP_200_OK]: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          category: { type: 'string' },
-          commentCount: { type: 'number' },
-          description: { type: 'string' },
-          hasVoted: { type: 'boolean' },
-          id: { type: 'string' },
-          slug: { type: 'string' },
-          status: { type: 'string' },
-          title: { type: 'string' },
-          userId: { type: 'string' },
-          votes: { type: 'number' },
+          enum: ['suggestion', 'planned', 'in-progress', 'live'],
         },
       },
     },
-  },
-};
 
-export const feedbackDetailSchema: FastifySchema = {
-  response: {
-    [status.HTTP_200_OK]: {
+    body: {
+      create: {
+        type: 'object',
+        required: ['category', 'description', 'title'],
+        properties: {
+          category: { $ref: 'feedback#/properties/category/items' },
+          description: { type: 'string', maxLength: 300 },
+          status: { $ref: 'feedback#/properties/status/items' },
+          title: { type: 'string', minLength: 5, maxLength: 75 },
+        },
+      },
+    },
+
+    response: {
       type: 'object',
       properties: {
         category: { type: 'string' },
@@ -59,70 +51,62 @@ export const feedbackDetailSchema: FastifySchema = {
         votes: { type: 'number' },
       },
     },
+  });
+});
+
+export const listFeedbackSchema: FastifySchema = {
+  querystring: {
+    properties: {
+      category: { $ref: 'feedback#/properties/category' },
+      sort: {
+        type: 'string',
+        enum: ['votes', 'comment_count'],
+      },
+      status: { $ref: 'feedback#/properties/status' },
+      order: {
+        type: 'string',
+        enum: ['asc', 'desc'],
+      },
+    },
+  },
+  response: {
+    [status.HTTP_200_OK]: {
+      type: 'array',
+      items: { $ref: 'feedback#/response' },
+    },
   },
 };
 
-const createAndEditBodySchema = {
-  body: {
-    type: 'object',
-    required: [
-      'category',
-      'description',
-      'title',
-    ],
-    properties: {
-      category: {
-        type: 'string',
-        enum: [
-          'feature',
-          'ui',
-          'ux',
-          'enhancement',
-          'bug',
-        ],
-      },
-      description: {
-        type: 'string',
-        maxLength: 300,
-      },
-      status: {
-        type: 'string',
-        enum: [
-          'suggestion',
-          'planned',
-          'in-progress',
-          'live',
-        ],
-      },
-      title: {
-        type: 'string',
-        minLength: 5,
-        maxLength: 75,
-      },
-    },
+export const feedbackDetailSchema: FastifySchema = {
+  response: {
+    [status.HTTP_200_OK]: { $ref: 'feedback#/response' },
   },
 };
 
 export const createFeedbackSchema: FastifySchema = {
-  ...createAndEditBodySchema,
+  body: { $ref: 'feedback#/body/create' },
 };
 
 export const editFeedbackSchema: FastifySchema = {
-  ...createAndEditBodySchema,
+  body: { $ref: 'feedback#/body/create' },
   params: {
     type: 'object',
     required: ['feedbackId'],
     properties: {
-      feedbackId: {
-        type: 'string',
-        format: 'uuid',
-      },
+      feedbackId: { $ref: 'feedback#/properties/feedbackId' },
     },
   },
 };
 
-// TODO
-export const deleteFeedbackSchema: FastifySchema = {};
+export const deleteFeedbackSchema: FastifySchema = {
+  params: {
+    type: 'object',
+    required: ['feedbackId'],
+    properties: {
+      feedbackId: { $ref: 'feedback#/properties/feedbackId' },
+    },
+  },
+};
 
 export const roadmapCountSchema: FastifySchema = {
   response: {
@@ -141,21 +125,7 @@ export const roadmapSchema: FastifySchema = {
   response: {
     [status.HTTP_200_OK]: {
       type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          category: { type: 'string' },
-          commentCount: { type: 'number' },
-          description: { type: 'string' },
-          hasVoted: { type: 'boolean' },
-          id: { type: 'string' },
-          slug: { type: 'string' },
-          status: { type: 'string' },
-          title: { type: 'string' },
-          userId: { type: 'string' },
-          votes: { type: 'number' },
-        },
-      },
+      items: { $ref: 'feedback#/response' },
     },
   },
 };
