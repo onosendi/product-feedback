@@ -1,22 +1,30 @@
-import type { FastifySchema } from 'fastify';
+import type { FastifyPluginAsync, FastifySchema } from 'fastify';
+import fp from 'fastify-plugin';
 
-const createAndDeletaParamsSchema = {
-  params: {
-    type: 'object',
-    required: ['feedbackId'],
-    properties: {
-      feedbackId: {
-        type: 'string',
-        format: 'uuid',
+export const schema: FastifyPluginAsync = fp(async (fastify) => {
+  fastify.addSchema({
+    $id: 'votes',
+    params: {
+      type: 'object',
+      required: ['feedbackId'],
+      properties: {
+        feedbackId: {
+          type: 'string',
+          format: 'uuid',
+        },
       },
     },
+  });
+});
+
+export const createVoteSchema: FastifySchema = {
+  params: {
+    $ref: 'votes#/params',
   },
 };
 
-export const createVoteSchema: FastifySchema = {
-  ...createAndDeletaParamsSchema,
-};
-
 export const deleteVoteSchema: FastifySchema = {
-  ...createAndDeletaParamsSchema,
+  params: {
+    $ref: 'votes#/params',
+  },
 };
