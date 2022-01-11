@@ -81,6 +81,7 @@ export function validateFormValues(schema: any) {
 
 export const REQUIRED = 'This field is required';
 export const INVALID_PASSWORD = 'Invalid password';
+export const USERNAME_EXISTS = 'Username already exists';
 
 export const usernameValidator = yupString()
   .required(REQUIRED)

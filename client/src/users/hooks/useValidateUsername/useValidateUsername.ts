@@ -1,4 +1,5 @@
 import { useAppDispatch } from '../../../project/hooks';
+import { USERNAME_EXISTS } from '../../../project/validators';
 import usersApi from '../../api';
 
 export default function useValidateUsername() {
@@ -15,7 +16,7 @@ export default function useValidateUsername() {
         usersApi.endpoints.getUserDetail.initiate(value),
       );
       if (!isError) {
-        return 'Username already exists';
+        return USERNAME_EXISTS;
       }
     }
     return undefined;
