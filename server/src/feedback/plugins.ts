@@ -169,7 +169,11 @@ export const needsAdminToModifyStatus: FastifyPluginAsync = fp(async (fastify) =
     ) {
       const { role } = request.authUser;
       const { status } = request.body;
-      if (status !== 'suggestion' && role !== 'admin') {
+      if (
+        status
+        && status !== 'suggestion'
+        && role !== 'admin'
+      ) {
         done(new Error(INSUFFICIENT_PRIVILEGES));
       }
       done();
