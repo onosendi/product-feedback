@@ -14,6 +14,7 @@ import {
   TextField,
 } from '../../../project/components';
 import { usePreviousPage } from '../../../project/hooks';
+import routes from '../../../project/routes';
 import { getHasError, getHelperText } from '../../../project/utils';
 import { REQUIRED, validateFormValues } from '../../../project/validators';
 import {
@@ -62,19 +63,21 @@ export default function CreateOrUpdate({
     if (isNew) {
       // TODO: toast
       await createFeedback(body);
+      navigate(routes.feedback.list);
     } else {
+      // TODO: toast
       await editFeedback({
         body,
         meta: { feedbackId: feedback.id },
       });
+      navigate(previousPage);
     }
-    navigate(previousPage);
   };
 
   const handleDeleteSuggestsion = async () => {
     if (feedback?.id) {
       await deleteFeedback(feedback.id);
-      navigate(previousPage);
+      navigate(routes.feedback.list);
       // TODO: toast
     }
   };
