@@ -89,6 +89,9 @@ export const usernameValidator = yupString()
   .max(50, 'Can\'t be more than 50 characters')
   .trim();
 
+export const passwordValidator = yupString()
+  .min(6, 'Must have at least 6 characters');
+
 export const passwordConfirmValidator = yupString()
   .test('', 'Passwords do not match', function (value) {
     return value === this.parent.password;

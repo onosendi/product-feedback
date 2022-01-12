@@ -16,6 +16,7 @@ import { getFullName, getHasError, getHelperText } from '../../../project/utils'
 import {
   INVALID_PASSWORD,
   passwordConfirmValidator,
+  passwordValidator,
   REQUIRED,
   usernameValidator,
   validateFormValues,
@@ -33,8 +34,7 @@ const validationSchema = yupObject({
     .test('', REQUIRED, function (value) {
       return !(!value && (this.parent.password || this.parent.passwordConfirm));
     }),
-  password: yupString()
-    .min(6, 'Must have at least 6 characters')
+  password: passwordValidator
     .test('', REQUIRED, function (value) {
       return !(!value && (this.parent.currentPassword || this.parent.passwordConfirm));
     }),
@@ -57,18 +57,16 @@ export default function EditUserForm({
   const [editUser] = useEditUserMutation();
 
   const onSubmit = async (values: Record<string, any>) => {
-    const body = {
-      currentPassword: values.currentPassword,
-      email: values.email?.trim(),
-      firstName: values.firstName?.trim(),
-      lastName: values.lastName?.trim(),
-      password: values.password,
-      passwordConfirm: values.passwordConfirm,
-      username: values.username,
-    };
-
     try {
-      await editUser(body).unwrap();
+      await editUser({
+        currentPassword: values.currentPassword,
+        email: values.email?.trim(),
+        firstName: values.firstName?.trim(),
+        lastName: values.lastName?.trim(),
+        password: values.password,
+        passwordConfirm: values.passwordConfirm,
+        username: values.username,
+      }).unwrap();
       // TODO: toast
     } catch (error) {
       const err = error as any;
@@ -107,8 +105,7 @@ export default function EditUserForm({
                   name="username"
                   initialValue={user.username}
                   validate={validateUsername}
-                  // TODO
-                  render={({ input, meta }: any) => (
+                  render={({ input, meta }) => (
                     <TextField
                       defaultValue={user.username}
                       hasError={getHasError(meta)}
