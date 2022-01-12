@@ -3,6 +3,7 @@ import cx from 'clsx';
 import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useNavigate } from 'react-router-dom';
+import { object as yupObject, string as yupString } from 'yup';
 import { useAuth } from '../../../auth/hooks';
 import {
   Button,
@@ -13,15 +14,24 @@ import {
   TextField,
 } from '../../../project/components';
 import { usePreviousPage } from '../../../project/hooks';
-import routes from '../../../project/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
-import { composeValidators, isFilled, isLength } from '../../../project/validators';
+import { getHasError, getHelperText } from '../../../project/utils';
+import { REQUIRED, validateFormValues } from '../../../project/validators';
 import {
   useCreateFeedbackMutation,
   useDeleteFeedbackMutation,
   useEditFeedbackMutation,
 } from '../../api';
 import styles from './CreateOrUpdate.module.scss';
+
+const validationSchema = yupObject({
+  title: yupString()
+    .required(REQUIRED)
+    .min(5, 'Must be at least 5 characters')
+    .max(75, 'Can\'t be more than 75 characters'),
+  description: yupString()
+    .required(REQUIRED)
+    .max(300, 'Can\'t be more than 300 characters'),
+});
 
 type CreateOrUpdateProps = {
   feedback?: FeedbackResponse,
@@ -91,10 +101,12 @@ export default function CreateOrUpdate({
       </h1>
       <Form
         onSubmit={onSubmit}
+        validate={validateFormValues(validationSchema)}
         render={({
-          form,
           handleSubmit,
+          pristine,
           submitting,
+          valid,
         }) => (
           <form
             className={cx(styles.form)}
@@ -105,10 +117,6 @@ export default function CreateOrUpdate({
             <Field
               name="title"
               initialValue={feedback?.title}
-              validate={composeValidators(
-                [isFilled],
-                [isLength, { min: 5 }],
-              )}
               render={({ input, meta }) => (
                 <TextField
                   defaultValue={feedback?.title}
@@ -152,7 +160,6 @@ export default function CreateOrUpdate({
             <Field
               name="description"
               initialValue={feedback?.description}
-              validate={isFilled}
               render={({ input, meta }) => (
                 <TextField
                   defaultValue={feedback?.description}
@@ -171,7 +178,7 @@ export default function CreateOrUpdate({
             <div className={cx(styles.buttonWrapper)}>
               <Button
                 className={cx(styles.add)}
-                disabled={submitting || hasValidationErrors(form)}
+                disabled={submitting || pristine || !valid}
                 type="submit"
                 variant="1"
               >
