@@ -86,6 +86,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .first();
   });
 
+  // TODO: remove all of these `any` in plugins
   fastify.decorate('createComment', function (obj: any) {
     return fastify
       .knex('feedback_comment')
@@ -94,7 +95,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
         content: obj.content,
         user_id: obj.userId,
         feedback_id: obj.feedbackId,
-        feedback_comment_parent_id: obj.commentParentId,
+        feedback_comment_parent_id: obj.feedbackCommentParentId,
       });
   });
 });
