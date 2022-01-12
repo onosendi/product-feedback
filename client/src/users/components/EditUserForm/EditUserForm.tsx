@@ -126,7 +126,7 @@ export default function EditUserForm({
                 />
                 <Field
                   name="firstName"
-                  initialValue={user.firstName}
+                  initialValue={user.firstName || undefined}
                   render={({ input, meta }) => (
                     <TextField
                       defaultValue={user.firstName}
@@ -141,7 +141,7 @@ export default function EditUserForm({
                 />
                 <Field
                   name="lastName"
-                  initialValue={user.lastName}
+                  initialValue={user.lastName || undefined}
                   render={({ input, meta }) => (
                     <TextField
                       defaultValue={user.lastName}
@@ -157,7 +157,7 @@ export default function EditUserForm({
                 <div className={cx(styles.userPictureWrapper)}>
                   <Field
                     name="email"
-                    initialValue={user.email}
+                    initialValue={user.email || undefined}
                     render={({ input, meta }) => (
                       <TextField
                         defaultValue={user.email}
