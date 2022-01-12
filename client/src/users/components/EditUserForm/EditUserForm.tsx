@@ -12,13 +12,9 @@ import {
   Paper,
   TextField,
 } from '../../../project/components';
+import { getFullName, getHasError, getHelperText } from '../../../project/utils';
 import {
-  getFullName,
-  getHasError,
-  getHelperText,
-} from '../../../project/utils';
-import {
-    INVALID_PASSWORD,
+  INVALID_PASSWORD,
   passwordConfirmValidator,
   REQUIRED,
   usernameValidator,
@@ -60,7 +56,6 @@ export default function EditUserForm({
   const validateUsername = useValidateUsername();
   const [editUser] = useEditUserMutation();
 
-  // TODO
   const onSubmit = async (values: Record<string, any>) => {
     const body = {
       currentPassword: values.currentPassword,
@@ -77,11 +72,12 @@ export default function EditUserForm({
       // TODO: toast
     } catch (error) {
       const err = error as any;
+      const errors = {} as Record<string, string>;
       if (err?.data?.message === INVALID_PASSWORD) {
-        return {
-          currentPassword: INVALID_PASSWORD,
-          [FORM_ERROR]: true,
-        };
+        errors.currentPassword = INVALID_PASSWORD;
+      }
+      if (Object.entries(errors).length) {
+        return { ...errors, [FORM_ERROR]: true };
       }
     }
 
