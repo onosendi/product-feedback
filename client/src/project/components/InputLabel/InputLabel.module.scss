@@ -2,6 +2,8 @@
 
 .label {
   display: block;
+  padding-bottom: 2.4rem;
+  position: relative;
   width: 100%;
 }
 
@@ -43,6 +45,7 @@
   display: block;
   font-size: 1.3rem;
   margin-top: 0.4rem;
+  position: absolute;
 
   @include mixins.respond-to(md) {
     font-size: 1.4rem;

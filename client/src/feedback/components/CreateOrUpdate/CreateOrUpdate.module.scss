@@ -50,18 +50,18 @@
 
 .form {
   & > *:not(:first-child):not(.buttonWrapper) {
-    margin-top: 2.4rem;
+    margin-top: 1rem;
   }
 }
 
 .buttonWrapper {
   display: flex;
   flex-direction: column;
-  margin-top: 4rem;
+  margin-top: 2rem;
 
   @include mixins.respond-to(md) {
     flex-direction: row;
-    margin-top: 3.2rem;
+    margin-top: 2rem;
 
     & > .delete {
       order: 1;
