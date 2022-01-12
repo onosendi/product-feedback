@@ -3,13 +3,18 @@ import type { FormApi } from 'final-form';
 import { useRef } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useLocation } from 'react-router-dom';
+import { object as yupObject, string as yupString } from 'yup';
 import { useAuth } from '../../../auth/hooks';
 import { Button, Paper, TextField } from '../../../project/components';
 import routes from '../../../project/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
-import { isFilled } from '../../../project/validators';
+import { getHasError, getHelperText } from '../../../project/utils';
+import { REQUIRED, validateFormValues } from '../../../project/validators';
 import { useCreateCommentMutation } from '../../api';
 import styles from './CreateComment.module.scss';
+
+const validationSchema = yupObject({
+  content: yupString().required(REQUIRED).trim(),
+});
 
 interface CreateCommentProps {
   feedbackId: string;
@@ -57,11 +62,12 @@ export default function CreateComment({
   return (
     <Form
       onSubmit={(values, form) => { onSubmit(values, form); }}
+      validate={validateFormValues(validationSchema)}
       render={({
-        form,
         handleSubmit,
         pristine,
         submitting,
+        valid,
       }) => (
         <Paper
           className={cx(styles.form)}
@@ -72,7 +78,6 @@ export default function CreateComment({
         >
           <Field
             name="content"
-            validate={isFilled}
             render={({ input, meta }) => (
               <TextField
                 hasError={getHasError(meta)}
@@ -90,7 +95,7 @@ export default function CreateComment({
           />
           <div className={cx(styles.buttonWrapper)}>
             <Button
-              disabled={pristine || submitting || hasValidationErrors(form)}
+              disabled={pristine || submitting || !valid}
               type="submit"
               variant="1"
             >

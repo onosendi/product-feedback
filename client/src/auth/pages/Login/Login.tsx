@@ -1,7 +1,9 @@
+// TODO: Move form into its own component
 import cx from 'clsx';
 import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { Helmet } from 'react-helmet-async';
+import { object as yupObject, string as yupString } from 'yup';
 import {
   Button,
   Link,
@@ -12,11 +14,16 @@ import { APP_NAME } from '../../../project/constants';
 import status from '../../../project/httpStatusCodes';
 import { AuthLayout } from '../../../project/layouts';
 import routes from '../../../project/routes';
-import { getHasError, getHelperText, hasValidationErrors } from '../../../project/utils';
-import { isFilled } from '../../../project/validators';
+import { getHasError, getHelperText } from '../../../project/utils';
+import { REQUIRED, validateFormValues } from '../../../project/validators';
 import { useLoginMutation } from '../../api';
 import { useNavigateAuthorized } from '../../hooks';
 import styles from './Login.module.scss';
+
+const validationSchema = yupObject({
+  username: yupString().required(REQUIRED).trim(),
+  password: yupString().required(REQUIRED),
+});
 
 export default function Login() {
   useNavigateAuthorized();
@@ -28,7 +35,7 @@ export default function Login() {
     setErrors(false);
     try {
       await login({
-        username: values.username,
+        username: values.username.trim(),
         password: values.password,
       }).unwrap();
     } catch (error) {
@@ -53,16 +60,16 @@ export default function Login() {
             )}
             <Form
               onSubmit={onSubmit}
+              validate={validateFormValues(validationSchema)}
               render={({
-                form,
                 handleSubmit,
                 pristine,
                 submitting,
+                valid,
               }) => (
                 <form className={cx(styles.form)} noValidate onSubmit={handleSubmit}>
                   <Field
                     name="username"
-                    validate={isFilled}
                     render={({ input, meta }) => (
                       <TextField
                         hasError={getHasError(meta)}
@@ -75,7 +82,6 @@ export default function Login() {
                   />
                   <Field
                     name="password"
-                    validate={isFilled}
                     render={({ input, meta }) => (
                       <TextField
                         hasError={getHasError(meta)}
@@ -88,7 +94,7 @@ export default function Login() {
                     )}
                   />
                   <Button
-                    disabled={pristine || submitting || hasValidationErrors(form)}
+                    disabled={pristine || submitting || !valid}
                     fullWidth
                     type="submit"
                     variant="1"

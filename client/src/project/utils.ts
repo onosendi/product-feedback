@@ -11,11 +11,6 @@ export function getFullName(firstName: string, lastName: string): string {
   return [firstName, lastName].filter((name) => name).join(' ');
 }
 
-// TODO Use `valid` from form render props instead of `hasValidationErrors`
-export function hasValidationErrors(form: any): boolean {
-  return form.getState().hasValidationErrors;
-}
-
 export function getHelperText(meta: FieldMetaState<any>): undefined | string {
   return (
     (meta.touched && meta.error)
