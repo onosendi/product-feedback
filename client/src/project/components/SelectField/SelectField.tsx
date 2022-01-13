@@ -19,6 +19,7 @@ interface SelectFieldProps {
   id: string;
   label: string;
   name: string;
+  onChange?: any;
 }
 
 export default function SelectField({
@@ -31,6 +32,7 @@ export default function SelectField({
   id,
   label,
   name,
+  onChange,
 }: SelectFieldProps) {
   const {
     close,
@@ -46,6 +48,7 @@ export default function SelectField({
   const onSelect = (obj: { value: string, children: string }) => {
     close();
     setDisplay(obj.children);
+    onChange(obj.value);
   };
 
   useOutsideClick(close, toggleRef, mounted);

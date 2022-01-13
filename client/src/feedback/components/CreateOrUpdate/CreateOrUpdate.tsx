@@ -54,9 +54,9 @@ export default function CreateOrUpdate({
 
   const onSubmit = async (values: Record<string, any>) => {
     const body = {
-      category: formRef.current?.category?.value,
+      category: values.category,
       description: values.description,
-      status: formRef.current?.status?.value,
+      status: values.status,
       title: values.title,
     };
 
@@ -85,6 +85,9 @@ export default function CreateOrUpdate({
   const toggleDeleteDialog = () => {
     setShowDialog(!showDialog);
   };
+
+  const defaultCategoryValue = feedback?.category?.toLowerCase();
+  const defaultStatusValue = feedback?.status?.toLowerCase();
 
   return (
     <Paper className={cx(styles.paper)} component="main">
@@ -133,32 +136,44 @@ export default function CreateOrUpdate({
                 />
               )}
             />
-            <SelectField
-              defaultValue={feedback?.category?.toLowerCase()}
-              description="Choose a category for your feedback"
-              id="category"
-              label="Category"
+            <Field
               name="category"
-            >
-              <SelectItem value="feature">Feature</SelectItem>
-              <SelectItem value="ui">UI</SelectItem>
-              <SelectItem value="ux">UX</SelectItem>
-              <SelectItem value="enhancement">Enhancement</SelectItem>
-              <SelectItem value="bug">Bug</SelectItem>
-            </SelectField>
+              initialValue={defaultCategoryValue}
+              render={({ input }) => (
+                <SelectField
+                  defaultValue={defaultCategoryValue}
+                  description="Choose a category for your feedback"
+                  id="category"
+                  label="Category"
+                  {...input}
+                >
+                  <SelectItem value="feature">Feature</SelectItem>
+                  <SelectItem value="ui">UI</SelectItem>
+                  <SelectItem value="ux">UX</SelectItem>
+                  <SelectItem value="enhancement">Enhancement</SelectItem>
+                  <SelectItem value="bug">Bug</SelectItem>
+                </SelectField>
+              )}
+            />
             {role === 'admin' && (
-              <SelectField
-                defaultValue={feedback?.status?.toLowerCase()}
-                description="Change feature state"
-                id="status"
-                label={isNew ? 'Status' : 'Update Status'}
+              <Field
                 name="status"
-              >
-                <SelectItem value="suggestion">Suggestion</SelectItem>
-                <SelectItem value="planned">Planned</SelectItem>
-                <SelectItem value="in-progress">In-Progress</SelectItem>
-                <SelectItem value="live">Live</SelectItem>
-              </SelectField>
+                initialValue={defaultStatusValue}
+                render={({ input }) => (
+                  <SelectField
+                    defaultValue={defaultStatusValue}
+                    description="Change feature state"
+                    id="status"
+                    label={isNew ? 'Status' : 'Update Status'}
+                    {...input}
+                  >
+                    <SelectItem value="suggestion">Suggestion</SelectItem>
+                    <SelectItem value="planned">Planned</SelectItem>
+                    <SelectItem value="in-progress">In-Progress</SelectItem>
+                    <SelectItem value="live">Live</SelectItem>
+                  </SelectField>
+                )}
+              />
             )}
             <Field
               name="description"
