@@ -3,7 +3,7 @@ import type { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 import type { Knex } from 'knex';
 
-type CommentArgObj = {
+type CreateCommentObj = {
   commentId: DBId,
   content: string,
   createdAt?: Date,
@@ -16,12 +16,12 @@ declare module 'fastify' {
   interface FastifyInstance {
     getComments: (feedbackId: DBId) => Knex.QueryBuilder;
     getCommentById: (commentId: DBId) => Knex.QueryBuilder;
-    createComment: (obj: CommentArgObj) => Knex.QueryBuilder;
+    createComment: (obj: CreateCommentObj) => Knex.QueryBuilder;
   }
 }
 
 export const services: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.decorate('getComments', function (feedbackId: any) {
+  fastify.decorate('getComments', function (feedbackId: DBId) {
     return fastify
       .knex('feedback_comment as fc')
       .select(
@@ -68,7 +68,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .where({ 'fc.feedback_id': feedbackId });
   });
 
-  fastify.decorate('getCommentById', function (commentId: any) {
+  fastify.decorate('getCommentById', function (commentId: DBId) {
     return fastify
       .knex('feedback_comment as fc')
       .select(
@@ -86,8 +86,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .first();
   });
 
-  // TODO: remove all of these `any` in plugins
-  fastify.decorate('createComment', function (obj: any) {
+  fastify.decorate('createComment', function (obj: CreateCommentObj) {
     return fastify
       .knex('feedback_comment')
       .insert({

@@ -3,33 +3,34 @@ import type { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 import type { Knex } from 'knex';
 
+type GetUserWhere = Partial<DBUser>;
+
+type CreateUserObj = {
+  userId: DBId,
+  username: string,
+  password: string,
+};
+
+type EditUserObj = {
+  email: string | null,
+  emailHash: string,
+  firstName: string | null,
+  lastName: string | null,
+  password: string | undefined,
+  username: string,
+};
+
 declare module 'fastify' {
   interface FastifyInstance {
-    getUser: (where: Partial<DBUser>) => Knex.QueryBuilder;
-    createUser: (
-      obj: {
-        userId: DBId,
-        username: string,
-        password: string,
-      },
-    ) => Knex.QueryBuilder;
+    getUser: (where: GetUserWhere) => Knex.QueryBuilder;
+    createUser: (obj: CreateUserObj) => Knex.QueryBuilder;
     updateLastLogin: (userId: DBId) => Knex.QueryBuilder;
-    editUser: (
-      userId: DBId,
-      obj: {
-        email: string | null,
-        emailHash: string,
-        firstName: string | null,
-        lastName: string | null,
-        password: string | undefined,
-        username: string,
-      },
-    ) => Knex.QueryBuilder;
+    editUser: (userId: DBId, obj: EditUserObj) => Knex.QueryBuilder;
   }
 }
 
 export const services: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.decorate('getUser', function (where: any) {
+  fastify.decorate('getUser', function (where: GetUserWhere) {
     return fastify
       .knex('user')
       .select(
@@ -47,7 +48,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .first();
   });
 
-  fastify.decorate('createUser', function (obj: any) {
+  fastify.decorate('createUser', function (obj: CreateUserObj) {
     return fastify
       .knex('user')
       .insert({
@@ -57,14 +58,14 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       });
   });
 
-  fastify.decorate('updateLastLogin', function (userId: any) {
+  fastify.decorate('updateLastLogin', function (userId: DBId) {
     return fastify
       .knex('user')
       .where({ id: userId })
       .update({ last_login: new Date() });
   });
 
-  fastify.decorate('editUser', function (userId: any, obj: any) {
+  fastify.decorate('editUser', function (userId: DBId, obj: EditUserObj) {
     return fastify
       .knex('user')
       .update({

@@ -12,7 +12,7 @@ declare module 'fastify' {
 const plugins: FastifyPluginAsync = fp(async (fastify) => {
   fastify.decorate(
     'getQueryOr404',
-    async function (query: any) {
+    async function (query: Knex.QueryBuilder) {
       const qry = await query;
       if (!qry) {
         throw new Error(RECORD_NOT_FOUND);

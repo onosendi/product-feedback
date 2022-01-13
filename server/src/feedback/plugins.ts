@@ -14,7 +14,9 @@ import fp from 'fastify-plugin';
 import type { Knex } from 'knex';
 import { INSUFFICIENT_PRIVILEGES } from '../project/errors';
 
-type FeedbackArgObj = {
+type GetFeedbackWhere = Partial<DBFeedback>;
+
+type CreateFeedbackObj = {
   categoryId: DBId,
   createdAt?: Date,
   description: string,
@@ -25,16 +27,21 @@ type FeedbackArgObj = {
   userId: DBId,
 };
 
+type GetFeedbackDetailObj = {
+  slug: string,
+  userId: DBId,
+};
+
+type EditFeedbackObj = Omit<CreateFeedbackObj, 'slug' | 'userId' | 'feedbackId'>;
+
 declare module 'fastify' {
   interface FastifyInstance {
-    getFeedback: (where: Partial<DBFeedback>) => Knex.QueryBuilder;
     getFeedbackList: (userId: DBId) => Knex.QueryBuilder;
-    getFeedbackDetail: (
-      obj: Pick<FeedbackArgObj, 'slug' | 'userId'>,
-    ) => Knex.QueryBuilder;
+    getFeedback: (where: GetFeedbackWhere) => Knex.QueryBuilder;
+    getFeedbackDetail: (obj: GetFeedbackDetailObj) => Knex.QueryBuilder;
     getCategory: (category: DBCategoryCategory) => Knex.QueryBuilder;
-    createFeedback: (obj: FeedbackArgObj) => Knex.QueryBuilder;
-    editFeedback: (obj: Omit<FeedbackArgObj, 'slug' | 'userId'>) => Knex.QueryBuilder;
+    createFeedback: (obj: CreateFeedbackObj) => Knex.QueryBuilder;
+    editFeedback: (feedbackId: DBId, obj: EditFeedbackObj) => Knex.QueryBuilder;
     deleteFeedback: (feedbackId: DBId) => Knex.QueryBuilder;
     getRoadmap: (userId: DBId) => Knex.QueryBuilder;
     getRoadmapCount: () => Knex.QueryBuilder;
@@ -42,7 +49,7 @@ declare module 'fastify' {
 }
 
 export const services: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.decorate('getFeedbackList', function (userId: any) {
+  fastify.decorate('getFeedbackList', function (userId: DBId) {
     return fastify.knex('feedback as f')
       .select(
         'f.id',
@@ -87,19 +94,19 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       );
   });
 
-  fastify.decorate('getFeedback', function (where: any) {
+  fastify.decorate('getFeedback', function (where: GetFeedbackWhere) {
     return fastify.knex('feedback').where(where).first();
   });
 
-  fastify.decorate('getFeedbackDetail', function (obj: any) {
+  fastify.decorate('getFeedbackDetail', function (obj: GetFeedbackDetailObj) {
     return fastify.getFeedbackList(obj.userId).where({ slug: obj.slug }).first();
   });
 
-  fastify.decorate('getCategory', function (category: any) {
+  fastify.decorate('getCategory', function (category: DBCategoryCategory) {
     return fastify.knex('feedback_category').select('id').where({ category }).first();
   });
 
-  fastify.decorate('createFeedback', function (obj: any) {
+  fastify.decorate('createFeedback', function (obj: CreateFeedbackObj) {
     return fastify.knex('feedback')
       .insert({
         category_id: obj.categoryId,
@@ -112,8 +119,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       });
   });
 
-  // TODO: have separate argu for 'feedbackId'
-  fastify.decorate('editFeedback', function (obj: any) {
+  fastify.decorate('editFeedback', function (feedbackId: DBId, obj: EditFeedbackObj) {
     return fastify.knex('feedback')
       .update({
         category_id: obj.categoryId,
@@ -121,14 +127,14 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
         status: obj.status,
         title: obj.title,
       })
-      .where({ id: obj.feedbackId });
+      .where({ id: feedbackId });
   });
 
-  fastify.decorate('deleteFeedback', function (feedbackId: any) {
+  fastify.decorate('deleteFeedback', function (feedbackId: DBId) {
     return fastify.knex('feedback').where({ id: feedbackId }).delete();
   });
 
-  fastify.decorate('getRoadmap', function (userId: any) {
+  fastify.decorate('getRoadmap', function (userId: DBId) {
     return fastify.getFeedbackList(userId)
       .whereNot({ 'f.status': 'suggestion' })
       .orderBy('votes', 'desc');

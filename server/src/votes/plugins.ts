@@ -3,21 +3,23 @@ import type { FastifyPluginAsync } from 'fastify';
 import fp from 'fastify-plugin';
 import type { Knex } from 'knex';
 
-type VoteArgObj = {
+type CreateVoteObj = {
   feedbackId: DBId,
   userId: DBId,
   voteId: DBId,
 };
 
+type DeleteVoteObj = Omit<CreateVoteObj, 'voteId'>;
+
 declare module 'fastify' {
   interface FastifyInstance {
-    createVote: (obj: VoteArgObj) => Knex.QueryBuilder;
-    deleteVote: (obj: Omit<VoteArgObj, 'voteId'>) => Knex.QueryBuilder;
+    createVote: (obj: CreateVoteObj) => Knex.QueryBuilder;
+    deleteVote: (obj: DeleteVoteObj) => Knex.QueryBuilder;
   }
 }
 
 export const services: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.decorate('createVote', function (obj: any) {
+  fastify.decorate('createVote', function (obj: CreateVoteObj) {
     return fastify
       .knex('feedback_vote')
       .insert({
@@ -27,7 +29,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       });
   });
 
-  fastify.decorate('deleteVote', function (obj: any) {
+  fastify.decorate('deleteVote', function (obj: DeleteVoteObj) {
     return fastify
       .knex('feedback_vote')
       .where({

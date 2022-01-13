@@ -159,10 +159,9 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
       }
 
       const { id: categoryId } = await fastify.getCategory(category);
-      await fastify.editFeedback({
+      await fastify.editFeedback(feedbackId, {
         categoryId,
         description,
-        feedbackId,
         status: feedbackStatus,
         title,
       });
