@@ -2,6 +2,7 @@ import type { RoadmapResponse, RoadmapStatusResponseKeys } from '@t/response';
 import cx from 'clsx';
 import { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { AuthBar } from '../../../auth/components';
 import {
   Button,
   Container,
@@ -63,6 +64,7 @@ export default function Roadmap() {
       <Helmet>
         <title>{`Roadmap - ${APP_NAME}`}</title>
       </Helmet>
+      <AuthBar />
       <Container
         className={cx(styles.header)}
         component="header"
