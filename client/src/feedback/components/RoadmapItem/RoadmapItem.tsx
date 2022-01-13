@@ -29,8 +29,9 @@ export default function RoadmapItem({
       <p className={cx('type-jost', styles.columnDescription)}>{description}</p>
       {!feedback
         ? (
-          // TODO
-          <p>Nothing to see here...</p>
+          <p className={cx('type-jost', styles.nothingToSee)}>
+            Nothing to see here...
+          </p>
         ) : <FeedbackList forRoadmap feedback={feedback} />}
     </div>
   );

@@ -32,3 +32,23 @@
     font-size: 1.4rem;
   }
 }
+
+.nothingToSee {
+  background-image: url(../../../assets/svg/illustration-empty.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 20.2rem;
+  color: var(--clr-primary-darkslateblue);
+  font-size: 1.6rem;
+  margin-top: 5rem;
+  padding: 23.3rem 2.4rem 7.6rem;
+  text-align: center;
+
+  @include mixins.respond-to(md) {
+    background-size: 12.964rem;
+    background-position: top center;
+    font-size: 1.4rem;
+    padding-bottom: 11.1rem;
+    padding-top: 16rem;
+  }
+}
