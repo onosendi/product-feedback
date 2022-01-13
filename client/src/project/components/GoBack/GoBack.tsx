@@ -1,4 +1,3 @@
-// TODO: Better back navigation. Querystrings aren't saved.
 import cx from 'clsx';
 import { Link } from 'react-router-dom';
 import { usePreviousPage } from '../../hooks';
