@@ -1,4 +1,5 @@
 import type { DBId } from '@t/database';
+import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import { useSelector } from 'react-redux';
 import { CommentItem } from '..';
@@ -19,6 +20,11 @@ export default function ListComments({
   const comments = useSelector((state: RootState) => (
     selectComments(state, feedbackId)));
 
+  const reducer = (acc: number, item: CommentResponse) => (item.replies
+    ? acc + item.replies.length + 1
+    : acc + 1);
+  const commentCount = comments.reduce(reducer, 0);
+
   if (isFetching) {
     // TODO
     return (
@@ -36,7 +42,7 @@ export default function ListComments({
     <Paper className={cx(styles.commentPaper)}>
       <p className={cx('type-jost-bold', styles.commentCount)}>
         {/* TODO: comment/reply count */}
-        {`${comments.length} Comments`}
+        {`${commentCount} Comments`}
       </p>
       <ul className={cx(styles.commentList)}>
         {comments.map((comment) => (
