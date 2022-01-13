@@ -2,6 +2,7 @@ import type { FeedbackResponse } from '@t/response';
 import cx from 'clsx';
 import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { object as yupObject, string as yupString } from 'yup';
 import { useAuth } from '../../../auth/hooks';
@@ -61,15 +62,15 @@ export default function CreateOrUpdate({
     };
 
     if (isNew) {
-      // TODO: toast
       await createFeedback(body);
+      toast.success('Suggestion created');
       navigate(routes.feedback.list);
     } else {
-      // TODO: toast
       await editFeedback({
         body,
         meta: { feedbackId: feedback.id },
       });
+      toast.success('Feedback saved');
       navigate(previousPage);
     }
   };
@@ -78,7 +79,7 @@ export default function CreateOrUpdate({
     if (feedback?.id) {
       await deleteFeedback(feedback.id);
       navigate(routes.feedback.list);
-      // TODO: toast
+      toast.success('Feedback removed');
     }
   };
 
@@ -86,8 +87,8 @@ export default function CreateOrUpdate({
     setShowDialog(!showDialog);
   };
 
-  const defaultCategoryValue = feedback?.category?.toLowerCase();
-  const defaultStatusValue = feedback?.status?.toLowerCase();
+  const defaultCategoryValue = feedback?.category?.toLowerCase() || 'feature';
+  const defaultStatusValue = feedback?.status?.toLowerCase() || 'suggestion';
 
   return (
     <Paper className={cx(styles.paper)} component="main">

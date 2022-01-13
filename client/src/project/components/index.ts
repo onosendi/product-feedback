@@ -16,3 +16,4 @@ export { default as SelectField } from './SelectField';
 export { default as SelectItem } from './SelectItem';
 export { default as SelectList } from './SelectList';
 export { default as TextField } from './TextField';
+export { default as Toaster } from './Toaster';
