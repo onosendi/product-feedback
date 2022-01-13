@@ -20,7 +20,6 @@ interface TextFieldProps {
   name: string;
   onBlur?: VoidFunction;
   onChange?: ChangeEventHandler;
-  // TODO
   onFocus?: (event?: any) => void;
   placeholder?: string;
   rows?: number;
