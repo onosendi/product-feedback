@@ -3,10 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import routes from '../../../project/routes';
 import useAuth from '../useAuth';
 
+type LocationState = {
+  state: {
+    path: string,
+  },
+};
+
 export default function useNavigateAuthorized() {
   const navigate = useNavigate();
-  // TODO
-  const { state } = useLocation() as any;
+  const { state } = useLocation() as LocationState;
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {

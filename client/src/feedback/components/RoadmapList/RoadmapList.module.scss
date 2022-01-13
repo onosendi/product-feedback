@@ -1,0 +1,64 @@
+@use '../../../assets/scss/abstracts/mixins';
+@use '../../../assets/scss/abstracts/palette';
+
+.statusButtonWrapper {
+  --roadmap-button-bottom-border-color: #{palette.$lightslategray};
+
+  border-bottom: 0.1rem solid hsl(var(--roadmap-button-bottom-border-color) / 25%);
+
+  @include mixins.respond-to(md) {
+    display: none;
+  }
+}
+
+.statusButtonContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.statusButton {
+  @include mixins.transition(color);
+
+  --roadmap-button-color: #{palette.$darkslateblue};
+
+  color: hsl(var(--roadmap-button-color) / var(--roadmap-button-color-opacity, 40%));
+  min-height: 5.9rem;
+  position: relative;
+
+  &Active {
+    --roadmap-button-color-opacity: 100%;
+
+    &::after {
+      background-color: var(--clr-primary-blueviolet);
+      bottom: 0;
+      content: '';
+      height: 0.4rem;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  &:focus-visible,
+  &:hover {
+    color: var(--clr-primary-blueviolet);
+  }
+}
+
+@supports not selector(.button:focus-visible) {
+  .statusButton:focus {
+    color: var(--clr-primary-blueviolet);
+  }
+}
+
+.statusColumns {
+  display: grid;
+  grid-gap: 1rem;
+  margin-bottom: 9.8rem;
+  margin-top: 2.4rem;
+
+  @include mixins.respond-to(md) {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 3.2rem;
+  }
+}

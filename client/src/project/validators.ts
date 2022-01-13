@@ -1,4 +1,3 @@
-// TODO: remove this and validatorjs from packages
 import { setIn } from 'final-form';
 import type { AnySchema, ValidationError } from 'yup';
 import { string as yupString } from 'yup';

@@ -3,6 +3,7 @@ import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import type { FocusEvent } from 'react';
 import { Field, Form } from 'react-final-form';
+import toast from 'react-hot-toast';
 import { object as yupObject, string as yupString } from 'yup';
 import { Button, TextField } from '../../../project/components';
 import { getHasError, getHelperText } from '../../../project/utils';
@@ -35,6 +36,9 @@ export default function CreateReply({
         feedbackId: data.feedbackId,
       },
     });
+
+    toast.success('Reply created');
+
     setShowReply(false);
   };
 

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../auth/hooks';
 import { DelayChildren, Error404 } from '../../../project/components';
+import Loader from '../../../project/components/Loader';
 import { APP_NAME } from '../../../project/constants';
 import { FormLayout } from '../../../project/layouts';
 import { useGetFeedbackDetailQuery } from '../../api';
@@ -17,19 +18,19 @@ export default function EditFeedback() {
   } = useGetFeedbackDetailQuery(slug);
 
   if (isFetching) {
-    // TODO
     return (
       <DelayChildren>
-        <p>Loading...</p>
+        <Loader fullscreen />
       </DelayChildren>
     );
   }
 
-  // TODO: Don't allow regular users to edit feedback if it's out of
-  // 'feedback' status.
   if (
     !Object.entries(feedback).length
-    || (feedback.userId !== userId && role !== 'admin')
+    || (
+      (feedback.userId !== userId || feedback.status !== 'suggestion')
+      && role !== 'admin'
+    )
   ) {
     return <Error404 />;
   }

@@ -1,6 +1,7 @@
 import cx from 'clsx';
 import { FeedbackList } from '..';
 import { Button, DelayChildren, Paper } from '../../../project/components';
+import Loader from '../../../project/components/Loader';
 import { useQuerystring } from '../../../project/hooks';
 import routes from '../../../project/routes';
 import { useGetSuggestionsQuery } from '../../api';
@@ -15,10 +16,9 @@ export default function Feedback() {
   } = useGetSuggestionsQuery(querystring);
 
   if (isFetching) {
-    // TODO: Loading spinner
     return (
       <DelayChildren>
-        <p>Loading...</p>
+        <Loader className={cx(styles.loader)} />
       </DelayChildren>
     );
   }

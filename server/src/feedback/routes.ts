@@ -26,7 +26,6 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.register(voteServices);
   await fastify.register(needsAdminToModifyStatus);
 
-  // TODO: Make this the roadmap route too with querystring
   // List feedback
   fastify.route<{
     Querystring: {

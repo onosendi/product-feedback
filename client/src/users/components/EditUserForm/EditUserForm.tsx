@@ -3,6 +3,7 @@ import cx from 'clsx';
 import { FORM_ERROR } from 'final-form';
 import React from 'react';
 import { Field, Form } from 'react-final-form';
+import toast from 'react-hot-toast';
 import { object as yupObject, string as yupString } from 'yup';
 import { Picture } from '..';
 import {
@@ -67,7 +68,7 @@ export default function EditUserForm({
         passwordConfirm: values.passwordConfirm,
         username: values.username,
       }).unwrap();
-      // TODO: toast
+      toast.success('User info saved');
     } catch (error) {
       const err = error as any;
       const errors = {} as Record<string, string>;
@@ -166,7 +167,6 @@ export default function EditUserForm({
                     )}
                   />
                   <Picture
-                    // TODO: have hash be a part of auth object
                     alt={fullName || user.username}
                     className={cx(styles.userPicture)}
                     emailHash={user.emailHash}

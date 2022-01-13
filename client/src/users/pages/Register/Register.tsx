@@ -1,4 +1,3 @@
-// TODO: put form into its own component
 import cx from 'clsx';
 import { Helmet } from 'react-helmet-async';
 import { useNavigateAuthorized } from '../../../auth/hooks';

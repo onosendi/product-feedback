@@ -63,7 +63,6 @@ export type RoadmapResponse = BaseFeedbackResponse & {
 //
 // Comments
 //
-// TODO: extend these from database types
 export type CommentResponse = {
   content: string,
   email: string,

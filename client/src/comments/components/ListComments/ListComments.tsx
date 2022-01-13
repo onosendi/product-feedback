@@ -4,6 +4,7 @@ import cx from 'clsx';
 import { useSelector } from 'react-redux';
 import { CommentItem } from '..';
 import { DelayChildren, Paper } from '../../../project/components';
+import Loader from '../../../project/components/Loader';
 import type { RootState } from '../../../project/store';
 import { useGetCommentsQuery } from '../../api';
 import { selectComments } from '../../slice';
@@ -26,10 +27,9 @@ export default function ListComments({
   const commentCount = comments.reduce(reducer, 0);
 
   if (isFetching) {
-    // TODO
     return (
       <DelayChildren>
-        <p>Loading...</p>
+        <Loader className={cx(styles.loader)} />
       </DelayChildren>
     );
   }
@@ -41,7 +41,6 @@ export default function ListComments({
   return (
     <Paper className={cx(styles.commentPaper)}>
       <p className={cx('type-jost-bold', styles.commentCount)}>
-        {/* TODO: comment/reply count */}
         {`${commentCount} Comments`}
       </p>
       <ul className={cx(styles.commentList)}>

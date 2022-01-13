@@ -2,6 +2,7 @@ import cx from 'clsx';
 import type { FormApi } from 'final-form';
 import { useRef } from 'react';
 import { Field, Form } from 'react-final-form';
+import toast from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
 import { object as yupObject, string as yupString } from 'yup';
 import { useAuth } from '../../../auth/hooks';
@@ -29,11 +30,12 @@ export default function CreateComment({
   const [createComment] = useCreateCommentMutation();
 
   const onSubmit = async (values: Record<string, any>, form: FormApi) => {
-    // TODO: toast
     await createComment({
       body: { content: values.content },
       meta: { feedbackId },
     });
+
+    toast.success('Comment created');
 
     if (formRef.current) {
       formRef.current.content.value = '';

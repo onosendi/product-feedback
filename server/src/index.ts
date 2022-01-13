@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import type { FastifyInstance } from 'fastify';
-import Fastify from 'fastify';
+import fastify from 'fastify';
 import auth from './auth';
 import comments from './comments';
 import feedback from './feedback';
@@ -10,7 +10,7 @@ import votes from './votes';
 
 dotenv.config();
 
-const fastify: FastifyInstance = Fastify({
+const app: FastifyInstance = fastify({
   ajv: {
     customOptions: {
       $data: true,
@@ -22,21 +22,21 @@ const fastify: FastifyInstance = Fastify({
   logger: process.env.NODE_ENV === 'development',
 });
 
-fastify.register(project);
-fastify.register(auth);
-fastify.register(users);
-fastify.register(feedback);
-fastify.register(votes);
-fastify.register(comments);
+app.register(project);
+app.register(auth);
+app.register(users);
+app.register(feedback);
+app.register(votes);
+app.register(comments);
 
 async function start() {
   try {
-    await fastify.listen({
+    await app.listen({
       host: process.env.APP_HOST as string || 'localhost',
       port: Number(process.env.APP_PORT) || 8000,
     });
   } catch (err) {
-    fastify.log.error(err);
+    app.log.error(err);
     process.exit(1);
   }
 }

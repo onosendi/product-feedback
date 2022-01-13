@@ -1,5 +1,9 @@
 @use '../../../assets/scss/abstracts/mixins';
 
+.loader {
+  padding: 8rem 0;
+}
+
 .noFeedback {
   background-image: url(../../../assets/svg/illustration-empty.svg);
   background-position: top 7.6rem center;

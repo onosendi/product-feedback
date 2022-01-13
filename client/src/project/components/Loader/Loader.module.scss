@@ -1,0 +1,39 @@
+// https://cssloaders.github.io/
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.fullscreen {
+  bottom: 0;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.loader {
+  --full-screen-loader-size: 4.8rem;
+
+  animation: rotation 1s linear infinite;
+  border: 0.5rem solid var(--clr-neutral-100);
+  border-bottom-color: var(--clr-primary-crimson);
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  height: var(--full-screen-loader-size);
+  width: var(--full-screen-loader-size);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
