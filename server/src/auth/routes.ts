@@ -4,7 +4,7 @@ import type { AuthResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import status from '../project/httpStatusCodes';
 import { checkPassword } from '../project/passwordHasher';
-import { INVALID_USERRNAME_OR_PASSWORD } from '../project/errors';
+import { INVALID_USERNAME_OR_PASSWORD } from '../project/errors';
 import { services as userServices } from '../users/plugins';
 import { loginSchema } from './schemas';
 
@@ -24,7 +24,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         .select('password');
 
       if (!checkPassword(password, user?.password)) {
-        throw new Error(INVALID_USERRNAME_OR_PASSWORD);
+        throw new Error(INVALID_USERNAME_OR_PASSWORD);
       }
 
       await fastify.updateLastLogin(user.id);

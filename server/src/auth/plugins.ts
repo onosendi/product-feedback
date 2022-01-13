@@ -1,7 +1,7 @@
 import type { DBId, DBUser } from '@t/database';
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest as FR } from 'fastify';
 import fp from 'fastify-plugin';
-import status from '../project/httpStatusCodes';
+import { INVALID_USER_ID } from '../project/errors';
 import { services as userServices } from '../users/plugins';
 
 declare module 'fastify' {
@@ -38,7 +38,6 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
       request.authUser = {} as DBUser;
       const authorization = request?.headers?.authorization;
       if (authorization) {
-        // TODO Do we need try catch here?
         try {
           const [, token] = authorization.split(' ');
           const decoded = fastify.jwt.decode(token) as {
@@ -49,10 +48,7 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
           const { userId } = decoded;
           const user = await fastify.getUser({ id: userId });
           if (!user) {
-            // TODO use error handling to handle this
-            const error = new Error('Invalid user ID');
-            reply.status(status.HTTP_400_BAD_REQUEST).send(error);
-            return;
+            throw new Error(INVALID_USER_ID);
           }
           request.authUser = user;
         } catch (error) {
