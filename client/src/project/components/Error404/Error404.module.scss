@@ -1,0 +1,20 @@
+.container {
+  align-items: center;
+  color: var(--clr-primary-darkslateblue);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+.heading {
+  --404-spacing: 1.5rem;
+
+  border-right: 1px solid var(--clr-neutral-70);
+  font-size: 3rem;
+  margin-right: var(--404-spacing);
+  padding-right: var(--404-spacing);
+}
+
+.body {
+  font-size: 1.3rem;
+}
