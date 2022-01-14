@@ -1,9 +1,9 @@
 import type { UserResponse } from '@t/response';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../../auth/hooks';
-import { DelayChildren, Error404 } from '../../../project/components';
+import { DelayChildren, Error404, Loader } from '../../../project/components';
 import { APP_NAME } from '../../../project/constants';
-import DialogLayout from '../../../project/layouts/FormLayout';
+import { FormLayout } from '../../../project/layouts';
 import { useGetUserDetailQuery } from '../../api';
 import { EditUserForm } from '../../components';
 
@@ -15,10 +15,9 @@ export default function EditUser() {
   } = useGetUserDetailQuery(username as string);
 
   if (isFetching) {
-    // TODO
     return (
       <DelayChildren>
-        <p>Loading...</p>
+        <Loader fullscreen />
       </DelayChildren>
     );
   }
@@ -32,9 +31,9 @@ export default function EditUser() {
       <Helmet>
         <title>{`${user.username} - ${APP_NAME}`}</title>
       </Helmet>
-      <DialogLayout>
+      <FormLayout>
         <EditUserForm user={user} />
-      </DialogLayout>
+      </FormLayout>
     </>
   );
 }

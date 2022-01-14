@@ -8,11 +8,7 @@ import { INVALID_PASSWORD, USERNAME_ALREADY_EXISTS } from '../project/errors';
 import status from '../project/httpStatusCodes';
 import { checkPassword, createPassword } from '../project/passwordHasher';
 import { services } from './plugins';
-import {
-  editUserSchema,
-  registerSchema,
-  userDetailSchema,
-} from './schemas';
+import { editUserSchema, registerSchema, userDetailSchema } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.register(services);

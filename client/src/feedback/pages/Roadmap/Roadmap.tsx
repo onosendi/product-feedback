@@ -9,6 +9,7 @@ import {
   DelayChildren,
   GoBack,
 } from '../../../project/components';
+import Loader from '../../../project/components/Loader';
 import { APP_NAME } from '../../../project/constants';
 import routes from '../../../project/routes';
 import { useGetRoadmapQuery } from '../../api';
@@ -51,10 +52,9 @@ export default function Roadmap() {
   ];
 
   if (isFetching) {
-    // TODO
     return (
       <DelayChildren>
-        <p>Loading...</p>
+        <Loader fullscreen />
       </DelayChildren>
     );
   }

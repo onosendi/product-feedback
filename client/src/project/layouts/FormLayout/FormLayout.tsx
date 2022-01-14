@@ -4,13 +4,13 @@ import { AuthBar } from '../../../auth/components';
 import { Container, GoBack } from '../../components';
 import styles from './FormLayout.module.scss';
 
-interface DialogLayoutProps {
+interface FormLayoutProps {
   children: ReactNode;
 }
 
-export default function DialogLayout({
+export default function FormLayout({
   children,
-}: DialogLayoutProps) {
+}: FormLayoutProps) {
   return (
     <Container className={cx(styles.container)}>
       <div className={cx(styles.goBackAndUserBarWrapper)}>

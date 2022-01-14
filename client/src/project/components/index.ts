@@ -10,6 +10,7 @@ export { default as FormError } from './FormError';
 export { default as GoBack } from './GoBack';
 export { default as InputLabel } from './InputLabel';
 export { default as Link } from './Link';
+export { default as Loader } from './Loader';
 export { default as Paper } from './Paper';
 export { default as SelectCaret } from './SelectCaret';
 export { default as SelectField } from './SelectField';
