@@ -25,6 +25,7 @@ export default function Roadmap() {
   } = useGetRoadmapQuery();
 
   const reducer = (
+    //
     // TODO
     acc: any,
     item: RoadmapResponse,
