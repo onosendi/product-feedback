@@ -38,8 +38,10 @@ ul {
   outline: unset;
 }
 
-// TODO
-::selection {}
+::selection {
+  background-color: var(--clr-primary-lightsalmon);
+  color: var(--clr-neutral-100);
+}
 
 .fade-open {
   animation: fade-open 0.25s ease-out forwards;
@@ -122,7 +124,6 @@ ul {
   }
 }
 
-// TODO: check if this can be included in nest.
 @supports not selector(.select-list > li > button:focus-visible) {
   .select-list > li > button:focus {
     background-color: var(--clr-primary-ghostwhite);
