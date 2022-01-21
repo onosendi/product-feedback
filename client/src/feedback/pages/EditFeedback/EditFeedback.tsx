@@ -25,11 +25,12 @@ export default function EditFeedback() {
     );
   }
 
-  // TODO: Don't allow regular users to edit feedback if it's out of
-  // 'feedback' status.
   if (
     !Object.entries(feedback).length
-    || (feedback.userId !== userId && role !== 'admin')
+    || (
+      (feedback.userId !== userId || feedback.status !== 'suggestion')
+      && role !== 'admin'
+    )
   ) {
     return <Error404 />;
   }
