@@ -24,8 +24,7 @@ const project: FastifyPluginAsync = fp(async (fastify) => {
   // Third party
   fastify.register(fastifyCors, {
     origin: [
-      'http://localhost:3000',
-      'https://localhost:7002',
+      'http://192.168.1.6:3000',
     ],
   });
 
