@@ -28,6 +28,7 @@ export const USERNAME_EXISTS = 'Username already exists';
 export const usernameValidator = yupString()
   .required(REQUIRED)
   .min(3, 'Must be at least 3 characters')
+  .matches(/^[a-zA-Z]+([_-]?[a-zA-Z0-9])*$/, 'Invalid username')
   .max(50, 'Can\'t be more than 50 characters')
   .trim();
 
