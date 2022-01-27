@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run dev",
     "dev": "npm-run-all --print-label --parallel dev:*",
     "dev:server": "npm run dev -w server",
-    "dev:client": "npm run dev -w client"
+    "dev:client": "npm run dev -w client",
+    "build": "npm-run-all --print-label --parallel build:*",
+    "build:server": "npm run build -w server",
+    "build:client": "npm run build -w client",
+    "start": "npm-run-all --print-label --parallel start:*",
+    "start:server": "npm run start -w server",
+    "start:client": "npm run start -w client"
   },
   "keywords": [],
   "author": "",
