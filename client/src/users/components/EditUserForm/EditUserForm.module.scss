@@ -10,7 +10,7 @@
 }
 
 .userPictureWrapper {
-  align-items: flex-start;
+  align-items: flex-end;
   display: flex;
 
   @include mixins.respond-to(md) {
@@ -18,12 +18,12 @@
   }
 }
 
-.fileLabel {
+.emailLabel {
   margin-right: 2rem;
 }
 
 .userPicture {
-  margin-top: 3.8rem;
+  margin-bottom: 2.8rem;
 }
 
 .paper + .paper {

@@ -155,11 +155,12 @@ export default function EditUserForm({
                     render={({ input, meta }) => (
                       <TextField
                         defaultValue={user.email}
+                        description="Used to generate your profile picture"
                         hasError={getHasError(meta)}
                         helperText={getHelperText(meta)}
                         id="email"
-                        label="Email Address"
-                        labelClassName={cx(styles.fileLabel)}
+                        label="Gravatar Email Address"
+                        labelClassName={cx(styles.emailLabel)}
                         maxLength={254}
                         type="email"
                         {...input}
