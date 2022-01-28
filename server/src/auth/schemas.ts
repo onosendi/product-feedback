@@ -8,6 +8,7 @@ export const schema: FastifyPluginAsync = fp(async (fastify) => {
     login: {
       type: 'object',
       properties: {
+        emailHash: { type: 'string' },
         role: { type: 'string' },
         token: { type: 'string' },
         userId: { type: 'string' },

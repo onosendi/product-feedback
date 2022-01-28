@@ -1,23 +1,26 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import type { DBUserRole } from '@t/database';
+import { MD5 } from 'crypto-js';
 import type { RootState } from '../project/store';
 import usersApi from '../users/api';
 import authApi from './api';
 
 interface AuthState {
+  emailHash: string | null;
+  isAuthenticated: boolean;
   role: DBUserRole | null;
   token: string | null;
   userId: string | null;
   username: string | null;
-  isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
+  emailHash: null,
+  isAuthenticated: false,
   role: null,
   token: null,
   userId: null,
   username: null,
-  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
@@ -41,7 +44,8 @@ const authSlice = createSlice({
       usersApi.endpoints.editUser.matchFulfilled,
       (state, action) => {
         const s = state;
-        const { username } = action.meta.arg.originalArgs;
+        const { email, username } = action.meta.arg.originalArgs;
+        s.emailHash = MD5(email).toString();
         s.username = username;
       },
     );

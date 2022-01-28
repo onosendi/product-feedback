@@ -19,7 +19,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
-      const user: Pick<DBUser, 'id' | 'password' | 'role'> = await fastify
+      const user: Pick<DBUser, 'id' | 'password' | 'role' | 'emailHash'> = await fastify
         .getUser({ username })
         .select('password');
 
@@ -35,6 +35,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         token,
         userId: user.id,
         username,
+        emailHash: user.emailHash,
       };
 
       reply.status(status.HTTP_200_OK).send(response);

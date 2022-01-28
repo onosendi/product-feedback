@@ -8,6 +8,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "clsx": "^1.1.1",
+    "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "final-form": "^4.20.4",
     "focus-trap": "^6.7.1",
@@ -27,8 +28,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "dev": "npm start",
-    "start": "BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "dev": "BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "start": "serve -s build -l 7002",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -63,6 +64,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "sass": "^1.45.2"
+    "sass": "^1.45.2",
+    "serve": "^13.0.2"
   }
 }

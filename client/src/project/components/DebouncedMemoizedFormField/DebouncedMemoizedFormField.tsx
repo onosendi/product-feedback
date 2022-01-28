@@ -1,12 +1,11 @@
+import type { FieldState, FieldValidator } from 'final-form';
 import React, { useRef } from 'react';
 import type { FieldProps } from 'react-final-form';
 import { Field } from 'react-final-form';
 
 type DebouncedMemoizedFormFieldProps = FieldProps<any, any> & {
   milliseconds?: number,
-
-  // TODO
-  validate: any,
+  validate: FieldValidator<any>,
 };
 
 export default function DebouncedMemoizedFormField({
@@ -18,7 +17,11 @@ export default function DebouncedMemoizedFormField({
   const lastValue = useRef<any>(null);
   const lastResult = useRef<any>(null);
 
-  const validateField = (value: any, values: any, meta: any) => new Promise((resolve) => {
+  const validateField = (
+    value: string,
+    values: object,
+    meta: FieldState<any> | undefined,
+  ) => new Promise((resolve) => {
     if (timeout.current) {
       timeout.current();
     }

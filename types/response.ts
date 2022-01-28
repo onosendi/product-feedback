@@ -23,6 +23,7 @@ export type AuthResponse = {
   token: string,
   userId: DBId,
   username: string,
+  emailHash: string,
 };
 
 //
@@ -63,7 +64,6 @@ export type RoadmapResponse = BaseFeedbackResponse & {
 //
 // Comments
 //
-// TODO: extend these from database types
 export type CommentResponse = {
   content: string,
   email: string,

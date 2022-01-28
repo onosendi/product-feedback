@@ -28,10 +28,12 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
 
       const userId = uuidv4();
       const passwordHash = createPassword(password);
+      const emailHash = MD5('').toString();
       const [role] = await fastify.createUser({
         userId,
         username,
         password: passwordHash,
+        emailHash,
       }).returning('role');
 
       await fastify.updateLastLogin(userId);
@@ -42,6 +44,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         token,
         userId,
         username,
+        emailHash,
       };
 
       reply.status(status.HTTP_201_CREATED).send(response);

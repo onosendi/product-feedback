@@ -6,6 +6,7 @@ import { Field, Form } from 'react-final-form';
 import toast from 'react-hot-toast';
 import { object as yupObject, string as yupString } from 'yup';
 import { Picture } from '..';
+import { useAuth } from '../../../auth/hooks';
 import {
   Button,
   DebouncedMemoizedFormField,
@@ -52,6 +53,7 @@ type EditUserFormProps = {
 export default function EditUserForm({
   user,
 }: EditUserFormProps) {
+  const { emailHash } = useAuth();
   const fullName = getFullName(user.firstName, user.lastName);
 
   const validateUsername = useValidateUsername();
@@ -155,11 +157,12 @@ export default function EditUserForm({
                     render={({ input, meta }) => (
                       <TextField
                         defaultValue={user.email}
+                        description="Used to generate your profile picture"
                         hasError={getHasError(meta)}
                         helperText={getHelperText(meta)}
                         id="email"
-                        label="Email Address"
-                        labelClassName={cx(styles.fileLabel)}
+                        label="Gravatar Email Address"
+                        labelClassName={cx(styles.emailLabel)}
                         maxLength={254}
                         type="email"
                         {...input}
@@ -167,10 +170,9 @@ export default function EditUserForm({
                     )}
                   />
                   <Picture
-                    // TODO: have hash be a part of auth object
                     alt={fullName || user.username}
                     className={cx(styles.userPicture)}
-                    emailHash={user.emailHash}
+                    emailHash={emailHash}
                   />
                 </div>
               </div>

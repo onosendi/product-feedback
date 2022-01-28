@@ -1,0 +1,14 @@
+[Unit]
+Description=product-feedback server
+After=network.target
+
+[Service]
+Restart=always
+RestartSec=10
+WorkingDirectory=/var/www/vhosts/product-feedback/htdocs/server
+Environment=NODE_ENV=production
+Environment=PATH=/var/www/vhosts/product-feedback/.nvm/versions/node/v16.8.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+ExecStart=/var/www/vhosts/product-feedback/.nvm/versions/node/v16.8.0/bin/npm start
+
+[Install]
+WantedBy=default.target

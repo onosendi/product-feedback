@@ -71,7 +71,9 @@ export const editUserSchema: FastifySchema = {
       passwordConfirm: { $ref: 'users#/properties/passwordConfirm' },
       username: { $ref: 'users#/properties/username' },
     },
-    // TODO
+    // TODO: Ajv needs to be updated in order for this to work. Updating Ajv causes
+    //       type and compilation errors.
+    //
     // dependentRequired: {
     //   currentPassword: ['password', 'passwordConfirm'],
     //   password: ['currentPassword', 'passwordConfirm'],
