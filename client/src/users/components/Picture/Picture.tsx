@@ -1,13 +1,14 @@
 import cx from 'clsx';
+import { memo } from 'react';
 import styles from './Picture.module.scss';
 
 interface PictureProps {
   alt: string;
   className?: string;
-  emailHash?: string;
+  emailHash?: string | null;
 }
 
-export default function Picture({
+export default memo(function Picture({
   alt,
   className,
   emailHash = '',
@@ -22,4 +23,4 @@ export default function Picture({
       src={src}
     />
   );
-}
+});

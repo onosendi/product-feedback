@@ -9,6 +9,7 @@ type CreateUserObj = {
   userId: DBId,
   username: string,
   password: string,
+  emailHash: string,
 };
 
 type EditUserObj = {
@@ -55,6 +56,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
         id: obj.userId,
         username: obj.username,
         password: obj.password,
+        email_hash: obj.emailHash,
       });
   });
 

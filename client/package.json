@@ -8,6 +8,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "clsx": "^1.1.1",
+    "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "final-form": "^4.20.4",
     "focus-trap": "^6.7.1",

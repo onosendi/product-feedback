@@ -6,6 +6,7 @@ import { Field, Form } from 'react-final-form';
 import toast from 'react-hot-toast';
 import { object as yupObject, string as yupString } from 'yup';
 import { Picture } from '..';
+import { useAuth } from '../../../auth/hooks';
 import {
   Button,
   DebouncedMemoizedFormField,
@@ -52,6 +53,7 @@ type EditUserFormProps = {
 export default function EditUserForm({
   user,
 }: EditUserFormProps) {
+  const { emailHash } = useAuth();
   const fullName = getFullName(user.firstName, user.lastName);
 
   const validateUsername = useValidateUsername();
@@ -170,7 +172,7 @@ export default function EditUserForm({
                   <Picture
                     alt={fullName || user.username}
                     className={cx(styles.userPicture)}
-                    emailHash={user.emailHash}
+                    emailHash={emailHash}
                   />
                 </div>
               </div>

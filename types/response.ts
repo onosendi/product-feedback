@@ -23,6 +23,7 @@ export type AuthResponse = {
   token: string,
   userId: DBId,
   username: string,
+  emailHash: string,
 };
 
 //
