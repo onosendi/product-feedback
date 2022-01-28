@@ -7,6 +7,8 @@ export async function seed(knex: Knex) {
   const users = await knex('user').select('id', 'username');
   const onosendi = users.find((u) => u.username === 'onosendi');
   const jim = users.find((u) => u.username === 'jim');
+  const mike = users.find((u) => u.username === 'mike');
+  const tammy = users.find((u) => u.username === 'tammy');
 
   const [first, , third] = await knex('feedback').select('id');
 
@@ -19,11 +21,16 @@ export async function seed(knex: Knex) {
     {
       id: uuidv4(),
       user_id: jim.id,
-      feedback_id: first.id,
+      feedback_id: third.id,
     },
     {
       id: uuidv4(),
-      user_id: jim.id,
+      user_id: mike.id,
+      feedback_id: third.id,
+    },
+    {
+      id: uuidv4(),
+      user_id: tammy.id,
       feedback_id: third.id,
     },
   ]);

@@ -27,17 +27,21 @@ export async function seed(knex: Knex) {
       id: uuidv4(),
       username: 'mike',
       first_name: 'Mike',
-      last_name: 'Bloomberg',
+      last_name: 'Fowler',
       password,
     },
     {
       id: uuidv4(),
       username: 'tammy',
+      first_name: 'Tammy',
+      last_name: 'Higgins',
       password,
     },
     {
       id: uuidv4(),
       username: 'april',
+      first_name: 'April',
+      last_name: 'Frazier',
       password,
     },
   ]);

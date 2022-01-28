@@ -1,4 +1,5 @@
 import type { DBUser } from '@t/database';
+import faker from 'faker';
 import type { Knex } from 'knex';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,66 +12,45 @@ export async function seed(knex: Knex) {
   const mike = users.find((u: DBUser) => u.username === 'mike');
   const april = users.find((u: DBUser) => u.username === 'april');
 
-  const productRequest = await knex('feedback').select('id').first();
+  const [first, second] = await knex('feedback');
 
   const commentId1 = uuidv4();
-  const commentId2 = uuidv4();
 
   return knex('feedback_comment').insert([
     // Comment 1
     {
       id: commentId1,
-      content: 'Comment 1',
+      content: faker.lorem.sentence(),
       user_id: onosendi.id,
-      feedback_id: productRequest.id,
+      feedback_id: first.id,
     },
-    // Comment 1 reply 1
     {
       id: uuidv4(),
-      content: 'Comment 1 reply 1',
+      content: faker.lorem.sentence(),
       user_id: jim.id,
-      feedback_id: productRequest.id,
+      feedback_id: first.id,
       feedback_comment_parent_id: commentId1,
     },
-    // Comment 1 reply 2
     {
       id: uuidv4(),
-      content: 'Comment 1 reply 2',
+      content: faker.lorem.sentence(),
       user_id: april.id,
-      feedback_id: productRequest.id,
+      feedback_id: first.id,
       feedback_comment_parent_id: commentId1,
     },
 
-    // Comment 2
-    {
-      id: commentId2,
-      content: 'Comment 2',
-      user_id: jim.id,
-      feedback_id: productRequest.id,
-    },
-    // Comment 2 reply 1
     {
       id: uuidv4(),
-      content: 'Comment 2 reply 1',
-      user_id: april.id,
-      feedback_id: productRequest.id,
-      feedback_comment_parent_id: commentId2,
-    },
-    // Comment 2 reply 2
-    {
-      id: uuidv4(),
-      content: 'Comment 2 reply 2',
-      user_id: onosendi.id,
-      feedback_id: productRequest.id,
-      feedback_comment_parent_id: commentId2,
-    },
-
-    // Comment 4
-    {
-      id: uuidv4(),
-      content: 'Comment 3',
+      content: faker.lorem.sentence(),
       user_id: mike.id,
-      feedback_id: productRequest.id,
+      feedback_id: first.id,
+    },
+
+    {
+      id: uuidv4(),
+      content: faker.lorem.sentence(),
+      user_id: mike.id,
+      feedback_id: second.id,
     },
   ]);
 }

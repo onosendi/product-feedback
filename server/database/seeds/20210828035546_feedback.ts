@@ -1,14 +1,7 @@
-import crypto from 'crypto';
 import faker from 'faker';
 import type { Knex } from 'knex';
-import slugify from 'slugify';
 import { v4 as uuidv4 } from 'uuid';
-
-function makeSlug(title: string) {
-  const randomBytes = crypto.randomBytes(4).toString('hex');
-  const newTitle = `${title.substring(0, 83)}-${randomBytes}`;
-  return slugify(newTitle, { lower: true, strict: true });
-}
+import makeSlug from '../../src/project/makeSlug';
 
 function getDescription() {
   return faker.lorem.paragraph().substring(0, 300);
@@ -28,25 +21,11 @@ export async function seed(knex: Knex) {
   const title4 = faker.lorem.sentence();
   const title5 = faker.lorem.sentence();
 
-  const feature = await knex('feedback_category')
-    .select('id')
-    .where({ category: 'feature' })
-    .first();
-
-  const ui = await knex('feedback_category')
-    .select('id')
-    .where({ category: 'ui' })
-    .first();
-
-  const ux = await knex('feedback_category')
-    .select('id')
-    .where({ category: 'ux' })
-    .first();
-
-  const enhancement = await knex('feedback_category')
-    .select('id')
-    .where({ category: 'enhancement' })
-    .first();
+  const categories = await knex('feedback_category');
+  const feature = categories.find((c) => c.category === 'feature');
+  const ui = categories.find((c) => c.category === 'ui');
+  const ux = categories.find((c) => c.category === 'ux');
+  const enhancement = categories.find((c) => c.category === 'enhancement');
 
   return knex('feedback').insert([
     {
