@@ -1,7 +1,7 @@
 import type { UserResponse } from '@t/response';
 import cx from 'clsx';
 import { FORM_ERROR } from 'final-form';
-import React from 'react';
+import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import toast from 'react-hot-toast';
 import { object as yupObject, string as yupString } from 'yup';
@@ -53,6 +53,12 @@ type EditUserFormProps = {
 export default function EditUserForm({
   user,
 }: EditUserFormProps) {
+  const [initialValues, setInitialValues] = useState({
+    username: user.username,
+    firstName: user.firstName || undefined,
+    lastName: user.lastName || undefined,
+    email: user.email || undefined,
+  });
   const { emailHash } = useAuth();
   const fullName = getFullName(user.firstName, user.lastName);
 
@@ -61,7 +67,7 @@ export default function EditUserForm({
 
   const onSubmit = async (values: Record<string, any>) => {
     try {
-      await editUser({
+      const data = {
         currentPassword: values.currentPassword,
         email: values.email?.trim(),
         firstName: values.firstName?.trim(),
@@ -69,7 +75,11 @@ export default function EditUserForm({
         password: values.password,
         passwordConfirm: values.passwordConfirm,
         username: values.username,
-      }).unwrap();
+      };
+
+      await editUser(data).unwrap();
+      setInitialValues(data);
+
       toast.success('User info saved');
     } catch (error) {
       const err = error as any;
@@ -87,6 +97,7 @@ export default function EditUserForm({
 
   return (
     <Form
+      initialValues={initialValues}
       onSubmit={onSubmit}
       validate={validateFormValues(validationSchema)}
       render={({
@@ -106,7 +117,6 @@ export default function EditUserForm({
               <div className={cx(styles.textFieldWrapper)}>
                 <DebouncedMemoizedFormField
                   name="username"
-                  initialValue={user.username}
                   validate={validateUsername}
                   render={({ input, meta }) => (
                     <TextField
@@ -122,7 +132,6 @@ export default function EditUserForm({
                 />
                 <Field
                   name="firstName"
-                  initialValue={user.firstName || undefined}
                   render={({ input, meta }) => (
                     <TextField
                       defaultValue={user.firstName}
@@ -137,7 +146,6 @@ export default function EditUserForm({
                 />
                 <Field
                   name="lastName"
-                  initialValue={user.lastName || undefined}
                   render={({ input, meta }) => (
                     <TextField
                       defaultValue={user.lastName}
@@ -153,7 +161,6 @@ export default function EditUserForm({
                 <div className={cx(styles.userPictureWrapper)}>
                   <Field
                     name="email"
-                    initialValue={user.email || undefined}
                     render={({ input, meta }) => (
                       <TextField
                         defaultValue={user.email}
