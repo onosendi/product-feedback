@@ -15,12 +15,8 @@ export function createPassword(
   return `${newSalt}$${pbkdf2}`;
 }
 
-export function checkPassword(password: string, encoded: string) {
-  try {
-    const [salt, hash] = encoded.split('$');
-    const pbkdf2 = hashPbkdf2(password, salt);
-    return pbkdf2 === hash;
-  } catch {
-    return false;
-  }
+export function checkPassword(password: string, encoded: string = '') {
+  const [salt, hash] = encoded.split('$');
+  const pbkdf2 = hashPbkdf2(password, salt);
+  return pbkdf2 === hash;
 }

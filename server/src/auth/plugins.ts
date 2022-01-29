@@ -2,7 +2,6 @@ import type { DBId, DBUser } from '@t/database';
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest as FR } from 'fastify';
 import fp from 'fastify-plugin';
 import { INVALID_USER_ID } from '../project/errors';
-import { services as userServices } from '../users/plugins';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -28,8 +27,6 @@ declare module 'fastify' {
   }
 }
 export const authUser: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.register(userServices);
-
   fastify.decorateRequest('authUser', null);
 
   fastify.addHook(
@@ -46,7 +43,7 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
             userId: DBId,
           };
           const { userId } = decoded;
-          const user = await fastify.getUser({ id: userId });
+          const user = await fastify.userService.getUser({ id: userId });
           if (!user) {
             throw new Error(INVALID_USER_ID);
           }

@@ -5,23 +5,20 @@ import { MD5 } from 'crypto-js';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 import { INVALID_PASSWORD, USERNAME_ALREADY_EXISTS } from '../project/errors';
-import status from '../project/httpStatusCodes';
-import { checkPassword, createPassword } from '../project/passwordHasher';
-import { services } from './plugins';
-import { editUserSchema, registerSchema, userDetailSchema } from './schemas';
+import status from '../project/http-status-codes';
+import { checkPassword, createPassword } from '../project/password-hasher';
+import { createUserSchema, editUserSchema, userDetailSchema } from './schemas';
 
 const usersRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.register(services);
-
   // Create user.
   fastify.route<{ Body: APIRegister }>({
     method: 'POST',
     url: '/',
-    schema: registerSchema,
+    schema: createUserSchema,
     handler: async (request, reply) => {
       const { username, password } = request.body;
 
-      const user = await fastify.getUser({ username });
+      const user = await fastify.userService.getUser({ username });
       if (user) {
         throw new Error(USERNAME_ALREADY_EXISTS);
       }
@@ -29,14 +26,14 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
       const userId = uuidv4();
       const passwordHash = createPassword(password);
       const emailHash = MD5('').toString();
-      const [role] = await fastify.createUser({
+      const [role] = await fastify.userService.createUser({
         userId,
         username,
         password: passwordHash,
         emailHash,
       }).returning('role');
 
-      await fastify.updateLastLogin(userId);
+      await fastify.userService.updateLastLogin(userId);
 
       const token = fastify.jwt.sign({ userId });
       const response: AuthResponse = {
@@ -51,15 +48,15 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     },
   });
 
-  fastify.route<{
-    Params: { username: string },
-  }>({
+  fastify.route<{ Params: { username: string } }>({
     method: 'GET',
     url: '/:username',
     schema: userDetailSchema,
     handler: async (request, reply) => {
       const { username } = request.params;
-      const user = await fastify.getQueryOr404(fastify.getUser({ username }));
+      const user = await fastify.getQueryOr404(
+        fastify.userService.getUser({ username }),
+      );
       if (request.authUser.username === username) {
         reply.status(status.HTTP_200_OK).send(user);
         return;
@@ -95,7 +92,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
       };
 
       if (newUsername && newUsername !== username) {
-        const user = await fastify.getUser({ username: newUsername });
+        const user = await fastify.userService.getUser({ username: newUsername });
         if (user) {
           throw new Error(USERNAME_ALREADY_EXISTS);
         }
@@ -103,6 +100,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
 
       if (currentPassword && password && passwordConfirm) {
         const user: Pick<DBUser, 'password'> = await fastify
+          .userService
           .getUser({ id: userId })
           .select('password');
         if (!checkPassword(currentPassword, user.password)) {
@@ -111,7 +109,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
         updateObj.password = createPassword(password);
       }
 
-      await fastify.editUser(userId, updateObj);
+      await fastify.userService.editUser(userId, updateObj);
 
       reply.status(status.HTTP_204_NO_CONTENT);
     },

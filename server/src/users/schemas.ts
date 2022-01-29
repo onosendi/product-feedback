@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync, FastifySchema } from 'fastify';
 import fp from 'fastify-plugin';
-import status from '../project/httpStatusCodes';
+import status from '../project/http-status-codes';
 
 export const schema: FastifyPluginAsync = fp(async (fastify) => {
   fastify.addSchema({
@@ -18,7 +18,7 @@ export const schema: FastifyPluginAsync = fp(async (fastify) => {
   });
 });
 
-export const registerSchema: FastifySchema = {
+export const createUserSchema: FastifySchema = {
   body: {
     type: 'object',
     required: ['password', 'passwordConfirm', 'username'],

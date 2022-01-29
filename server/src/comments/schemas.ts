@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync, FastifySchema } from 'fastify';
 import fp from 'fastify-plugin';
-import status from '../project/httpStatusCodes';
+import status from '../project/http-status-codes';
 
 export const schema: FastifyPluginAsync = fp(async (fastify) => {
   fastify.addSchema({
@@ -30,7 +30,7 @@ export const listCommentsSchema: FastifySchema = {
   querystring: {
     required: ['feedback_id'],
     properties: {
-      feedback_id: { type: 'string' },
+      feedback_id: { type: 'string', format: 'uuid' },
     },
   },
   response: {
@@ -42,6 +42,13 @@ export const listCommentsSchema: FastifySchema = {
 };
 
 export const createCommentSchema: FastifySchema = {
+  querystring: {
+    required: ['feedback_id'],
+    properties: {
+      feedback_id: { type: 'string', format: 'uuid' },
+      parent_id: { type: 'string', format: 'uuid' },
+    },
+  },
   body: {
     type: 'object',
     required: ['content'],

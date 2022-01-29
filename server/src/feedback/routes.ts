@@ -7,11 +7,10 @@ import type {
 } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import status from '../project/httpStatusCodes';
-import makeSlug from '../project/makeSlug';
+import status from '../project/http-status-codes';
+import makeSlug from '../project/make-slug';
 import { INSUFFICIENT_PRIVILEGES } from '../project/errors';
-import { services as voteServices } from '../votes/plugins';
-import { needsAdminToModifyStatus, services } from './plugins';
+import { needsAdminToModifyStatus } from './plugins';
 import {
   createFeedbackSchema,
   deleteFeedbackSchema,
@@ -22,8 +21,6 @@ import {
 } from './schemas';
 
 const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.register(services);
-  fastify.register(voteServices);
   await fastify.register(needsAdminToModifyStatus);
 
   // List feedback
@@ -47,7 +44,7 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
         order,
       } = request.query;
 
-      const feedback = fastify.getFeedbackList(userId);
+      const feedback = fastify.feedbackService.getFeedbackList(userId);
 
       if (category) {
         feedback.whereIn('category', category);
@@ -79,7 +76,7 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
       const { slug } = request.params;
 
       const feedback: FeedbackResponse = await fastify.getQueryOr404(
-        fastify.getFeedbackDetail({ userId, slug }),
+        fastify.feedbackService.getFeedbackDetail({ userId, slug }),
       );
 
       reply.status(status.HTTP_200_OK).send(feedback);
@@ -104,9 +101,9 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
 
       const feedbackId = uuidv4();
       const slug = makeSlug(title);
-      const { id: categoryId } = await fastify.getCategory(category);
+      const { id: categoryId } = await fastify.feedbackService.getCategory(category);
 
-      await fastify.createFeedback({
+      await fastify.feedbackService.createFeedback({
         categoryId,
         description,
         feedbackId,
@@ -117,7 +114,7 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
       });
 
       const voteId = uuidv4();
-      await fastify.createVote({ feedbackId, userId, voteId });
+      await fastify.voteService.createVote({ feedbackId, userId, voteId });
 
       reply.status(status.HTTP_201_CREATED).send(status.HTTP_201_CREATED);
     },
@@ -144,7 +141,7 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
       } = request.body;
 
       const feedback = await fastify.getQueryOr404(
-        fastify.getFeedback({ id: feedbackId }),
+        fastify.feedbackService.getFeedback({ id: feedbackId }),
       );
 
       if (
@@ -157,8 +154,8 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
         throw new Error(INSUFFICIENT_PRIVILEGES);
       }
 
-      const { id: categoryId } = await fastify.getCategory(category);
-      await fastify.editFeedback(feedbackId, {
+      const { id: categoryId } = await fastify.feedbackService.getCategory(category);
+      await fastify.feedbackService.editFeedback(feedbackId, {
         categoryId,
         description,
         status: feedbackStatus,
@@ -182,14 +179,14 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
       const { feedbackId } = request.params;
 
       const feedback = await fastify.getQueryOr404(
-        fastify.getFeedback({ id: feedbackId }),
+        fastify.feedbackService.getFeedback({ id: feedbackId }),
       );
 
       if (userId !== feedback.userId && role !== 'admin') {
         throw new Error(INSUFFICIENT_PRIVILEGES);
       }
 
-      await fastify.deleteFeedback(feedbackId);
+      await fastify.feedbackService.deleteFeedback(feedbackId);
 
       reply.status(status.HTTP_204_NO_CONTENT);
     },
@@ -200,7 +197,9 @@ const feedbackRoutes: FastifyPluginAsync = async (fastify) => {
     url: '/roadmap-count',
     schema: roadmapCountSchema,
     handler: async (request, reply) => {
-      const roadmapCount: RoadmapCountResponse = await fastify.getRoadmapCount();
+      const roadmapCount: RoadmapCountResponse = await fastify
+        .feedbackService
+        .getRoadmapCount();
       reply.status(status.HTTP_200_OK).send(roadmapCount);
     },
   });

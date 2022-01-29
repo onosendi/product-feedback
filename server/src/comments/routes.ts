@@ -3,15 +3,10 @@ import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import type { FastifyPluginAsync } from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
-import { services as feedbackServices } from '../feedback/plugins';
-import status from '../project/httpStatusCodes';
-import { services } from './plugins';
+import status from '../project/http-status-codes';
 import { createCommentSchema, listCommentsSchema } from './schemas';
 
 const commentRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.register(services);
-  fastify.register(feedbackServices);
-
   // List comments
   fastify.route<{
     Querystring: { feedback_id: DBId },
@@ -22,9 +17,13 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
     handler: async (request, reply) => {
       const { feedback_id: feedbackId } = request.query;
 
-      await fastify.getQueryOr404(fastify.getFeedback({ id: feedbackId }));
+      await fastify.getQueryOr404(
+        fastify.feedbackService.getFeedback({ id: feedbackId }),
+      );
 
-      const comments: CommentResponse[] = await fastify.getComments(feedbackId);
+      const comments: CommentResponse[] = await fastify
+        .commentService
+        .getComments(feedbackId);
 
       reply.status(status.HTTP_200_OK).send(comments);
     },
@@ -50,11 +49,19 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
         feedback_id: feedbackId,
       } = request.query;
 
-      await fastify.getQueryOr404(fastify.getFeedback({ id: feedbackId }));
+      await fastify.getQueryOr404(
+        fastify.feedbackService.getFeedback({ id: feedbackId }),
+      );
+
+      if (feedbackCommentParentId) {
+        await fastify.getQueryOr404(
+          fastify.commentService.getCommentById(feedbackCommentParentId),
+        );
+      }
 
       const commentId = uuidv4();
 
-      await fastify.createComment({
+      await fastify.commentService.createComment({
         commentId,
         content,
         userId,
@@ -62,7 +69,9 @@ const commentRoutes: FastifyPluginAsync = async (fastify) => {
         feedbackCommentParentId,
       });
 
-      const comment: CommentResponse = await fastify.getCommentById(commentId);
+      const comment: CommentResponse = await fastify
+        .commentService
+        .getCommentById(commentId);
 
       reply.status(status.HTTP_201_CREATED).send(comment);
     },
