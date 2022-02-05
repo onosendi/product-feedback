@@ -37,7 +37,9 @@ REACT_APP_API_BASE_URL=http://localhost:8000
 
 ### Server
 
-#### Environment variables
+#### Environment
+
+##### Development
 
 Create an `.env` file in the `server` directory with:
 ```ini
@@ -46,6 +48,20 @@ APP_PORT=8000
 APP_SECRET=my secret
 
 DB_NAME=product_feedback
+DB_USER=product_feedback
+DB_PASSWORD=product_feedback
+DB_DEBUG=false
+```
+
+##### Testing
+
+Create an `.env.testing` file in the `server` directory with:
+```ini
+APP_HOST=localhost
+APP_PORT=8000
+APP_SECRET=my secret
+
+DB_NAME=test_product_feedback
 DB_USER=product_feedback
 DB_PASSWORD=product_feedback
 DB_DEBUG=false
