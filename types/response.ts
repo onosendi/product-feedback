@@ -1,4 +1,5 @@
 import type {
+  DBCategoryDisplay,
   DBFeedbackStatus,
   DBFeedbackStatusSuggestion,
   DBId,
@@ -30,7 +31,7 @@ export type AuthResponse = {
 // Feedback
 //
 type BaseFeedbackResponse = {
-  category: DBFeedbackStatusSuggestion,
+  category: DBCategoryDisplay,
   commentCount: number,
   description: string,
   hasVoted: boolean,

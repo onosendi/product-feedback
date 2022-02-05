@@ -1,28 +1,10 @@
 import type { DBId } from '@t/database';
-import type { FastifyPluginAsync } from 'fastify';
-import fp from 'fastify-plugin';
-import type { Knex } from 'knex';
+import BaseService from '../project/service';
 
-type CreateCommentObj = {
-  commentId: DBId,
-  content: string,
-  createdAt?: Date,
-  feedbackCommentParentId?: DBId | null,
-  feedbackId: DBId,
-  userId: DBId,
-};
-
-declare module 'fastify' {
-  interface FastifyInstance {
-    getComments: (feedbackId: DBId) => Knex.QueryBuilder;
-    getCommentById: (commentId: DBId) => Knex.QueryBuilder;
-    createComment: (obj: CreateCommentObj) => Knex.QueryBuilder;
-  }
-}
-
-export const services: FastifyPluginAsync = fp(async (fastify) => {
-  fastify.decorate('getComments', function (feedbackId: DBId) {
-    return fastify
+export default class CommentService extends BaseService {
+  getComments(feedbackId: DBId) {
+    return this
+      .fastify
       .knex('feedback_comment as fc')
       .select(
         'fc.id',
@@ -37,10 +19,10 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       )
       .join('user as u', 'u.id', '=', 'fc.user_id')
       .leftJoin(
-        fastify.knex('feedback_comment as fc')
+        this.fastify.knex('feedback_comment as fc')
           .select(
             'feedback_comment_parent_id',
-            fastify.knex.raw(`
+            this.fastify.knex.raw(`
               json_agg(
                 json_build_object(
                   'id', fc.id,
@@ -50,7 +32,7 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
                   'username', u.username,
                   'first_name', u.first_name,
                   'last_name', u.last_name,
-                  'email_hash', 'u.email_hash'
+                  'email_hash', u.email_hash
                 )
                 order by fc.created_at
               ) as replies
@@ -66,10 +48,11 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .orderBy('fc.created_at')
       .whereNull('fc.feedback_comment_parent_id')
       .where({ 'fc.feedback_id': feedbackId });
-  });
+  }
 
-  fastify.decorate('getCommentById', function (commentId: DBId) {
-    return fastify
+  getCommentById(commentId: DBId) {
+    return this
+      .fastify
       .knex('feedback_comment as fc')
       .select(
         'fc.id',
@@ -84,10 +67,17 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
       .join('user as u', 'u.id', '=', 'fc.user_id')
       .where({ 'fc.id': commentId })
       .first();
-  });
+  }
 
-  fastify.decorate('createComment', function (obj: CreateCommentObj) {
-    return fastify
+  createComment(obj: {
+    commentId: DBId,
+    content: string,
+    feedbackCommentParentId?: DBId | null,
+    feedbackId: DBId,
+    userId: DBId,
+  }) {
+    return this
+      .fastify
       .knex('feedback_comment')
       .insert({
         id: obj.commentId,
@@ -96,5 +86,5 @@ export const services: FastifyPluginAsync = fp(async (fastify) => {
         feedback_id: obj.feedbackId,
         feedback_comment_parent_id: obj.feedbackCommentParentId,
       });
-  });
-});
+  }
+}

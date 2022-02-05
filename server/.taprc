@@ -1,0 +1,15 @@
+# vim:ft=yaml
+
+after: tests/teardown.mjs
+before: tests/setup.mjs
+branches: 0
+browser: false
+coverage-report:
+  - html
+test-env:
+  - NODE_ENV=testing
+nyc-arg: 
+  - --exclude=database/**/*
+  - --exclude=tests/*
+test-regex: .*.test.ts$
+ts: true

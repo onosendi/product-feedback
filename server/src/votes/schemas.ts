@@ -8,10 +8,7 @@ export const schema: FastifyPluginAsync = fp(async (fastify) => {
       type: 'object',
       required: ['feedbackId'],
       properties: {
-        feedbackId: {
-          type: 'string',
-          format: 'uuid',
-        },
+        feedbackId: { type: 'string', format: 'uuid' },
       },
     },
   });

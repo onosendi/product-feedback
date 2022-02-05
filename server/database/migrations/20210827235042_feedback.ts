@@ -4,7 +4,7 @@ export const up = (knex: Knex) => knex.schema.createTable('feedback', (t) => {
   t.uuid('id').primary();
   t.datetime('created_at').defaultTo(knex.fn.now()).notNullable();
   t.string('title', 75).notNullable();
-  t.string('slug', 83).notNullable();
+  t.string('slug', 84).notNullable();
   t.string('description', 300).notNullable();
   t.enu('status', ['suggestion', 'planned', 'in-progress', 'live']).notNullable();
   t
