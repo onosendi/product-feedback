@@ -12,7 +12,8 @@
     "build:client": "npm run build -w client",
     "start": "npm-run-all --print-label --parallel start:*",
     "start:server": "npm run start -w server",
-    "start:client": "npm run start -w client"
+    "start:client": "npm run start -w client",
+    "test": "npm -w server test"
   },
   "keywords": [],
   "author": "",
