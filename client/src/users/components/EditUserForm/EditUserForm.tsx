@@ -1,7 +1,7 @@
 import type { UserResponse } from '@t/response';
 import cx from 'clsx';
 import { FORM_ERROR } from 'final-form';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import toast from 'react-hot-toast';
 import { object as yupObject, string as yupString } from 'yup';
@@ -53,17 +53,35 @@ type EditUserFormProps = {
 export default function EditUserForm({
   user,
 }: EditUserFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [initialValues, setInitialValues] = useState({
     username: user.username,
     firstName: user.firstName || undefined,
     lastName: user.lastName || undefined,
     email: user.email || undefined,
+    currentPassword: undefined,
+    password: undefined,
+    passwordConfirm: undefined,
   });
   const { emailHash } = useAuth();
   const fullName = getFullName(user.firstName, user.lastName);
 
   const validateUsername = useValidateUsername();
   const [editUser] = useEditUserMutation();
+
+  const clearPasswordFields = () => {
+    setInitialValues({
+      ...initialValues,
+      currentPassword: undefined,
+      password: undefined,
+      passwordConfirm: undefined,
+    });
+    if (formRef.current) {
+      formRef.current.currentPassword.value = '';
+      formRef.current.password.value = '';
+      formRef.current.passwordConfirm.value = '';
+    }
+  };
 
   const onSubmit = async (values: Record<string, any>) => {
     try {
@@ -78,7 +96,10 @@ export default function EditUserForm({
       };
 
       await editUser(data).unwrap();
+
       setInitialValues(data);
+
+      clearPasswordFields();
 
       toast.success('User info saved');
     } catch (error) {
@@ -110,6 +131,7 @@ export default function EditUserForm({
           className={cx(styles.form)}
           noValidate
           onSubmit={handleSubmit}
+          ref={formRef}
         >
           <Paper className={cx(styles.paper)}>
             <fieldset>

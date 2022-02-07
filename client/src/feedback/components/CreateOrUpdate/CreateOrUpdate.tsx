@@ -1,6 +1,6 @@
 import type { FeedbackResponse } from '@t/response';
 import cx from 'clsx';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +44,6 @@ export default function CreateOrUpdate({
 }: CreateOrUpdateProps) {
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
-  const formRef = useRef<HTMLFormElement>(null);
   const previousPage = usePreviousPage();
 
   const [createFeedback] = useCreateFeedbackMutation();
@@ -119,7 +118,6 @@ export default function CreateOrUpdate({
             className={cx(styles.form)}
             noValidate
             onSubmit={handleSubmit}
-            ref={formRef}
           >
             <Field
               name="title"
