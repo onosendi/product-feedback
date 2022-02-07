@@ -33,7 +33,7 @@ export const authUser: FastifyPluginAsync = fp(async (fastify) => {
     'preHandler',
     async (request: FR, reply: FastifyReply) => {
       request.authUser = {} as DBUser;
-      const authorization = request?.headers?.authorization;
+      const { authorization } = request.headers;
       if (authorization) {
         try {
           const [, token] = authorization.split(' ');

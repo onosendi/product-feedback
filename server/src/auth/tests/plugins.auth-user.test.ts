@@ -7,6 +7,16 @@ tap.test('Auth user plugin', async (t) => {
   const app = await build(t);
   const testUser = await login(app);
 
+  t.test('No auth header', async (t2) => {
+    const feedback = await createFeedback(app, testUser.user);
+    const response = await app.inject({
+      method: 'POST',
+      url: `/votes/${feedback.id}`,
+    });
+
+    t2.equal(response.statusCode, status.HTTP_401_UNAUTHORIZED);
+  });
+
   t.test('Invalid user ID', async (t2) => {
     const badFeedbackId = uuidv4();
     const badUserId = uuidv4();

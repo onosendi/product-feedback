@@ -124,7 +124,7 @@ tap.test('Create vote', async (t) => {
     t2.equal(message, 'Invalid password');
   });
 
-  t.test('Success', async (t2) => {
+  t.test('Success with password', async (t2) => {
     const username = 'test-edit-user';
     const password = 'testing';
     const salt = 'testing';
@@ -155,7 +155,57 @@ tap.test('Create vote', async (t) => {
       payload: newPayload,
     });
 
+    const newUser = await app
+      .knex('user')
+      .where({ username: newPayload.username })
+      .first();
+
+    const found = {
+      username: newUser.username,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      email: newUser.email,
+      emailHash: newUser.emailHash,
+    };
+
+    const wanted = {
+      username: newPayload.username,
+      firstName: newPayload.firstName,
+      lastName: newPayload.lastName,
+      email: newPayload.email,
+      emailHash: MD5(newPayload.email).toString(),
+    };
+
     t2.equal(response.statusCode, status.HTTP_204_NO_CONTENT);
+    t2.strictSame(found, wanted);
+    t2.ok(checkPassword(newPayload.password, newUser.password));
+  });
+
+  t.test('Success without password', async (t2) => {
+    const username = 'test-edit-user-wo-pass';
+    await app.userService.createUser({
+      userId: uuidv4(),
+      username,
+      password: createPassword('testing', 'testing'),
+      emailHash: '',
+      role: 'user',
+    });
+    const newTestUser = await login(app, username);
+    const newPayload = {
+      username: 'new-test-edit-user-wo-pass',
+      firstName: 'first',
+      lastName: 'last',
+      email: 'new@email.com',
+    };
+
+    const response = await app.inject({
+      method: 'PATCH',
+      url: '/users',
+      headers: {
+        authorization: `Bearer ${newTestUser.auth.token}`,
+      },
+      payload: newPayload,
+    });
 
     const newUser = await app
       .knex('user')
@@ -178,7 +228,7 @@ tap.test('Create vote', async (t) => {
       emailHash: MD5(newPayload.email).toString(),
     };
 
+    t2.equal(response.statusCode, status.HTTP_204_NO_CONTENT);
     t2.strictSame(found, wanted);
-    t2.ok(checkPassword(newPayload.password, newUser.password));
   });
 });

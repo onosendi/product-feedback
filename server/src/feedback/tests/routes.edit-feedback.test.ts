@@ -233,7 +233,7 @@ tap.test('Edit feedback', async (t) => {
       description: 'testing',
       feedbackId,
       slug: makeSlug('testing'),
-      status: 'suggestion',
+      status: 'live',
       title: 'testing',
       userId: testAdminUser.user.id,
     });
@@ -246,7 +246,6 @@ tap.test('Edit feedback', async (t) => {
       payload: {
         category: 'ux',
         description: 'new-testing',
-        status: 'live',
         title: 'new-testing',
       },
     });
@@ -267,7 +266,7 @@ tap.test('Edit feedback', async (t) => {
     const wanted = {
       category: 'UX',
       description: 'new-testing',
-      status: 'live',
+      status: 'suggestion',
       title: feedback.title,
     };
 

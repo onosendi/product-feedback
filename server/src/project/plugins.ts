@@ -56,9 +56,14 @@ declare module 'fastify' {
   }
 }
 export const fastifyEnv: FastifyPluginAsync = fp(async (fastify) => {
-  const envFilename = process.env.NODE_ENV === 'testing'
-    ? '.env.testing'
-    : '.env';
+  // Instalbul's `ignore else` doesn't respect ternary
+  let envFilename;
+  /* istanbul ignore else */
+  if (process.env.NODE_ENV === 'testing') {
+    envFilename = '.env.testing';
+  } else {
+    envFilename = '.env';
+  }
 
   await fastify.register(FastifyEnv, {
     dotenv: {

@@ -42,13 +42,26 @@ tap.test('Login', async (t) => {
     t2.strictSame(payload, wanted);
   });
 
-  t.test('Incorrect username/password', async (t2) => {
+  t.test('Incorrect password', async (t2) => {
     const response = await app.inject({
       method: 'POST',
       url: 'auth/login',
       payload: {
         username: 'testing',
         password: 'bad password',
+      },
+    });
+
+    t2.equal(response.statusCode, status.HTTP_401_UNAUTHORIZED);
+  });
+
+  t.test('Incorrect username', async (t2) => {
+    const response = await app.inject({
+      method: 'POST',
+      url: 'auth/login',
+      payload: {
+        username: 'bad-username',
+        password: 'testing',
       },
     });
 

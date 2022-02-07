@@ -105,6 +105,25 @@ tap.test('Create feedback', async (t) => {
     t2.equal(message, 'Insufficient privileges');
   });
 
+  t.test('Success response without status given', async (t2) => {
+    const title = 'test-create-feedback-2342';
+    const response = await app.inject({
+      method: 'POST',
+      url: '/feedback',
+      headers: {
+        authorization: `Bearer ${testUser.auth.token}`,
+      },
+      payload: {
+        category: 'ui',
+        description: 'testing',
+        status: undefined,
+        title,
+      },
+    });
+
+    t2.equal(response.statusCode, status.HTTP_201_CREATED);
+  });
+
   t.test('Success response and vote', async (t2) => {
     const title = 'test-create-feedback-2342';
     const response = await app.inject({
