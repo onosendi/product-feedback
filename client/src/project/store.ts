@@ -7,13 +7,13 @@ import commentsReducer from '../comments/slice';
 import feedbackReducer from '../feedback/slice';
 import baseApi from './api';
 import { rtkQueryErrorHandler } from './middleware';
-import projectReducer from './slice';
+import historyReducer from './historySlice';
 
 const combinedReducers = combineReducers({
   auth: authReducer,
   comments: commentsReducer,
   feedback: feedbackReducer,
-  project: projectReducer,
+  history: historyReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 

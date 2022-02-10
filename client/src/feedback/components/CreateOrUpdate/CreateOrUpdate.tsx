@@ -14,7 +14,7 @@ import {
   SelectItem,
   TextField,
 } from '../../../project/components';
-import { usePreviousPage } from '../../../project/hooks';
+import { useGoBack } from '../../../project/hooks';
 import routes from '../../../project/routes';
 import { getHasError, getHelperText } from '../../../project/utils';
 import { REQUIRED, validateFormValues } from '../../../project/validators';
@@ -44,7 +44,7 @@ export default function CreateOrUpdate({
 }: CreateOrUpdateProps) {
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
-  const previousPage = usePreviousPage();
+  const goBack = useGoBack();
 
   const [createFeedback] = useCreateFeedbackMutation();
   const [editFeedback] = useEditFeedbackMutation();
@@ -70,7 +70,7 @@ export default function CreateOrUpdate({
         meta: { feedbackId: feedback.id },
       });
       toast.success('Feedback saved');
-      navigate(previousPage);
+      goBack();
     }
   };
 
@@ -203,7 +203,7 @@ export default function CreateOrUpdate({
               </Button>
               <Button
                 className={cx(styles.cancel)}
-                href={previousPage}
+                onClick={goBack}
                 variant="3"
               >
                 Cancel

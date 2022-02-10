@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { addHistory } from '../../slice';
+import { addHistoryItem } from '../../historySlice';
 
 export default function useHistoryManager() {
   const { pathname, search } = useLocation();
@@ -9,7 +9,7 @@ export default function useHistoryManager() {
 
   useEffect(() => {
     if (pathname) {
-      dispatch(addHistory(`${pathname}${search}`));
+      dispatch(addHistoryItem(`${pathname}${search}`));
     }
   }, [pathname, search]);
 }
