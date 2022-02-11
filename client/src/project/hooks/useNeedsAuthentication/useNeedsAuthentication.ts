@@ -7,7 +7,7 @@ export default function useNeedsAuthentication() {
   const { pathname, search } = useLocation();
   const { isAuthenticated } = useAuth();
 
-  return (callback: any) => {
+  return (callback: () => void) => {
     if (!isAuthenticated) {
       navigate(routes.auth.login, {
         state: { path: pathname + search },
