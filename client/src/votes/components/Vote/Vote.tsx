@@ -1,11 +1,9 @@
 import cx from 'clsx';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../auth/hooks';
-import { Button } from '../../../project/components';
-import routes from '../../../project/routes';
-import type { RootState } from '../../../project/store';
 import { selectFeedbackById } from '../../../feedback/slice';
+import { Button } from '../../../project/components';
+import { useNeedsAuthentication } from '../../../project/hooks';
+import type { RootState } from '../../../project/store';
 import { useCreateVoteMutation, useDeleteVoteMutation } from '../../api';
 import styles from './Vote.module.scss';
 
@@ -20,10 +18,7 @@ export default function Vote({
   id,
   responsive = true,
 }: VoteProps) {
-  const navigate = useNavigate();
-  const { pathname, search } = useLocation();
-
-  const { isAuthenticated } = useAuth();
+  const needsAuthentication = useNeedsAuthentication();
 
   const [createVote] = useCreateVoteMutation();
   const [deleteVote] = useDeleteVoteMutation();
@@ -34,15 +29,10 @@ export default function Vote({
   const votes = feedback?.votes;
 
   const onClick = () => {
-    if (!isAuthenticated) {
-      navigate(routes.auth.login, {
-        state: { path: pathname + search },
-      });
-      return;
-    }
-
     const func = hasVoted ? deleteVote : createVote;
-    func(id);
+    needsAuthentication(() => {
+      func(id);
+    });
   };
 
   return (

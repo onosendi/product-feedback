@@ -2,10 +2,8 @@ import type { DBId } from '@t/database';
 import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { CreateReply } from '..';
-import { useAuth } from '../../../auth/hooks';
-import routes from '../../../project/routes';
+import { useNeedsAuthentication } from '../../../project/hooks';
 import { getFullName } from '../../../project/utils';
 import { Picture } from '../../../users/components';
 import styles from './CommentItem.module.scss';
@@ -20,9 +18,7 @@ export default function CommentItem({
   parentId,
 }: CommentItemProps) {
   const [showReply, setShowReply] = useState(false);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { isAuthenticated } = useAuth();
+  const needsAuthentication = useNeedsAuthentication();
 
   const fullName = getFullName(data.firstName, data.lastName);
   const hasName = !!fullName;
@@ -33,12 +29,9 @@ export default function CommentItem({
     index % 2 === 0 ? token : <span key={index}>{token}</span>));
 
   const toggleReply = () => {
-    if (!isAuthenticated) {
-      navigate(routes.auth.login, {
-        state: { path: pathname },
-      });
-    }
-    setShowReply(!showReply);
+    needsAuthentication(() => {
+      setShowReply(!showReply);
+    });
   };
 
   return (
