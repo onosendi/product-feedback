@@ -3,7 +3,7 @@ import type { CommentResponse } from '@t/response';
 import cx from 'clsx';
 import { useState } from 'react';
 import { CreateReply } from '..';
-import { useNeedsAuthentication } from '../../../project/hooks';
+import { useNeedsAuthentication } from '../../../auth/hooks';
 import { getFullName } from '../../../project/utils';
 import { Picture } from '../../../users/components';
 import styles from './CommentItem.module.scss';

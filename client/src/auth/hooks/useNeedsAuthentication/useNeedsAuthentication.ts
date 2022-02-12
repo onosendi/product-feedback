@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../auth/hooks';
-import routes from '../../routes';
+import { useAuth } from '..';
+import routes from '../../../project/routes';
 
 export default function useNeedsAuthentication() {
   const navigate = useNavigate();

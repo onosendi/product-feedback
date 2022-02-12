@@ -2,7 +2,7 @@ import cx from 'clsx';
 import { useSelector } from 'react-redux';
 import { selectFeedbackById } from '../../../feedback/slice';
 import { Button } from '../../../project/components';
-import { useNeedsAuthentication } from '../../../project/hooks';
+import { useNeedsAuthentication } from '../../../auth/hooks';
 import type { RootState } from '../../../project/store';
 import { useCreateVoteMutation, useDeleteVoteMutation } from '../../api';
 import styles from './Vote.module.scss';
