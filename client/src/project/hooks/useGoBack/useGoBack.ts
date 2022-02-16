@@ -14,7 +14,7 @@ export default function useGoBack() {
   ];
 
   return () => {
-    const currentPage = history.at(-1);
+    const currentPage = history[history.length - 1];
 
     let previousPage = '';
     for (let i = history.length - 1; i >= 0; i -= 1) {
