@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@onosendi/eslint-config": "^2.0.0",
     "@types/crypto-js": "^4.1.0",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.5",

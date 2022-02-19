@@ -1,60 +1,19 @@
 {
-  "env": {
-    "es2021": true
-  },
   "extends": [
     "airbnb",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "@onosendi/eslint-config/lib/typescript"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 13,
-    "project": "./tsconfig.json",
     "sourceType": "module"
   },
   "plugins": [
     "@typescript-eslint"
   ],
-  "root": true,
   "rules": {
-    "@typescript-eslint/consistent-type-imports": [
-      2,
-      {
-        "prefer": "type-imports"
-      }
-    ],
-    "@typescript-eslint/member-delimiter-style": [
-      2,
-      {
-        "multiline": {
-          "delimiter": "comma",
-          "requireLast": true
-        },
-        "singleline": {
-          "delimiter": "comma",
-          "requireLast": false
-        },
-        "overrides": {
-          "interface": {
-            "multiline": {
-              "delimiter": "semi",
-              "requireLast": true
-            }
-          }
-        }
-      }
-    ],
     "func-names": "off",
-    "max-len": "off",
-    "no-console": [
-      1,
-      {
-        "allow": [
-          "warn",
-          "error"
-        ]
-      }
-    ],
     "prefer-arrow-callback": "off"
   }
 }
