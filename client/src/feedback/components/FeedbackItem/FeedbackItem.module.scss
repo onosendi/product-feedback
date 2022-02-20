@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .link {
   border: 0.1rem solid var(--request-list-item-border-color, transparent);
@@ -15,22 +15,6 @@
   }
 }
 
-a.link {
-  &:hover {
-    .heading {
-      color: var(--clr-primary-royalblue);
-    }
-  }
-
-  &:focus-visible {
-    --request-list-item-border-color: var(--clr-primary-lavender);
-
-    .heading {
-      --request-list-item-heading-color: var(--clr-primary-blueviolet);
-    }
-  }
-}
-
 @supports not selector(.link:focus-visible) {
   .link:focus {
     --request-list-item-border-color: var(--clr-primary-lavender);
@@ -42,7 +26,7 @@ a.link {
   padding-top: 6.2rem;
 
   &::before {
-    content: '';
+    content: "";
     height: 0.6rem;
     left: 0;
     position: absolute;
@@ -84,6 +68,22 @@ a.link {
   }
 }
 
+a.link {
+  &:hover {
+    .heading {
+      color: var(--clr-primary-royalblue);
+    }
+  }
+
+  &:focus-visible {
+    --request-list-item-border-color: var(--clr-primary-lavender);
+
+    .heading {
+      --request-list-item-heading-color: var(--clr-primary-blueviolet);
+    }
+  }
+}
+
 .description {
   color: var(--clr-primary-slategray);
   margin-bottom: 1.2rem;
@@ -115,7 +115,7 @@ a.link {
   }
 
   &Icon {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTIuNjIgMTZIMS4zNDZsLjkwMi0uOTFjLjQ4Ni0uNDkxLjc5LTEuMTMuODcyLTEuODIzQzEuMDM2IDExLjg4NyAwIDkuODkgMCA3Ljc5NCAwIDMuOTI4IDMuNTIgMCA5LjAzIDAgMTQuODcgMCAxOCAzLjYxNSAxOCA3LjQ1NWMwIDMuODY2LTMuMTY0IDcuNDc4LTguOTcgNy40NzgtMS4wMTcgMC0yLjA3OC0uMTM3LTMuMDI1LS4zODhBNC43MDUgNC43MDUgMCAwMTIuNjIgMTZ6IiBmaWxsPSIjQ0REMkVFIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=);
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTIuNjIgMTZIMS4zNDZsLjkwMi0uOTFjLjQ4Ni0uNDkxLjc5LTEuMTMuODcyLTEuODIzQzEuMDM2IDExLjg4NyAwIDkuODkgMCA3Ljc5NCAwIDMuOTI4IDMuNTIgMCA5LjAzIDAgMTQuODcgMCAxOCAzLjYxNSAxOCA3LjQ1NWMwIDMuODY2LTMuMTY0IDcuNDc4LTguOTcgNy40NzgtMS4wMTcgMC0yLjA3OC0uMTM3LTMuMDI1LS4zODhBNC43MDUgNC43MDUgMCAwMTIuNjIgMTZ6IiBmaWxsPSIjQ0REMkVFIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=");
     background-repeat: no-repeat;
     background-size: 100%;
     display: inline-block;
@@ -150,7 +150,7 @@ a.link {
 
   &::before {
     border-radius: 50%;
-    content: '';
+    content: "";
     height: 0.8rem;
     left: 0;
     position: absolute;

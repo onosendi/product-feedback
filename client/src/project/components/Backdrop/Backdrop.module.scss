@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .backdrop {
   @include mixins.z-index(backdrop);
@@ -25,6 +25,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: var(--backdrop-opacity);
   }
@@ -34,6 +35,7 @@
   from {
     opacity: var(--backdrop-opacity);
   }
+
   to {
     opacity: 0;
   }

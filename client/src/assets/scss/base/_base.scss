@@ -1,5 +1,5 @@
-@use '../abstracts/mixins';
-@use '../abstracts/palette';
+@use "../abstracts/mixins";
+@use "../abstracts/palette";
 
 body {
   background-color: var(--clr-primary-ghostwhite);
@@ -12,11 +12,11 @@ body {
 }
 
 input {
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 button {
-  @include mixins.button();
+  @include mixins.button;
 }
 
 fieldset {
@@ -55,6 +55,7 @@ ul {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -64,6 +65,7 @@ ul {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -111,8 +113,8 @@ ul {
     }
 
     &[data-selected="true"]::after {
-      content: '';
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMSI+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUQxRkVBIiBzdHJva2Utd2lkdGg9IjIiIGQ9Ik0xIDUuMjMzTDQuNTIyIDkgMTIgMSIvPjwvc3ZnPg==);
+      content: "";
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMSI+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUQxRkVBIiBzdHJva2Utd2lkdGg9IjIiIGQ9Ik0xIDUuMjMzTDQuNTIyIDkgMTIgMSIvPjwvc3ZnPg==");
       background-size: 100%;
       height: 1.1rem;
       position: absolute;

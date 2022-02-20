@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .wrapper {
   @include mixins.z-index(app-bar);
@@ -24,7 +24,7 @@
 
     &::before {
       color: var(--clr-primary-slategray);
-      content: '|';
+      content: "|";
       margin-right: 1rem;
     }
   }

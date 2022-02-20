@@ -1,7 +1,7 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .form {
-  margin-top: 4.4rem; 
+  margin-top: 4.4rem;
   padding-bottom: 4rem;
 
   @include mixins.respond-to(md) {

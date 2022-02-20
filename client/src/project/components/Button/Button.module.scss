@@ -1,7 +1,7 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .button {
-  @include mixins.button();
+  @include mixins.button;
   @include mixins.transition(background-color);
 
   --button-padding: 1.7rem;
@@ -45,7 +45,7 @@
 }
 
 .prependPlus::before {
-  content: '+';
+  content: "+";
   margin-right: 0.5rem;
 }
 

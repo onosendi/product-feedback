@@ -1,5 +1,5 @@
-@use '../abstracts/mixins';
-@use '../abstracts/types';
+@use "../abstracts/mixins";
+@use "../abstracts/types";
 
 html {
   font-size: 62.5%;
@@ -22,8 +22,7 @@ h6 {
     @each $type-prop, $type-val in $type-map {
       @if $type-prop != respond-to {
         #{$type-prop}: $type-val;
-      }
-      @else {
+      } @else {
         @each $response-size, $response-map in $type-val {
           @include mixins.respond-to($response-size) {
             @each $response-prop, $response-val in $response-map {

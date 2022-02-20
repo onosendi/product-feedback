@@ -66,6 +66,8 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "sass": "^1.45.2",
-    "serve": "^13.0.2"
+    "serve": "^13.0.2",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "stylelint-scss": "^4.1.0"
   }
 }

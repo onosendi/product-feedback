@@ -1,13 +1,13 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .caret {
   @include mixins.transition(transform);
 
   background-color: var(--clr-primary-royalblue);
   height: 0.65rem;
-  mask: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSAxbDQgNCA0LTQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=);
+  mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSAxbDQgNCA0LTQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=");
   mask-size: 100%;
-  position: absolute;;
+  position: absolute;
   right: 2.4rem;
   top: 50%;
   transform: translateY(-50%) rotate(var(--select-caret-rotation, 0deg));

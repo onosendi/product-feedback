@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .drawer {
   @include mixins.z-index(drawer);
@@ -32,6 +32,7 @@
   from {
     right: -100%;
   }
+
   to {
     right: 0;
   }
@@ -41,6 +42,7 @@
   from {
     right: 0;
   }
+
   to {
     right: -100%;
   }

@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .column {
   display: none;
@@ -34,7 +34,7 @@
 }
 
 .nothingToSee {
-  background-image: url(../../../assets/svg/illustration-empty.svg);
+  background-image: url("../../../assets/svg/illustration-empty.svg");
   background-position: top center;
   background-repeat: no-repeat;
   background-size: 20.2rem;

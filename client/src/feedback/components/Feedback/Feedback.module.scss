@@ -1,11 +1,11 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .loader {
   padding: 8rem 0;
 }
 
 .noFeedback {
-  background-image: url(../../../assets/svg/illustration-empty.svg);
+  background-image: url("../../../assets/svg/illustration-empty.svg");
   background-position: top 7.6rem center;
   background-repeat: no-repeat;
   background-size: 10.2rem;

@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .button {
   --button-color: var(--clr-primary-darkslateblue);
@@ -18,9 +18,9 @@
 
   &::before {
     background-color: var(--vote-chevron-color, var(--clr-primary-royalblue));
-    content: '';
+    content: "";
     height: 0.745rem;
-    mask: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSA2bDQtNCA0IDQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=);
+    mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSA2bDQtNCA0IDQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=");
     mask-size: 100%;
     left: 1.6rem;
     position: absolute;

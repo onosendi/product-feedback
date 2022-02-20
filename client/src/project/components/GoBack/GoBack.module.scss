@@ -4,10 +4,10 @@
   text-decoration: none;
 
   &::before {
-    content: '';
+    content: "";
     height: 1.2rem;
     left: 0;
-    mask: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSIxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiA5TDIgNWw0LTQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=);
+    mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSIxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiA5TDIgNWw0LTQiIHN0cm9rZT0iIzQ2NjFFNiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=");
     mask-size: 100%;
     position: absolute;
     top: 50%;

@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .header {
   position: relative;
@@ -73,23 +73,6 @@
   }
 }
 
-.hamburger.hamburgerOpen:hover {
-  opacity: 0.7;
-}
-
-.hamburger.hamburgerOpen .hamburgerInner,
-.hamburger.hamburgerOpen .hamburgerInner::before,
-.hamburger.hamburgerOpen .hamburgerInner::after {
-  background-color: var(--clr-neutral-100);
-}
-
-.hamburgerBox {
-  display: inline-block;
-  height: 1.7rem;
-  position: relative;
-  width: 2.5rem;
-}
-
 .hamburgerInner {
   display: block;
   top: 50%;
@@ -113,7 +96,7 @@
 
 .hamburgerInner::before,
 .hamburgerInner::after {
-  content: '';
+  content: "";
   display: block;
 }
 
@@ -129,6 +112,23 @@
   transition:
     bottom 0.075s 0.12s ease,
     transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger.hamburgerOpen:hover {
+  opacity: 0.7;
+}
+
+.hamburger.hamburgerOpen .hamburgerInner,
+.hamburger.hamburgerOpen .hamburgerInner::before,
+.hamburger.hamburgerOpen .hamburgerInner::after {
+  background-color: var(--clr-neutral-100);
+}
+
+.hamburgerBox {
+  display: inline-block;
+  height: 1.7rem;
+  position: relative;
+  width: 2.5rem;
 }
 
 .hamburger.hamburgerOpen .hamburgerInner {

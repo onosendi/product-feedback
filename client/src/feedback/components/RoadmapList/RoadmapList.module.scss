@@ -1,5 +1,5 @@
-@use '../../../assets/scss/abstracts/mixins';
-@use '../../../assets/scss/abstracts/palette';
+@use "../../../assets/scss/abstracts/mixins";
+@use "../../../assets/scss/abstracts/palette";
 
 .statusButtonWrapper {
   --roadmap-button-bottom-border-color: #{palette.$lightslategray};
@@ -31,7 +31,7 @@
     &::after {
       background-color: var(--clr-primary-blueviolet);
       bottom: 0;
-      content: '';
+      content: "";
       height: 0.4rem;
       left: 0;
       position: absolute;

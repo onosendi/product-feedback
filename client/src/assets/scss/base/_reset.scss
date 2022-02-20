@@ -19,8 +19,8 @@ dd {
   margin: 0;
 }
 
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 
@@ -30,7 +30,7 @@ html:focus-within {
 
 body {
   min-height: 100vh;
-  text-rendering: optimizeSpeed;
+  text-rendering: optimizespeed;
   line-height: 1.5;
 }
 
@@ -53,7 +53,7 @@ select {
 
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
-   scroll-behavior: auto;
+    scroll-behavior: auto;
   }
 
   *,

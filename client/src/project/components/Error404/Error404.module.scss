@@ -7,12 +7,12 @@
 }
 
 .heading {
-  --404-spacing: 1.5rem;
+  --spacing-404: 1.5rem;
 
   border-right: 1px solid var(--clr-neutral-70);
   font-size: 3rem;
-  margin-right: var(--404-spacing);
-  padding-right: var(--404-spacing);
+  margin-right: var(--spacing-404);
+  padding-right: var(--spacing-404);
 }
 
 .body {

@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .pageWrapperWrapper {
   padding: unset;
@@ -51,7 +51,7 @@
   @include mixins.respond-to(md) {
     align-items: unset;
     grid-gap: 1rem;
-    grid-template-columns: 33.333333333333% auto;
+    grid-template-columns: 33.3333% auto;
     min-height: 14.2rem;
     padding: unset;
   }
@@ -96,7 +96,7 @@
 
   @include mixins.respond-to(md) {
     background-color: var(--clr-primary-darkslategray);
-    background-image: url(../../../assets/svg/icon-suggestions.svg);
+    background-image: url("../../../assets/svg/icon-suggestions.svg");
     background-position: left 2.4rem center;
     background-repeat: no-repeat;
     background-size: 2.3rem;

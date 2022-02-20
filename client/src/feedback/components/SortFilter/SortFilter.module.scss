@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .wrapper {
   position: relative;
@@ -23,7 +23,7 @@
     font-weight: normal;
 
     &::after {
-      content: ' :\00a0';
+      content: " :\00a0";
     }
   }
 

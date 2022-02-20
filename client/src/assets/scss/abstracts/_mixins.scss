@@ -1,25 +1,24 @@
-@use './breakpoints';
-@use './types';
-@use './z-index';
+@use "sass:map";
+@use "./breakpoints";
+@use "./types";
+@use "./z-index";
 
 @mixin respond-to($breakpoint) {
   @if map-has-key(breakpoints.$breakpoints, $breakpoint) {
-    @media (min-width: #{map-get(breakpoints.$breakpoints, $breakpoint)}) {
+    @media (min-width: #{map.get(breakpoints.$breakpoints, $breakpoint)}) {
       @content;
     }
-  }
-  @else {
-    @error 'Invalid breakpoint: `#{$breakpoint}`.';
+  } @else {
+    @error "Invalid breakpoint: `#{$breakpoint}`.";
   }
 }
 
 @mixin type($type) {
   @if map-has-key(types.$types, $type) {
-    @each $type-prop, $type-val in map-get(types.$types, $type) {
+    @each $type-prop, $type-val in map.get(types.$types, $type) {
       @if $type-prop != respond-to {
         #{$type-prop}: $type-val;
-      }
-      @else {
+      } @else {
         @each $response-size, $response-map in $type-val {
           @include respond-to($response-size) {
             @each $response-prop, $response-val in $response-map {
@@ -29,9 +28,8 @@
         }
       }
     }
-  }
-  @else {
-    @error 'Invalid type: `#{$type}`.';
+  } @else {
+    @error "Invalid type: `#{$type}`.";
   }
 }
 
@@ -39,11 +37,10 @@
   $z-index: 0;
 
   @if $index {
-    @if map-has-key(z-index.$z-index, $index) {
-      $z-index: map-get(z-index.$z-index, $index);
-    }
-    @else {
-      @error 'Invalid index: `#{$index}`.';
+    @if map.has-key(z-index.$z-index, $index) {
+      $z-index: map.get(z-index.$z-index, $index);
+    } @else {
+      @error "Invalid index: `#{$index}`.";
     }
   }
 
@@ -58,7 +55,7 @@
 
 @mixin sr-only {
   border: 0;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   font-size: 0;
   height: 1px;
   margin: -1px;
@@ -84,11 +81,13 @@
   background-image:
     radial-gradient(
       circle at -5rem -15rem,
-      var(--clr-primary-lightskyblue) 0%, transparent 50%,
+      var(--clr-primary-lightskyblue) 0%,
+      transparent 50%,
     ),
     radial-gradient(
       circle at calc(100% + 5rem) calc(100% + 5rem),
-      var(--clr-primary-lightsalmon) 0%, transparent 50%,
+      var(--clr-primary-lightsalmon) 0%,
+      transparent 50%,
     ),
     radial-gradient(
       farthest-corner at 100% 0,

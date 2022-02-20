@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .footer {
   min-height: 4rem;
@@ -32,7 +32,7 @@
   line-height: normal;
 
   &::before {
-    content: '@';
+    content: "@";
   }
 }
 

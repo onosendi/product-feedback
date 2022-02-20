@@ -1,4 +1,4 @@
-@use '../abstracts/palette';
+@use "../abstracts/palette";
 
 :root {
   --root-border-radius: 1rem;
@@ -8,12 +8,17 @@
 
   @each $category, $category-map in palette.$palette {
     @each $name, $value in $category-map {
+      // TODO
+      // stylelint-disable-next-line
       --clr-#{$category}-#{$name}: hsl(#{$value});
     }
   }
 
   @for $n from 0 through 100 {
     $calculated: $n * 1%;
-    --clr-neutral-#{$n}: hsl(0 0% #{$calculated});
+
+    // TODO
+    // stylelint-disable-next-line
+    --clr-neutral-#{$n}: hsl(0deg 0% #{$calculated});
   }
 }

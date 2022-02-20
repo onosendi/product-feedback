@@ -1,4 +1,4 @@
-@use '../../../assets/scss/abstracts/mixins';
+@use "../../../assets/scss/abstracts/mixins";
 
 .nav {
   position: relative;
@@ -41,7 +41,7 @@
       --roadmap-bullet-point-size: 0.8rem;
 
       border-radius: 50%;
-      content: '';
+      content: "";
       height: var(--roadmap-bullet-point-size);
       left: 0;
       position: absolute;
