@@ -54,7 +54,14 @@ export default function InputLabel({
       {renderLabel()}
       {children}
       {!!helperText && (
-        <span className={cx('type-jost', hasError && styles.error, styles.helper)}>
+        <span
+          className={cx(
+            'type-jost',
+            hasError && styles.error,
+            styles.helper,
+          )}
+          data-testid="helper-text"
+        >
           {helperText}
         </span>
       )}
