@@ -2,6 +2,31 @@
   "name": "client",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "dev": "BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "start": "serve -s build -l 7002",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext ts --ext tsx ."
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules\/(?!redux-persist).*$"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
@@ -27,26 +52,6 @@
     "web-vitals": "^2.1.2",
     "yup": "^0.32.11"
   },
-  "scripts": {
-    "dev": "BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "start": "serve -s build -l 7002",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext ts --ext tsx ."
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@onosendi/eslint-config": "^2.0.0",
     "@types/crypto-js": "^4.1.0",
@@ -58,13 +63,16 @@
     "@types/validator": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
+    "babel-jest": "^27.5.1",
     "eslint": "^8.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-testing-library": "^5.0.5",
     "sass": "^1.45.2",
     "serve": "^13.0.2",
     "stylelint-config-standard-scss": "^3.0.0",

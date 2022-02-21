@@ -16,7 +16,9 @@
     }
   },
   "plugins": [
-    "react"
+    "react",
+    "testing-library",
+    "jest-dom"
   ],
   "rules": {
     "func-names": "off",
