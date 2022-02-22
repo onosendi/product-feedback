@@ -13,7 +13,7 @@
     "start": "npm-run-all --print-label --parallel start:*",
     "start:server": "npm run start -w server",
     "start:client": "npm run start -w client",
-    "test": "npm -w server test",
+    "test": "npm -w server test && npm -w client test -- --watchAll=false",
     "lint": "npm --workspaces run lint"
   },
   "keywords": [],
