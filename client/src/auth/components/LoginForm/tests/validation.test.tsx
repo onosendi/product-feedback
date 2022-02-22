@@ -1,6 +1,7 @@
-import { fireEvent, logRoles, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderApp } from '../../../../project/test-utils';
+import { REQUIRED } from '../../../../project/validators';
 import LoginForm from '../LoginForm';
 
 beforeEach(() => {
@@ -25,13 +26,13 @@ test('Button should be enabled when fields have a value', () => {
 test('Username should be required', () => {
   const username = screen.getByLabelText(/username/i);
   fireEvent.blur(username);
-  const errorMessage = screen.queryByText(/required/i);
-  expect(errorMessage).toBeTruthy();
+  const errorMessage = screen.getByTestId('helper-text').textContent;
+  expect(errorMessage).toBe(REQUIRED);
 });
 
 test('Password should be required', () => {
   const password = screen.getByLabelText(/password/i);
   fireEvent.blur(password);
-  const errorMessage = screen.queryByText(/required/i);
-  expect(errorMessage).toBeTruthy();
+  const errorMessage = screen.getByTestId('helper-text').textContent;
+  expect(errorMessage).toBe(REQUIRED);
 });
