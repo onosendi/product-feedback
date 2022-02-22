@@ -11,6 +11,9 @@
     "lint": "eslint --ext ts --ext tsx ."
   },
   "jest": {
+    "coverageReporters": [
+      "html"
+    ],
     "transformIgnorePatterns": [
       "/node_modules\/(?!redux-persist).*$"
     ]
